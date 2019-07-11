@@ -14,9 +14,23 @@ const config = {
   firebase.initializeApp(config)
 
   export const auth = firebase.auth()
+  
+  const db = firebase.firestore()
 
   const provider = new firebase.auth.GoogleAuthProvider()
   provider.setCustomParameters({ prompt: 'select_account' })
-  export const signInWithGoogle = () => auth.signInWithPopup(provider)
+
+  export const firstTimeLogin = () => auth.signInWithPopup(provider).then(result => {
+    const { displayName, email, photoURL, uid } = result.user
+
+    db.collection('users').doc(uid).set({
+      displayName,
+      email,
+      photoURL,
+      zipcode: null,
+      books: [],
+      loaned: []
+    })
+  })
 
   export default firebase;
