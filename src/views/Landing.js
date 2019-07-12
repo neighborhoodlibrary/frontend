@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Header from '../components/Header/Header';
-import { signInWithGoogle } from '../firebase/firebase.utils'
+import { firstTimeLogin } from '../firebase/firebase.utils'
 
 export default class Landing extends Component {
     render() {
         return (
             <div>
                 <Header />
-                <button onClick={signInWithGoogle} >Sign In</button>
+                <button onClick={firstTimeLogin} >Sign In</button>
             </div>
         )
     }
