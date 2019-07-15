@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Header from "../components/Header/Header";
+import MyShelf from "./MyShelf/MyShelf";
 
 class MainContainer extends Component {
   constructor(props) {
@@ -8,7 +10,8 @@ class MainContainer extends Component {
   render() {
     return (
       <div>
-        <p>After Login container for all components</p>
+        <Header />
+        <MyShelf />
       </div>
     );
   }
