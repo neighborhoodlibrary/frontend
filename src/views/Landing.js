@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Header from '../components/Header/Header';
 import UserContext from '../context/user/userContext'
 import firebase from '../firebase/firebase.utils'
@@ -6,6 +6,18 @@ import 'firebase/auth'
 
 const Landing = () => {
     const userContext = useContext(UserContext)
+
+    const [loggedIn, setLoggedIn] = useState(false)
+
+    useEffect(() => {
+        loggedInToTrue()
+        console.log(loggedIn)
+        console.log(userContext.userState.user.email)
+    })
+
+    const loggedInToTrue = () => {
+        setLoggedIn(true)
+    }
 
     const auth = firebase.auth()
 
