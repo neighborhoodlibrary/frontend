@@ -10,7 +10,6 @@ class MainContainer extends Component {
   render() {
     return (
       <div>
-        <Header />
         <MyShelf />
       </div>
     );

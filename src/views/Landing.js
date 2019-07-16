@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import Header from '../components/Header/Header';
 import UserContext from '../context/user/userContext'
 import firebase from '../firebase/firebase.utils'
 import 'firebase/auth'
+
+import { Redirect } from 'react-router-dom';
 
 const Landing = () => {
     const userContext = useContext(UserContext)
@@ -41,12 +42,30 @@ const Landing = () => {
         })
 
         userContext.addUser(result.user)
+
     })
+
+    function redirect() {
+        if(userContext.userState.loggedIn == true) {
+            return <Redirect to="/shelf" />
+        }
+    }
+
+    // auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    // .then(function() {
+    //   return firebase.auth().signInWithEmailAndPassword(email, password);
+    // })
+    // .catch(function(error) {
+    //   // Handle Errors here.
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    // });
+  
 
     return (
         <div>
-            <Header />
             <button onClick={firstTimeLogin} >Sign In</button>
+            {redirect()}
         </div>
     )
 }
