@@ -11,7 +11,8 @@ const UserState = props => {
         location: '',
         books: [],
         borrowed: [],
-        loaned: []
+        loaned: [],
+        loggedIn: false
     }
 
     const [state, dispatch] = useReducer(UserReducer, initialState)

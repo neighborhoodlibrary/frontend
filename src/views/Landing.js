@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../components/Header/Header';
-import { firstTimeLogin } from '../firebase/firebase.utils'
+import { firstTimeLogin } from '../firebase/firebaseLogin'
 
 export default class Landing extends Component {
     render() {
