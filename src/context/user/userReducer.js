@@ -1,9 +1,13 @@
-import { GET_USER } from '../types'
+import { ADD_USER, GET_USER } from '../types'
 
 export default (state, action) => {
     switch(action.type) {
-        case GET_USER:
-            return action.payload
+        case ADD_USER:
+            return {
+                ...state,
+                user: action.payload,
+                loggedIn: true
+            }
         default:
             return state
     }

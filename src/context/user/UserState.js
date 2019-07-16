@@ -1,30 +1,28 @@
 import UserContext from './userContext'
 import React, { useReducer } from 'react'
 import UserReducer from './userReducer'
-import { GET_USER } from '../types'
+import { GET_USER, ADD_USER } from '../types'
 
 const UserState = props => {
     const initialState = {
-        email: '',
-        displayName: '',
-        uid: '',
-        location: '',
-        books: [],
-        borrowed: [],
-        loaned: []
+        user: {},
+        loggedIn: false
     }
 
     const [state, dispatch] = useReducer(UserReducer, initialState)
 
-    const getUser = () => {
-
+    const addUser = user => {
+        dispatch({
+            type: ADD_USER,
+            payload: user
+        })
     }
     
     return (
         <UserContext.Provider 
         value={{
             user: state,
-            getUser
+            addUser
         }}>
             {props.children}
         </UserContext.Provider>
