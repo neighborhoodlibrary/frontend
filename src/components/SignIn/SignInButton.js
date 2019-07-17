@@ -3,6 +3,8 @@ import UserContext from '../../context/user/userContext'
 import firebase from '../../firebase/firebase.utils'
 import 'firebase/auth'
 
+import { Redirect } from 'react-router-dom';
+
 export default function SignInButton() {
     const userContext = useContext(UserContext)
 
@@ -41,11 +43,38 @@ export default function SignInButton() {
 
         userContext.addUser(result.user)
 
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+        .then(function() {
+        });
+
     })
+
+    function signOut() {
+        if(curUser !== null){
+        auth.signOut().then(function() {
+      }).catch(function(error) {
+      });
+    }
+    }
+
+    var curUser = auth.currentUser;
+
+    function display(){
+        if(curUser !== null){
+            return (
+                <button onClick={signOut} >Sign Out</button> 
+            )
+        } else {
+            console.log(curUser)
+            return (
+                <button onClick={firstTimeLogin} >Sign In</button>
+            )
+        }
+    }
 
     return (
         <div>
-            <button onClick={firstTimeLogin} >Sign In</button>
+            {display()}
         </div>
     )
 }
