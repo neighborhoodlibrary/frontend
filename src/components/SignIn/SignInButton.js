@@ -38,7 +38,8 @@ export default function SignInButton() {
             photoURL,
             zipcode: null,
             books: [],
-            loaned: []
+            loaned: [],
+            borrowed: []
         })
 
         userContext.addUser(result.user)
