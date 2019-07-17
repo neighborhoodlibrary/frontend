@@ -1,4 +1,5 @@
 import React from 'react';
+import Redirect from 'react-router-dom';
 import NavMenu from './NavMenu/NavMenu';
 import styled from 'styled-components';
 
