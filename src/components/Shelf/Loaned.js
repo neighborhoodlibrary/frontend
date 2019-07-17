@@ -4,7 +4,7 @@ export default class Loaned extends Component {
     render() {
         return (
             <div>
-                
+                Loaned
             </div>
         )
     }
