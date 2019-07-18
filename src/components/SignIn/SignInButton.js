@@ -6,6 +6,7 @@ import "firebase/auth";
 import { Redirect } from "react-router-dom";
 
 export default function SignInButton() {
+
   const userContext = useContext(UserContext);
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -13,7 +14,7 @@ export default function SignInButton() {
   useEffect(() => {
     console.log(loggedIn);
     console.log(userContext.userState.user.email);
-    if (loggedIn == false) {
+    if (loggedIn == false && curUser) {
       userContext.setLogin(true);
       loggedInToTrue();
     }
@@ -24,6 +25,8 @@ export default function SignInButton() {
   };
 
   const auth = firebase.auth();
+
+  var curUser = auth.currentUser;
 
   const db = firebase.firestore();
 
@@ -55,21 +58,15 @@ export default function SignInButton() {
     });
 
   function signOut() {
-    if (curUser !== null) {
-      auth
-        .signOut()
-        .then(function() {})
-        .catch(function(error) {});
-    }
+    auth.signOut().then(function() {}).catch(function(error) {});
+    userContext.setLogin(false);
   }
 
-  var curUser = auth.currentUser;
 
   function display() {
-    if (curUser !== null) {
+    if (userContext.userState.loggedIn === true) {
       return <button onClick={signOut}>Sign Out</button>;
     } else {
-      console.log(curUser);
       return <button onClick={firstTimeLogin}>Sign In</button>;
     }
   }

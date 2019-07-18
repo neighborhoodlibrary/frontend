@@ -1,9 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserContext from '../context/user/userContext'
-import 'firebase/auth'
-
-import SignInButton from '../components/SignIn/SignInButton';
-
 import { Redirect } from 'react-router-dom';
 
 const Landing = () => {

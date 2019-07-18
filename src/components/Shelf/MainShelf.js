@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import AddBook from '../AddBook/AddBook';
 
 export default class MainShelf extends Component {
     render() {
@@ -6,6 +7,7 @@ export default class MainShelf extends Component {
             <div>
                 <p>
                     Welcome to your shelf...
+                    <AddBook />
                 </p>
             </div>
         )
