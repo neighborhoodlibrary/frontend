@@ -4,9 +4,8 @@ import Landing from "./views/Landing";
 import UserState from "./context/user/UserState";
 import BookState from "./context/book/BookState";
 import Header from './components/Header/Header';
-import MainShelf from './components/Shelf/MainShelf';
 
-import { Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 import PrivateRoute from './authentication/PrivateRoute';
 

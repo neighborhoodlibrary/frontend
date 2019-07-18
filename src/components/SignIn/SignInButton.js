@@ -3,8 +3,6 @@ import UserContext from "../../context/user/userContext";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 
-import { Redirect } from "react-router-dom";
-
 export default function SignInButton() {
   const userContext = useContext(UserContext);
 
@@ -13,7 +11,7 @@ export default function SignInButton() {
   useEffect(() => {
     console.log(loggedIn);
     console.log(userContext.userState.user.email);
-    if (loggedIn == false) {
+    if (loggedIn === false) {
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
           userContext.setLogin(true);
@@ -28,8 +26,6 @@ export default function SignInButton() {
   };
 
   const auth = firebase.auth();
-
-  var curUser = auth.currentUser;
 
   const db = firebase.firestore();
 

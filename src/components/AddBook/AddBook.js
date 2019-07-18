@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import BookMap from "./BookMap";
-import firebase from "../../firebase/firebase.utils";
 
 var booksApi = require("google-books-search");
 
@@ -32,30 +31,6 @@ export default class AddBook extends Component {
       [e.target.name]: e.target.value
     });
   };
-
-  // bookSearch(type = 'title', entry) {
-  //   var booksOptions = {
-  //     field: type,
-  //     offset: 0,
-  //     limit: 10,
-  //     type: "books",
-  //     order: "relevance",
-  //     lang: "en"
-  //   };
-
-  //   booksApi.search(entry, booksOptions, function(error, results, apiResponse) {
-  //     const db = firebase.firestore();
-  //     if (!error) {
-  //       console.log(results);
-  //       db.collection('books').doc().set({
-  //         author: results[0].authors[0],
-  //         description: results[0].description
-  //       })
-  //     } else {
-  //       console.log(error);
-  //     }
-  //   });
-  // }
 
   formSubmit = e => {
     e.preventDefault();
