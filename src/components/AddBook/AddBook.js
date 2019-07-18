@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import BookMap from "./BookMap";
+import firebase from "../../firebase/firebase.utils";
 
 var booksApi = require("google-books-search");
 
@@ -43,8 +44,13 @@ export default class AddBook extends Component {
     };
 
     booksApi.search(entry, booksOptions, function(error, results, apiResponse) {
+      const db = firebase.firestore();
       if (!error) {
         console.log(results);
+        db.collection('books').doc().set({
+          author: results[0].authors[0],
+          description: results[0].description
+        })
       } else {
         console.log(error);
       }
