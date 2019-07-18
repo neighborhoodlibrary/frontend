@@ -8,8 +8,7 @@ export default class AddBook extends Component {
     super(props);
     this.state = {
       type: null,
-      title: "",
-      author: "",
+      entry: "",
       results: null,
       bookData: null
     };
@@ -33,7 +32,7 @@ export default class AddBook extends Component {
     });
   };
 
-  bookSearch(type = `${this.state.type}`, entry) {
+  bookSearch(type = 'title', entry) {
     var booksOptions = {
       field: type,
       offset: 0,
@@ -56,8 +55,7 @@ export default class AddBook extends Component {
     e.preventDefault();
     var resultsarr = this.bookSearch(
       this.state.type,
-      this.state.type === "title" ? this.state.title : this.state.author
-    );
+      this.state.entry  );
     console.log(resultsarr);
   };
 
@@ -66,42 +64,17 @@ export default class AddBook extends Component {
     return (
       <div>
         <h2>Add a Book!</h2>
-        <div>Choose search parameter: </div>
-        <form>
-          <label>
-            Title
-            <input
-              type="radio"
-              name="type"
-              value="title"
-              checked={this.state.type === "title"}
-              onChange={this.handleChanges}
-            />
-          </label>
-          <label>
-            Author
-            <input
-              type="radio"
-              name="type"
-              value="author"
-              checked={this.state.type === "author"}
-              onChange={this.handleChanges}
-            />
-          </label>
-        </form>
-
         <form onSubmit={this.formSubmit}>
+        <select onChange={this.handleChanges} name="type">
+            <option value="title">Title</option>
+            <option value="author">Author</option>
+            <option value="isbn">ISBN</option>
+        </select>
           <input
-            placeholder={this.state.type === "title" ? "title" : "author"}
+            placeholder={this.state.type === null ? "title" : this.state.type}
             onChange={this.handleChanges}
-            name={this.state.type === "title" ? "title" : "author"}
-            value={
-              this.state.type === null
-                ? "Pick parameters first"
-                : this.state.type === "title"
-                ? this.state.title
-                : this.state.author
-            }
+            name="entry"
+            value={this.state.value}
           />
           <button>Search</button>
         </form>
