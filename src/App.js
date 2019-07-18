@@ -1,7 +1,5 @@
 import React from "react";
 import "./App.css";
-import Auth from "./authentication/Auth";
-import MainContainer from "./views/MainContainer";
 import Landing from "./views/Landing";
 import UserState from "./context/user/UserState";
 import BookState from "./context/book/BookState";
@@ -15,8 +13,13 @@ import PrivateRoute from './authentication/PrivateRoute';
 import Borrowed from './components/Shelf/Borrowed';
 import Loaned from './components/Shelf/Loaned';
 import Library from './components/Shelf/Library';
+import MyShelf from "./views/MyShelf/MyShelf";
 
-const AuthComponent = Auth(MainContainer)(Landing);
+import styled from 'styled-components';
+
+const LowerSection = styled.div`
+  padding: 0px 10px;
+`;
 
 function App() {
 
@@ -31,11 +34,13 @@ function App() {
         <BookState>
           <Router>
               <Route path="/" component={Header} />
-              <Route exact path="/" component={Landing} />
-              <PrivateRoute exact path='/shelf' component={MainShelf} />
-              <PrivateRoute exact path='/shelf/borrowed' component={Borrowed} />
-              <PrivateRoute exact path='/shelf/loaned' component={Loaned} />
-              <PrivateRoute exact path='/shelf/library' component={Library} />
+              <LowerSection>
+                <Route exact path="/" component={Landing} />
+                <PrivateRoute exact path='/shelf' component={MyShelf} />
+                <PrivateRoute exact path='/shelf/borrowed' component={Borrowed} />
+                <PrivateRoute exact path='/shelf/loaned' component={Loaned} />
+                <PrivateRoute exact path='/shelf/library' component={Library} />
+              </LowerSection>
           </Router> 
         </BookState>
       </UserState>
