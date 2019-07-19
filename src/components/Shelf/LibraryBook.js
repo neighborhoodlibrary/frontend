@@ -18,7 +18,12 @@ const LibraryBook = props => {
   console.log(props);
   return (
     <Container>
-      <Item />
+      <Item>
+        <p>title: {props.book.title}</p>
+        <p>author: {props.book.author}</p>
+        <p>avgRating: {props.book.averageRating}</p>
+        <img src={props.book.thumbnail} alt="book_thumb" />
+      </Item>
     </Container>
   );
 };
