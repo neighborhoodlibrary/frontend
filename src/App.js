@@ -23,11 +23,6 @@ const LowerSection = styled.div`
 
 function App() {
 
-  const userKey = Object.keys(window.localStorage)
-  .filter(it => it.startsWith('firebase:authUser'))[0];
-
-  console.log(userKey)
-
   return (
     <div className="App">
       <UserState>

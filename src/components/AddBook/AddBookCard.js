@@ -36,7 +36,6 @@ const AddBookCardDiv = styled.div`
 `;
 
 export default function AddBookCard(props) {
-    console.log(props.book)
     return (
         <AddBookCardDiv>
             <h2>

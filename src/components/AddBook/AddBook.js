@@ -27,7 +27,7 @@ export default class AddBook extends Component {
     this.state = {
       type: null,
       entry: "",
-      results: null,
+      results: [],
       bookData: null
     };
   }
@@ -35,16 +35,18 @@ export default class AddBook extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.results === null) {
       return null;
+    } else if (prevState.results === undefined){
+      this.setState({
+        results: null
+      });
     } else if (prevState.results !== this.state.results) {
       this.setState({
-        type: !null
+        type: null
       });
     }
   }
 
   handleChanges = e => {
-    console.log(e);
-    console.log(this.state);
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -72,6 +74,7 @@ export default class AddBook extends Component {
       results,
       apiResponse
     ) {
+      console.log(results);
       something(results);
     });
   };

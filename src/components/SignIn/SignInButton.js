@@ -50,8 +50,6 @@ export default function SignInButton() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    console.log(loggedIn);
-    console.log(userContext.userState.user.email);
     if (loggedIn === false) {
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -75,7 +73,6 @@ export default function SignInButton() {
 
   const firstTimeLogin = () =>
     auth.signInWithPopup(provider).then(result => {
-      console.log(result.user);
       const { displayName, email, photoURL, uid } = result.user;
 
       db.collection("users")

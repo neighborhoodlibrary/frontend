@@ -8,18 +8,20 @@ const BookMapDiv = styled.div`
 `;
 
 export default function BookMap(props) {
-    if(props.resultsarr){
-        return(
+    if(props.resultsarr === null){
+        return <div>0 results</div>
+    } else if (props.resultsarr === undefined){
+        return <div>0 results.</div>
+    } else {
+        return (
             <BookMapDiv>
-                <React.Fragment>
-                    {props.resultsarr.map(book => (
-                        <AddBookCard book={book} />
-                    ))}
-                </React.Fragment>
+            <React.Fragment>
+                {props.resultsarr.map(book => (
+                    <AddBookCard book={book} key={book.id} />
+                ))}
+            </React.Fragment>
             </BookMapDiv>
         )
-    } else {
-        return <div>0 RESULTS</div>
     }
 
 }
