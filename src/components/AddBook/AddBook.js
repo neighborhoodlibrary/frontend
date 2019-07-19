@@ -1,8 +1,25 @@
 import React, { Component } from "react";
 import BookMap from "./BookMap";
-import firebase from "../../firebase/firebase.utils";
+import styled from 'styled-components';
 
 var booksApi = require("google-books-search");
+
+const AddBookDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const AddBookForm = styled.form`
+  display: flex;
+  padding: 15px;
+
+  input {
+    padding: 7px;
+    margin: 0px 3px;
+    border-radius: 2px;
+    border: 1px solid rgb(0,0,0,.2)
+  }
+`;
 
 export default class AddBook extends Component {
   constructor(props) {
@@ -10,7 +27,7 @@ export default class AddBook extends Component {
     this.state = {
       type: null,
       entry: "",
-      results: null,
+      results: [],
       bookData: null
     };
   }
@@ -18,6 +35,10 @@ export default class AddBook extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.results === null) {
       return null;
+    } else if (prevState.results === undefined){
+      this.setState({
+        type: null
+      });
     } else if (prevState.results !== this.state.results) {
       this.setState({
         type: null
@@ -26,36 +47,10 @@ export default class AddBook extends Component {
   }
 
   handleChanges = e => {
-    console.log(e);
-    console.log(this.state);
     this.setState({
       [e.target.name]: e.target.value
     });
   };
-
-  // bookSearch(type = 'title', entry) {
-  //   var booksOptions = {
-  //     field: type,
-  //     offset: 0,
-  //     limit: 10,
-  //     type: "books",
-  //     order: "relevance",
-  //     lang: "en"
-  //   };
-
-  //   booksApi.search(entry, booksOptions, function(error, results, apiResponse) {
-  //     const db = firebase.firestore();
-  //     if (!error) {
-  //       console.log(results);
-  //       db.collection('books').doc().set({
-  //         author: results[0].authors[0],
-  //         description: results[0].description
-  //       })
-  //     } else {
-  //       console.log(error);
-  //     }
-  //   });
-  // }
 
   formSubmit = e => {
     e.preventDefault();
@@ -63,7 +58,7 @@ export default class AddBook extends Component {
     var booksOptions = {
       field: `${this.state.type}`,
       offset: 0,
-      limit: 10,
+      limit: 20,
       type: "books",
       order: "relevance",
       lang: "en"
@@ -80,18 +75,15 @@ export default class AddBook extends Component {
       apiResponse
     ) {
       console.log(results);
-      console.log(something);
       something(results);
     });
   };
 
   render() {
-    console.log(this.state.type);
-    console.log(this.state.results);
     return (
-      <div>
-        <h2>Add a Book!</h2>
-        <form onSubmit={this.formSubmit}>
+      <AddBookDiv>
+        <h2>Add a Book</h2>
+        <AddBookForm onSubmit={this.formSubmit}>
           <select onChange={this.handleChanges} name="type">
             <option value="title">Title</option>
             <option value="author">Author</option>
@@ -104,9 +96,9 @@ export default class AddBook extends Component {
             value={this.state.value}
           />
           <button>Search</button>
-        </form>
+        </AddBookForm>
         <BookMap resultsarr={this.state.results} />
-      </div>
+      </AddBookDiv>
     );
   }
 }

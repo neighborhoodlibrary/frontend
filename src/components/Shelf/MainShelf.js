@@ -6,8 +6,8 @@ export default class MainShelf extends Component {
         return (
             <div>
                 <p>
-                    Welcome to your shelf...
-                    <AddBook />
+                    Welcome to your shelf!
+
                 </p>
             </div>
         )
