@@ -9,20 +9,22 @@ const NavMenuDiv = styled.div`
 
     a {
         margin: 0px 5px;
-        background-color: #8899AA;
-        color: white;
+        background-color: #f0efed;
+        color: #1a1919;
         font-size: .95em;
-        padding: 5px 10px;
-        border-radius: 3px;
+        padding: 6px 11px;
+        border-radius: 2px;
         text-decoration: none;
+        font-family: 'Merriweather Sans', sans-serif;
     }
 
-    .hide {
-        display: none;
+    a:hover{
+        background-color: #eeedeb;
     }
 
-    .shown {
-
+    
+    @media(max-width: 1000px){
+        flex-direction: column;
     }
 `
 
@@ -35,6 +37,7 @@ export default class NavMenu extends Component {
                     <NavLink to='/shelf/borrowed'>Borrowed</NavLink>
                     <NavLink to='/shelf/loaned'>Loaned</NavLink>
                     <NavLink to='/shelf/library'>Library</NavLink>
+                    <NavLink to='/shelf/add'>Add A Book</NavLink>
                 </div>
 
                 <SignInButton />

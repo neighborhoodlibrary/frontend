@@ -1,7 +1,48 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../../context/user/userContext";
 import firebase from "../../firebase/firebase.utils";
+import styled from 'styled-components';
 import "firebase/auth";
+
+const SIButton = styled.button`
+  margin: 0px 5px;
+  background-color: #f0efed;
+  color: #1a1919;
+  padding: 6px 11px;
+  border: none;
+  border-radius: 2px;
+  text-decoration: none;
+  font-family: 'Merriweather Sans', sans-serif;
+
+  &:hover {
+    -webkit-animation: color-change-2x 2s linear infinite alternate both;
+            animation: color-change-2x 2s linear infinite alternate both;
+  }
+
+  @-webkit-keyframes color-change-2x {
+    0% {
+      background: #f0efed;
+      color: #1a1919
+    }
+    100% {
+      background: #1a1919;
+      color: #f0efed;
+    }
+  }
+  @keyframes color-change-2x {
+      0% {
+        background: #f0efed;
+        color: #1a1919;
+      }
+      100% {
+        background: #1a1919;
+        color: #f0efed;
+      }
+  }
+ 
+ }
+ 
+`;
 
 export default function SignInButton() {
   const userContext = useContext(UserContext);
@@ -66,9 +107,9 @@ export default function SignInButton() {
 
   function display() {
     if (userContext.userState.loggedIn === true) {
-      return <button onClick={signOut}>Sign Out</button>;
+      return <SIButton onClick={signOut}>Sign Out</SIButton>;
     } else {
-      return <button onClick={firstTimeLogin}>Sign In</button>;
+      return <SIButton onClick={firstTimeLogin}>Sign In</SIButton>;
     }
   }
 

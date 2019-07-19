@@ -15,6 +15,7 @@ import Library from './components/Shelf/Library';
 import MyShelf from "./views/MyShelf/MyShelf";
 
 import styled from 'styled-components';
+import AddBook from "./components/AddBook/AddBook";
 
 const LowerSection = styled.div`
   padding: 0px 10px;
@@ -39,6 +40,7 @@ function App() {
                 <PrivateRoute exact path='/shelf/borrowed' component={Borrowed} />
                 <PrivateRoute exact path='/shelf/loaned' component={Loaned} />
                 <PrivateRoute exact path='/shelf/library' component={Library} />
+                <PrivateRoute exact path='/shelf/add' component={AddBook} />
               </LowerSection>
           </Router> 
         </BookState>
