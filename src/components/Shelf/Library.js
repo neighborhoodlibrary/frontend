@@ -24,13 +24,10 @@ const Container = styled.div`
 `;
 
 const Library = () => {
-  const userContext = useContext(UserContext);
-  const [booksId, setBooksId] = useState([]);
   const [booksInfo, setBooksInfo] = useState([]);
   const [gBooksInfo, setGBooksInfo] = useState([]);
   const auth = firebase.auth();
   const user = auth.currentUser;
-  //   const docRef = firebase.firestore().collection("users");
   const docRef = firebase.firestore().collection("books");
   //
 
@@ -42,8 +39,6 @@ const Library = () => {
   };
 
   useEffect(() => {
-    // console.log(booksId);
-    // console.log(user);
     let someArr = [];
     if (booksInfo.length === 0) {
       docRef
@@ -56,7 +51,6 @@ const Library = () => {
         })
         .then(() => {
           setBooksInfo(someArr);
-          console.log(booksInfo);
         })
         .catch(error => {
           console.log("Error getting the documents:", error);
@@ -66,10 +60,8 @@ const Library = () => {
 
   useEffect(() => {
     let anotherArr = [];
-    console.log(booksInfo.length, gBooksInfo.length);
     if (booksInfo.length !== 0 && gBooksInfo.length === 0) {
       for (let i = 0; i < booksInfo.length; i++) {
-        console.log(booksInfo[i].isbn);
         booksApi.search(`${booksInfo[i].isbn}`, booksOptions, function(
           error,
           results,
