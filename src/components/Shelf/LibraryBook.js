@@ -15,7 +15,6 @@ const Item = styled.div`
 `;
 
 const LibraryBook = props => {
-  console.log(props);
   return (
     <Container>
       <Item>

@@ -45,7 +45,6 @@ const Loaned = () => {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            console.log(doc.data());
             someArr.push(doc.data());
           });
         })
