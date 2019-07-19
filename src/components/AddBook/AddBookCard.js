@@ -36,16 +36,14 @@ const AddBookCardDiv = styled.div`
 `;
 
 export default function AddBookCard(props) {
+
     return (
         <AddBookCardDiv>
             <h2>
                 {props.book.title}
             </h2> 
             <div class="authorhold">
-                <h6>by</h6>
-                {props.book.authors.map(author =>{
-                    return <h3>{author}</h3>
-                })}
+                
             </div>
             <div class="imghold">
                 <img src={props.book.thumbnail} alt="Thumbnail"/>

@@ -37,7 +37,7 @@ export default class AddBook extends Component {
       return null;
     } else if (prevState.results === undefined){
       this.setState({
-        results: null
+        type: null
       });
     } else if (prevState.results !== this.state.results) {
       this.setState({
@@ -58,7 +58,7 @@ export default class AddBook extends Component {
     var booksOptions = {
       field: `${this.state.type}`,
       offset: 0,
-      limit: 10,
+      limit: 20,
       type: "books",
       order: "relevance",
       lang: "en"
