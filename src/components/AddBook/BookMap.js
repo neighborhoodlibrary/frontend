@@ -1,16 +1,27 @@
-import React from 'react'
+import React from 'react';
+import AddBookCard from './AddBookCard';
+import styled from 'styled-components';
+
+const BookMapDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`;
 
 export default function BookMap(props) {
-    if(props.results){
-        return(
+    if(props.resultsarr === null){
+        return <div>0 results</div>
+    } else if (props.resultsarr === undefined){
+        return <div>0 results.</div>
+    } else {
+        return (
+            <BookMapDiv>
             <React.Fragment>
-                {props.results.map(book => (
-                    <div>{book.title}</div>
+                {props.resultsarr.map(book => (
+                    <AddBookCard book={book} key={book.id} />
                 ))}
             </React.Fragment>
+            </BookMapDiv>
         )
-    } else {
-        return <div>No results...</div>
     }
 
 }
