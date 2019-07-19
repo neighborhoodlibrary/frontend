@@ -20,7 +20,7 @@ const LibraryBook = props => {
     <Container>
       <Item>
         <p>title: {props.book.title}</p>
-        <p>author: {props.book.author}</p>
+        <p>author: {props.book.authors}</p>
         <p>avgRating: {props.book.averageRating}</p>
         <img src={props.book.thumbnail} alt="book_thumb" />
       </Item>
