@@ -1,4 +1,4 @@
-import { ADD_USER, GET_USER, SET_LOGIN } from "../types";
+import { ADD_USER, SET_LOGIN } from "../types";
 
 export default (state, action) => {
   switch (action.type) {

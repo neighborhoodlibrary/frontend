@@ -1,7 +1,7 @@
 import UserContext from "./userContext";
 import React, { useReducer } from "react";
 import UserReducer from "./userReducer";
-import { GET_USER, ADD_USER, SET_LOGIN } from "../types";
+import { ADD_USER, SET_LOGIN } from "../types";
 
 const UserState = props => {
   const initialState = {
