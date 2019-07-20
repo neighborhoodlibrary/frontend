@@ -17,12 +17,13 @@ const Item = styled.div`
 const Book = () => {
   const bookContext = useContext(BookContext);
   const [displayedBook, getDisplayedBook] = useState([]);
+
   useEffect(() => {
     if (displayedBook.length === 0) {
       getDisplayedBook(bookContext.getBook());
     }
-  });
-  console.log(displayedBook);
+  }, [displayedBook.length, bookContext]);
+
   return (
     <Container>
       <Item>
