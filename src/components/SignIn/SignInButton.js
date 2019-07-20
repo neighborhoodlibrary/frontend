@@ -47,13 +47,19 @@ const SIButton = styled.button`
 export default function SignInButton() {
   const userContext = useContext(UserContext);
 
+  const auth = firebase.auth();
+
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     if (loggedIn === false) {
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          userContext.setLogin(true);
+          var loginObj = {
+            user: auth.currentUser,
+            loggedIn: true
+          }
+          userContext.setLogin(loginObj);
           loggedInToTrue();
         }
       });
@@ -63,8 +69,6 @@ export default function SignInButton() {
   const loggedInToTrue = () => {
     setLoggedIn(true);
   };
-
-  const auth = firebase.auth();
 
   const db = firebase.firestore();
 

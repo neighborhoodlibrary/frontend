@@ -18,10 +18,10 @@ const UserState = props => {
     });
   };
 
-  const setLogin = login => {
+  const setLogin = loginObj => {
     dispatch({
       type: SET_LOGIN,
-      payload: login
+      payload: loginObj
     });
   };
 

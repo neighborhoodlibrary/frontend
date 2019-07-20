@@ -12,7 +12,8 @@ export default (state, action) => {
     case SET_LOGIN:
       return {
         ...state,
-        loggedIn: action.payload
+        loggedIn: action.payload.loggedIn,
+        user: action.payload.user
       };
     default:
       return state;
