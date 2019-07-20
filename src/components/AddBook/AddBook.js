@@ -11,12 +11,19 @@ const AddBookDiv = styled.div`
 
 const AddBookForm = styled.form`
   display: flex;
-  padding: 15px;
+  justify-content: space-around;
 
   input {
     padding: 7px;
-    margin: 0px 3px;
     border-radius: 2px;
+    width: 50%;
+    border: 1px solid rgb(0,0,0,.2)
+  }
+
+  select {
+    padding: 7px;
+    border-radius: 2px;
+    width: 10%;
     border: 1px solid rgb(0,0,0,.2)
   }
 `;
@@ -82,7 +89,6 @@ export default class AddBook extends Component {
   render() {
     return (
       <AddBookDiv>
-        <h2>Add a Book</h2>
         <AddBookForm onSubmit={this.formSubmit}>
           <select onChange={this.handleChanges} name="type">
             <option value="title">Title</option>

@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import MainShelf from '../../components/Shelf/MainShelf';
-import styled from 'styled-components';
+import UserContext from '../../context/user/userContext';
 
-const MainContainer = styled.div`
+export default function MyShelf() {
 
-`
-
-export default class MyShelf extends Component {
-    render() {
-        return (
-                <MainContainer>
-                    <MainShelf />
-                </MainContainer>
-        )
-    }
+    return (
+        <div>
+            <MainShelf />
+        </div>
+    )
 }

@@ -3,8 +3,21 @@ import AddBookCard from './AddBookCard';
 import styled from 'styled-components';
 
 const BookMapDiv = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    @media(max-width: 1100px){
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media(max-width: 870px){
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media(max-width: 550px){
+        grid-template-columns: 1fr;
+    }
 `;
 
 export default function BookMap(props) {
