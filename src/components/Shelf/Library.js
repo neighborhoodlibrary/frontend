@@ -24,13 +24,10 @@ const Container = styled.div`
 `;
 
 const Library = () => {
-  const userContext = useContext(UserContext);
-  const [booksId, setBooksId] = useState([]);
   const [booksInfo, setBooksInfo] = useState([]);
   const [gBooksInfo, setGBooksInfo] = useState([]);
   const auth = firebase.auth();
   const user = auth.currentUser;
-  //   const docRef = firebase.firestore().collection("users");
   const docRef = firebase.firestore().collection("books");
   //
 
