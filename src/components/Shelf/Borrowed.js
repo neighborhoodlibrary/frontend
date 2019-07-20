@@ -14,7 +14,7 @@ import React, { useContext, useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 //
-import BorrowedBook from "./BorrowedBook";
+import Book from "./Book";
 import styled from "styled-components";
 //
 const booksApi = require("google-books-search");
@@ -44,7 +44,9 @@ const Borrowed = () => {
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            someArr.push(doc.data());
+            let book = doc.data();
+            book.bookId = doc.id;
+            someArr.push(book);
           });
         })
         .then(() => {
@@ -66,6 +68,10 @@ const Borrowed = () => {
           apiResponse
         ) {
           if (!error) {
+            results[0].borrowerId = booksInfo[i].borrowerId;
+            results[0].ownerId = booksInfo[i].ownerId;
+            results[0].checkedOut = booksInfo[i].checkedOut;
+            results[0].bookId = booksInfo[i].bookId;
             anotherArr.push(results[0]);
             if (anotherArr.length === booksInfo.length) {
               setGbooksInfo(anotherArr);
@@ -81,7 +87,7 @@ const Borrowed = () => {
   return (
     <Container>
       {gBooksInfo.map(book => (
-        <BorrowedBook key={Math.random()} book={book} />
+        <Book key={Math.random()} book={book} />
       ))}
     </Container>
   );
