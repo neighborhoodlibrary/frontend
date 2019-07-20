@@ -35,6 +35,24 @@ const AddBookForm = styled.form`
     width: 10%;
     border: 1px solid rgb(0,0,0,.2)
   }
+
+  @media(max-width: 800px){
+    flex-direction: column;
+    align-items: center;
+
+    input {
+      width: 75%
+      margin: 10px;
+    }
+  
+    select {
+      width: 30%
+    }
+  
+    button {
+      width: 20%
+    }
+  }
 `;
 
 export default class AddBook extends Component {
