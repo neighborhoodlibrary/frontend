@@ -20,7 +20,7 @@ import AddBook from "./components/AddBook/AddBook";
 import BookDetails from "./components/Shelf/BookDetails";
 
 const LowerSection = styled.div`
-  padding: 0px 10px;
+  padding: 0px 20px;
 `;
 
 function App() {

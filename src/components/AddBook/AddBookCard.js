@@ -1,53 +1,82 @@
-import React from 'react';
+import React, { Component } from 'react'
 import styled from 'styled-components';
+import { Card, CardText, CardBody, CardHeader, Button, Collapse } from 'reactstrap';
 
 const AddBookCardDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    border: rgba(0,0,0,.5) solid black;
-    border-radius: 2px;
     margin: 15px;
-    max-width: 375px;
-    -webkit-box-shadow: 0px 0px 14px -3px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 14px -3px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 14px -3px rgba(0,0,0,0.75);
-    font-family: 'Merriweather', serif;
+    font-family: 'Merriweather Sans';
 
-    h2{
-        line-height: fit-content;
-        font-size: 1.15em;
-    }
-
-    .authorhold {
+    .imghold {
         display: flex;
-
-        h3 {
-            padding: 5px;
-            font-size: 1em;
-        }
-    }
-
-    &:hover {
-        background-color: rgba(0,0,0,.02);
+        justify-content: center;
+        padding: 10px;
     }
 `;
+export default class AddBookCard extends Component {
+    constructor(props) {
+        super(props);
+        this.toggle = this.toggle.bind(this);
+        this.state = { collapse: false };
+        this.toggle = this.toggle.bind(this);
+        this.identifiers = this.identifiers.bind(this);
+        this.authors = this.authors.bind(this);
+      }
+    
+      toggle() {
+        this.setState(state => ({ collapse: !state.collapse }));
+        console.log(this.props.book)
+      }
 
-export default function AddBookCard(props) {
+      identifiers() {
+        return (this.props.book.industryIdentifiers.map(name => {
+            for (let [key, value] of Object.entries(name)) {
+                return <CardHeader>{key}: {value}</CardHeader>
+              }
+        })
+        )
+      }
 
-    return (
-        <AddBookCardDiv>
-            <h2>
-                {props.book.title}
-            </h2> 
-            <div class="authorhold">
-                
-            </div>
-            <div class="imghold">
-                <img src={props.book.thumbnail} alt="Thumbnail"/>
-            </div>
-        </AddBookCardDiv>
-    )
+      authors() {
+          if(this.props.book.authors){
+          return (this.props.book.authors.map(author => {
+              return <div>{author}</div>
+          }
+            ))
+        } else {
+            return <div>N/A</div>
+        }
+      }
+
+    
+    render() {
+        return (
+            <AddBookCardDiv>
+                <Card>
+                    <CardHeader tag="h4">
+                        {this.props.book.title}
+                    </CardHeader>
+                    <CardHeader tag="h6">
+                       by: {this.authors()}
+                    </CardHeader>
+                    <div class="imghold">
+                        <img width="50%" src={this.props.book.thumbnail} />
+                    </div>
+                    <CardBody>
+                        <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>More details...</Button>
+
+                    <Collapse isOpen={this.state.collapse}>
+                        <CardHeader>Page Count: {this.props.book.pageCount}</CardHeader>
+                        <CardHeader>Publisher: {this.props.book.publisher}</CardHeader>
+                        <CardHeader>Published: {this.props.book.publishedDate}</CardHeader>
+                        <CardHeader>Description: </CardHeader> <CardText padding="5px">
+                            {this.props.book.description}
+                        </CardText>
+                        <CardHeader>Google Books ID: {this.props.book.id}</CardHeader>
+                        {this.identifiers()}
+                    </Collapse>
+                    </CardBody>
+                </Card>
+            </AddBookCardDiv>
+        )
+    }
 }

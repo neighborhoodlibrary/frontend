@@ -3,25 +3,41 @@ import AddBookCard from './AddBookCard';
 import styled from 'styled-components';
 
 const BookMapDiv = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    @media(max-width: 1100px){
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @media(max-width: 870px){
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media(max-width: 550px){
+        grid-template-columns: 1fr;
+    }
+
+    .noresults {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
 `;
 
 export default function BookMap(props) {
-    if(props.resultsarr === null){
-        return <div>0 results</div>
-    } else if (props.resultsarr === undefined){
-        return <div>0 results.</div>
-    } else {
-        return (
-            <BookMapDiv>
-            <React.Fragment>
+    return (
+        <BookMapDiv>
+            {props.resultsarr !== undefined ? (
+                <React.Fragment>
                 {props.resultsarr.map(book => (
                     <AddBookCard book={book} key={book.id} />
                 ))}
-            </React.Fragment>
-            </BookMapDiv>
-        )
-    }
-
+                </React.Fragment>
+            ) : (
+                <div class="noresults">0 results found.</div>
+            )}
+        </BookMapDiv>
+    )
 }
