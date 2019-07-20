@@ -7,6 +7,7 @@ var booksApi = require("google-books-search");
 const AddBookDiv = styled.div`
   display: flex;
   flex-direction: column;
+  font-family: 'Merriweather Sans', sans-serif;
 `;
 
 const AddBookForm = styled.form`
@@ -14,14 +15,22 @@ const AddBookForm = styled.form`
   justify-content: space-around;
 
   input {
-    padding: 7px;
+    padding: 10px;
     border-radius: 2px;
     width: 50%;
     border: 1px solid rgb(0,0,0,.2)
   }
 
   select {
-    padding: 7px;
+    padding: 10px;
+    border-radius: 2px;
+    text-align: center;
+    width: 10%;
+    border: 1px solid rgb(0,0,0,.2)
+  }
+
+  button {
+    padding: 10px;
     border-radius: 2px;
     width: 10%;
     border: 1px solid rgb(0,0,0,.2)
@@ -41,10 +50,12 @@ export default class AddBook extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.results === null) {
-      return null;
+      this.setState({
+        results: []
+      })
     } else if (prevState.results === undefined){
       this.setState({
-        type: null
+        results: []
       });
     } else if (prevState.results !== this.state.results) {
       this.setState({
