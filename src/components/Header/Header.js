@@ -23,7 +23,7 @@ const HeaderDiv = styled.div`
         color: black;
     }
 
-    @media(max-width: 750px){
+    @media(max-width: 800px){
         flex-direction: column;
     }
 `;
