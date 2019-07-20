@@ -58,7 +58,7 @@ export default class AddBookCard extends Component {
                        by: {this.authors()}
                     </CardHeader>
                     <div class="imghold">
-                        <img width="50%" src={this.props.book.thumbnail} />
+                        <img alt="thumbnail" width="50%" src={this.props.book.thumbnail} />
                     </div>
                     <CardBody>
                         <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>More details...</Button>
