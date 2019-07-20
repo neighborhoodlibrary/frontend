@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Card, CardText, CardBody, CardHeader, Button, Collapse } from 'reactstrap';
+import AddBookButton from './AddBookButton';
 
 const AddBookCardDiv = styled.div`
     margin: 15px;
@@ -72,6 +73,7 @@ export default class AddBookCard extends Component {
                         <CardHeader>Google Books ID: {this.props.book.id}</CardHeader>
                         {this.identifiers()}
                     </Collapse>
+                    <AddBookButton book={this.props.book} />
                     </CardBody>
                 </Card>
             </AddBookCardDiv>
