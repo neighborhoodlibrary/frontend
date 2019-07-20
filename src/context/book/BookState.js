@@ -1,7 +1,7 @@
 import BookContext from "./bookContext";
 import React, { useReducer } from "react";
 import BookReducer from "./bookReducer";
-import { GET_BOOK, SET_BOOK } from "../types";
+import { SET_BOOK } from "../types";
 
 const BookState = props => {
   const initialState = {
