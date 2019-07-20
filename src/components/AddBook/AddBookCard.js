@@ -29,9 +29,7 @@ export default class AddBookCard extends Component {
 
       identifiers() {
         return (this.props.book.industryIdentifiers.map(name => {
-            for (let [key, value] of Object.entries(name)) {
-                return <CardHeader>{key}: {value}</CardHeader>
-              }
+            return <CardHeader>{name.type}: {name.identifier}</CardHeader>
         })
         )
       }
