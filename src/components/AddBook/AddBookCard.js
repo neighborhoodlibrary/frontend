@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import { Card, CardText, CardBody, CardHeader, Button, Collapse } from 'reactstrap';
+import { Card, CardBody, CardHeader, Button, Collapse } from 'reactstrap';
 import AddBookButton from './AddBookButton';
 
 const AddBookCardDiv = styled.div`
