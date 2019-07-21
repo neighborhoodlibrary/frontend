@@ -1,17 +1,4 @@
-// import React, { Component } from 'react'
-
-// export default class Library extends Component {
-//     render() {
-//         return (
-//             <div>
-
-//             </div>
-//         )
-//     }
-// }
-
 import React, { useState, useEffect } from "react";
-// import UserContext from "../../context/user/userContext";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import Book from "./Book";
@@ -20,7 +7,9 @@ import styled from "styled-components";
 const booksApi = require("google-books-search");
 
 const Container = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 30px;
 `;
 
 const Library = () => {
@@ -29,14 +18,7 @@ const Library = () => {
   const auth = firebase.auth();
   const user = auth.currentUser;
   const docRef = firebase.firestore().collection("books");
-  //
 
-  const booksOptions = {
-    field: "isbn",
-    limit: 10,
-    type: "books",
-    lang: "en"
-  };
 
   useEffect(() => {
     let someArr = [];
@@ -61,19 +43,19 @@ const Library = () => {
   });
   useEffect(() => {
     let anotherArr = [];
+    console.log(booksInfo)
     if (booksInfo.length !== 0 && gBooksInfo.length === 0) {
       for (let i = 0; i < booksInfo.length; i++) {
-        booksApi.search(`${booksInfo[i].isbn}`, booksOptions, function(
+        booksApi.lookup(`${booksInfo[i].googleId}`, function(
           error,
-          results,
-          apiResponse
+          results
         ) {
           if (!error) {
-            results[0].borrowerId = booksInfo[i].borrowerId;
-            results[0].ownerId = booksInfo[i].ownerId;
-            results[0].checkedOut = booksInfo[i].checkedOut;
-            results[0].bookId = booksInfo[i].bookId;
-            anotherArr.push(results[0]);
+            // results[0].borrowerId = booksInfo[i].borrowerId;
+            // results[0].ownerId = booksInfo[i].ownerId;
+            // results[0].checkedOut = booksInfo[i].checkedOut;
+            // results[0].bookId = booksInfo[i].bookId;
+            anotherArr.push(results);
             if (anotherArr.length === booksInfo.length) {
               setGBooksInfo(anotherArr);
             }
