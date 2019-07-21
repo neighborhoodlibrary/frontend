@@ -52,7 +52,7 @@ export default function AddBookButton(props) {
 
     return (
         <Button onClick={addBook}>
-            Add
+            Add Book
         </Button>
     )
 }
