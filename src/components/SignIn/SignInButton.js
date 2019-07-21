@@ -49,14 +49,36 @@ export default function SignInButton() {
 
   const auth = firebase.auth();
 
+  const db = firebase.firestore();
+
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     if (loggedIn === false) {
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+          var curUser = auth.currentUser;
+
+          var varUser = {
+            displayName: "Holder"
+          };
+
+          // db.collection("users")
+          //   .doc(curUser.uid)
+          //   .get()
+          //   .then(ss =>{
+          //     varUser = ss.data();
+          //     console.log(varUser)
+          //   })
+          //   .catch(error => {
+          //     console.log(error)
+          //   })
+
+          //   console.log(varUser)
+          
+
           var loginObj = {
-            user: auth.currentUser,
+            user: curUser,
             loggedIn: true
           }
           userContext.setLogin(loginObj);
@@ -69,8 +91,6 @@ export default function SignInButton() {
   const loggedInToTrue = () => {
     setLoggedIn(true);
   };
-
-  const db = firebase.firestore();
 
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });

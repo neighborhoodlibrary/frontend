@@ -5,6 +5,8 @@ import { Jumbotron } from 'reactstrap';
 export default function MainShelf() {
   const userContext = useContext(UserContext);
 
+  console.log(userContext.userState.user)
+
   return (
     <div>
       <Jumbotron>
