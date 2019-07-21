@@ -12,6 +12,12 @@ const AddBookCardDiv = styled.div`
         justify-content: center;
         padding: 10px;
     }
+
+    .buttonz {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 `;
 export default class AddBookCard extends Component {
     constructor(props) {
@@ -29,10 +35,14 @@ export default class AddBookCard extends Component {
       }
 
       identifiers() {
-        return (this.props.book.industryIdentifiers.map(name => {
-            return <CardHeader>{name.type}: {name.identifier}</CardHeader>
-        })
-        )
+        if(this.props.book.industryIdentifiers){
+            return (this.props.book.industryIdentifiers.map(name => {
+                return <CardHeader>{name.type}: {name.identifier}</CardHeader>
+            })
+            )
+        } else {
+            return <CardHeader>Identifiers not found</CardHeader>
+        }
       }
 
       authors() {
@@ -61,8 +71,10 @@ export default class AddBookCard extends Component {
                         <img alt="thumbnail" width="50%" src={this.props.book.thumbnail} />
                     </div>
                     <CardBody>
-                        <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>More details...</Button>
-
+                        <div class="buttonz">
+                            <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>More details...</Button>
+                            <AddBookButton book={this.props.book} />
+                        </div>
                     <Collapse isOpen={this.state.collapse}>
                         <CardHeader>Page Count: {this.props.book.pageCount}</CardHeader>
                         <CardHeader>Publisher: {this.props.book.publisher}</CardHeader>
@@ -73,7 +85,6 @@ export default class AddBookCard extends Component {
                         <CardHeader>Google Books ID: {this.props.book.id}</CardHeader>
                         {this.identifiers()}
                     </Collapse>
-                    <AddBookButton book={this.props.book} />
                     </CardBody>
                 </Card>
             </AddBookCardDiv>

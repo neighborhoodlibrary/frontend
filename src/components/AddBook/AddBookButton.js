@@ -24,6 +24,8 @@ export default function AddBookButton(props) {
             var isbnhold = bookobj.industryIdentifiers.map(iden => {
                 if(iden.type === "ISBN_13"){
                     return iden.identifier
+                } else if (iden.type === "ISBN_10"){
+                    return iden.identifier
                 } else {
                     return bookobj.id
                 }
