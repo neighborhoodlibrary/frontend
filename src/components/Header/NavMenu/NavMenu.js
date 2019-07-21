@@ -19,7 +19,7 @@ const NavMenuDiv = styled.div`
     font-family: "Merriweather Sans", sans-serif;
   }
 
-  @media(max-width: 750px){
+  @media(max-width: 800px){
     justify-content: space-between;
   }
 `;

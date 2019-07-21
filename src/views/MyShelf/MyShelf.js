@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
 import MainShelf from '../../components/Shelf/MainShelf';
-import UserContext from '../../context/user/userContext';
+import React, { Component } from 'react'
 
-export default function MyShelf() {
+export default class MyShelf extends Component {
+    render() {
+        return (
+            <div>
+                <MainShelf />
+            </div>
 
-    return (
-        <div>
-            <MainShelf />
-        </div>
-    )
+        )
+    }
 }

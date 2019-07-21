@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Card, CardText, CardBody, CardHeader, Button, Collapse } from 'reactstrap';
+import AddBookButton from './AddBookButton';
 
 const AddBookCardDiv = styled.div`
     margin: 15px;
@@ -29,9 +30,7 @@ export default class AddBookCard extends Component {
 
       identifiers() {
         return (this.props.book.industryIdentifiers.map(name => {
-            for (let [key, value] of Object.entries(name)) {
-                return <CardHeader>{key}: {value}</CardHeader>
-              }
+            return <CardHeader>{name.type}: {name.identifier}</CardHeader>
         })
         )
       }
@@ -59,7 +58,7 @@ export default class AddBookCard extends Component {
                        by: {this.authors()}
                     </CardHeader>
                     <div class="imghold">
-                        <img width="50%" src={this.props.book.thumbnail} />
+                        <img alt="thumbnail" width="50%" src={this.props.book.thumbnail} />
                     </div>
                     <CardBody>
                         <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>More details...</Button>
@@ -74,6 +73,7 @@ export default class AddBookCard extends Component {
                         <CardHeader>Google Books ID: {this.props.book.id}</CardHeader>
                         {this.identifiers()}
                     </Collapse>
+                    <AddBookButton book={this.props.book} />
                     </CardBody>
                 </Card>
             </AddBookCardDiv>
