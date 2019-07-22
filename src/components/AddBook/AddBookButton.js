@@ -3,6 +3,8 @@ import firebase from "../../firebase/firebase.utils";
 import { Button } from 'reactstrap';
 import "firebase/auth";
 
+var uniqueID = require('uniqid');
+
 export default function AddBookButton(props) {
     
     const db = firebase.firestore();
@@ -28,6 +30,10 @@ export default function AddBookButton(props) {
             bookobj.subtitle = ""
         }
 
+        if(!bookobj.pageCount) {
+            bookobj.pageCount = "N/A"
+        }
+
         if(!bookobj.publishedDate) {
             bookobj.publishedDate = "Not found"
         }
@@ -40,9 +46,10 @@ export default function AddBookButton(props) {
             var isbnhold = bookobj.industryIdentifiers
         }
 
+        var idHold = uniqueID("nl-");
     
         db.collection("books")
-          .doc()
+          .doc(idHold)
           .set({
             title: bookobj.title,
             subtitle: bookobj.subtitle,
@@ -55,13 +62,12 @@ export default function AddBookButton(props) {
             thumbnail: '',
             googThumbnail: bookobj.thumbnail,
             googleId: bookobj.id,
-            //TO BE REMOVEDvv
-            isbn: bookobj.id,
-            //TO BE REMOVED^^
             googIi: isbnhold,
+            isbn: isbnhold,
             checkedOut: false,
             borrowerId: "",
-            ownerId: curUser.uid
+            ownerId: curUser.uid,
+            id: idHold
           })
     
         console.log(bookobj)
