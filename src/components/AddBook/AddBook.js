@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BookMap from "./BookMap";
 import styled from 'styled-components';
+import { Form, Input, Button, FormGroup } from 'reactstrap';
 
 var booksApi = require("google-books-search");
 
@@ -11,29 +12,20 @@ const AddBookDiv = styled.div`
 `;
 
 const AddBookForm = styled.form`
+  width: 100%;
   display: flex;
   justify-content: space-around;
 
   input {
-    padding: 10px;
-    border-radius: 2px;
     width: 50%;
-    border: 1px solid rgb(0,0,0,.2)
   }
 
   select {
-    padding: 10px;
-    border-radius: 2px;
-    text-align: center;
     width: 10%;
-    border: 1px solid rgb(0,0,0,.2)
   }
 
   button {
-    padding: 10px;
-    border-radius: 2px;
     width: 10%;
-    border: 1px solid rgb(0,0,0,.2)
   }
 
   @media(max-width: 800px){
@@ -118,20 +110,22 @@ export default class AddBook extends Component {
   render() {
     return (
       <AddBookDiv>
-        <AddBookForm onSubmit={this.formSubmit}>
-          <select onChange={this.handleChanges} name="type">
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-            <option value="isbn">ISBN</option>
-          </select>
-          <input
-            placeholder={this.state.type === null ? "title" : this.state.type}
-            onChange={this.handleChanges}
-            name="entry"
-            value={this.state.value}
-          />
-          <button>Search</button>
-        </AddBookForm>
+        <Form onSubmit={this.formSubmit}>
+              <AddBookForm>
+                <Input type="select" onChange={this.handleChanges} name="type">
+                  <option value="title">Title</option>
+                  <option value="author">Author</option>
+                  <option value="isbn">ISBN</option>
+                </Input>
+                <Input
+                  placeholder={this.state.type === null ? "title" : this.state.type}
+                  onChange={this.handleChanges}
+                  name="entry"
+                  value={this.state.value}
+                />
+                <Button>Search</Button>
+              </AddBookForm>
+        </Form>
         <BookMap resultsarr={this.state.results} />
       </AddBookDiv>
     );

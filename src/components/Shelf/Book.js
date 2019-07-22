@@ -4,7 +4,17 @@ import "firebase/auth";
 import styled from "styled-components";
 //
 import { NavLink } from "react-router-dom";
-import { Card } from 'reactstrap';
+import { Card, CardHeader, CardBody } from 'reactstrap';
+
+const CardDiv = styled.div`
+  margin: 15px;
+
+  a {
+    text-decoration: none;
+    font-family: 'Merriweather Sans', sans-serif;
+    color: black;
+  }
+`;
 
 const LibraryBook = props => {
   const bookContext = useContext(BookContext);
@@ -13,16 +23,18 @@ const LibraryBook = props => {
     bookContext.setBook(props.book);
   };
   return (
-    <div>
+    <CardDiv>
       <Card>
         <NavLink to={`/shelf/book/${props.book.bookId}`} onClick={setBookFunc}>
-            <p>title: {props.book.title}</p>
-            <p>author: {props.book.authors}</p>
-            <p>avgRating: {props.book.averageRating}</p>
-            <img src={props.book.thumbnail} alt="book_thumb" />
+            <CardHeader>{props.book.title}</CardHeader>
+            <CardBody>
+              <p>by: {props.book.authors}</p>
+              <p>avgRating: {props.book.averageRating}</p>
+              <img src={props.book.thumbnail} alt="book_thumb" />
+            </CardBody>
         </NavLink>
       </Card>
-    </div>
+    </CardDiv>
   );
 };
 
