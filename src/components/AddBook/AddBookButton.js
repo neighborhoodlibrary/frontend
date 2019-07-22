@@ -3,8 +3,6 @@ import firebase from "../../firebase/firebase.utils";
 import { Button } from 'reactstrap';
 import "firebase/auth";
 
-
-
 export default function AddBookButton(props) {
     
     const db = firebase.firestore();
@@ -16,35 +14,54 @@ export default function AddBookButton(props) {
     const addBook = () => {
         const bookobj = props.book;
 
+        //Will refactor logic below later
+
         if(!bookobj.authors) {
             bookobj.authors = ["N/A"]
         }
 
-        if(bookobj.industryIdentifiers){
-            var isbnhold = bookobj.industryIdentifiers.map(iden => {
-                if(iden.type === "ISBN_13"){
-                    return iden.identifier
-                } else if (iden.type === "ISBN_10"){
-                    return iden.identifier
-                } else {
-                    return bookobj.id
-                }
-            })
+        if(!bookobj.description) {
+            bookobj.description = "No description found"
         }
 
-        isbnhold = isbnhold[0].toString();
+        if(!bookobj.subtitle) {
+            bookobj.subtitle = ""
+        }
+
+        if(!bookobj.publishedDate) {
+            bookobj.publishedDate = "Not found"
+        }
+
+        if(!bookobj.publisher) {
+            bookobj.publisher = "Not found"
+        }
+
+        if(bookobj.industryIdentifiers){
+            var isbnhold = bookobj.industryIdentifiers
+        }
 
     
         db.collection("books")
           .doc()
           .set({
             title: bookobj.title,
+            subtitle: bookobj.subtitle,
             authors: bookobj.authors,
+            description: bookobj.description,
+            language: bookobj.language,
+            pageCount: bookobj.pageCount,
+            publishedDate: bookobj.publishedDate,
+            publisher: bookobj.publisher,
+            thumbnail: '',
+            googThumbnail: bookobj.thumbnail,
+            googleId: bookobj.id,
+            //TO BE REMOVEDvv
+            isbn: bookobj.id,
+            //TO BE REMOVED^^
+            googIi: isbnhold,
             checkedOut: false,
             borrowerId: "",
-            googleId: bookobj.id,
-            ownerId: curUser.uid,
-            isbn: isbnhold
+            ownerId: curUser.uid
           })
     
         console.log(bookobj)
