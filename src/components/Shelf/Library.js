@@ -8,7 +8,19 @@ const booksApi = require("google-books-search");
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  @media(max-width: 1100px){
+      grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media(max-width: 870px){
+      grid-template-columns: 1fr 1fr;
+  }
+
+  @media(max-width: 550px){
+      grid-template-columns: 1fr;
+  }
 `;
 
 const Library = () => {
