@@ -41,7 +41,7 @@ const LibraryBook = props => {
     db.collection("books")
       .doc(`${props.book.id}`)
       .delete()
-      .then(() => console.log("deleted"))
+      .then(() => props.getBooks())
       .catch(error => console.log(error));
   };
 
