@@ -27,18 +27,41 @@ const Book = () => {
       getDisplayedBook(bookContext.getBook());
     }
   }, []);
+  console.log(displayedBook);
 
   return (
     <Container>
       <BookHold>
         <img src={displayedBook.googThumbnail} alt="book_thumb" />
         <p>Title: {displayedBook.title}</p>
-        <p>Author: {displayedBook.authors}</p>
+        <p>
+          {!displayedBook.authors
+            ? ""
+            : displayedBook.authors.length === 1
+            ? `Author: ${displayedBook.authors[0]}`
+            : `Authors: ${displayedBook.authors.map(author => author)}`}
+        </p>
         <p>Average Rating: {displayedBook.averageRating}</p>
         <p>Page Count: {displayedBook.pageCount}</p>
-        <p>Currently Checked out:{displayedBook.checkedOut ? "yes" : "no"}</p>
+        <p>
+          {!displayedBook.googIi
+            ? ""
+            : displayedBook.googIi.map(ident => {
+                let iString = "";
+                for (let [key, value] of Object.entries(ident)) {
+                  iString += `${key} : ${value} `;
+                }
+                return iString;
+              })}
+        </p>
+        <p>Currently Checked out:{displayedBook.checkedOut ? " YES" : " NO"}</p>
         <p>Owner of Book: {displayedBook.ownerId}</p>
-        <p>Borrower of Book:{displayedBook.borrowerId}</p>
+        <p>
+          Borrower of Book:{" "}
+          {!displayedBook.borrowerId
+            ? " NOT CHECKED OUT"
+            : displayedBook.borrowerId}
+        </p>
       </BookHold>
     </Container>
   );
