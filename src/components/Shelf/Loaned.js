@@ -17,7 +17,7 @@ import "firebase/auth";
 import Book from "./Book";
 import styled from "styled-components";
 //
-const booksApi = require("google-books-search");
+// const booksApi = require("google-books-search");
 
 const Container = styled.div`
   display: flex;
@@ -25,68 +25,66 @@ const Container = styled.div`
 
 const Loaned = () => {
   const [booksInfo, setBooksInfo] = useState([]);
-  const [gBooksInfo, setGbooksInfo] = useState([]);
+  // const [gBooksInfo, setGbooksInfo] = useState([]);
   const auth = firebase.auth();
   const user = auth.currentUser;
   const docRef = firebase.firestore().collection("books");
-  const booksOptions = {
-    field: "isbn",
-    limit: 10,
-    type: "books",
-    lang: "en"
-  };
+  // const booksOptions = {
+  //   field: "isbn",
+  //   limit: 10,
+  //   type: "books",
+  //   lang: "en"
+  // };
 
   useEffect(() => {
-    let someArr = [];
-    if (booksInfo.length === 0) {
-      docRef
-        .where("ownerId", "==", user.uid)
-        .where("checkedOut", "==", true)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            let book = doc.data();
-            book.bookId = doc.id;
-            someArr.push(book);
-          });
-        })
-        .then(() => {
-          setBooksInfo(someArr);
-        })
-        .catch(error => {
-          console.log("Error getting the docs:", error);
+    let tempBooksArr = [];
+    docRef
+      .where("ownerId", "==", user.uid)
+      .where("checkedOut", "==", true)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          let book = doc.data();
+          // book.bookId = doc.id;
+          tempBooksArr.push(book);
         });
-    }
-  });
-  useEffect(() => {
-    let anotherArr = [];
-    if (booksInfo.length !== 0 && gBooksInfo.length === 0) {
-      for (let i = 0; i < booksInfo.length; i++) {
-        booksApi.search(`${booksInfo[i].isbn}`, booksOptions, function(
-          error,
-          results,
-          apiResponse
-        ) {
-          if (!error) {
-            results[0].borrowerId = booksInfo[i].borrowerId;
-            results[0].ownerId = booksInfo[i].ownerId;
-            results[0].checkedOut = booksInfo[i].checkedOut;
-            results[0].bookId = booksInfo[i].bookId;
-            anotherArr.push(results[0]);
-            if (anotherArr.length === booksInfo.length) {
-              setGbooksInfo(anotherArr);
-            }
-          } else {
-            console.log(error);
-          }
-        });
-      }
-    }
-  });
+      })
+      .then(() => {
+        setBooksInfo(tempBooksArr);
+      })
+      .catch(error => {
+        console.log("Error getting the docs:", error);
+      });
+  }, []);
+  // useEffect(() => {
+  //   let anotherArr = [];
+  //   if (booksInfo.length !== 0 && gBooksInfo.length === 0) {
+  //     for (let i = 0; i < booksInfo.length; i++) {
+  //       booksApi.search(`${booksInfo[i].isbn}`, booksOptions, function(
+  //         error,
+  //         results,
+  //         apiResponse
+  //       ) {
+  //         if (!error) {
+  //           results[0].borrowerId = booksInfo[i].borrowerId;
+  //           results[0].ownerId = booksInfo[i].ownerId;
+  //           results[0].checkedOut = booksInfo[i].checkedOut;
+  //           results[0].bookId = booksInfo[i].bookId;
+  //           anotherArr.push(results[0]);
+  //           if (anotherArr.length === booksInfo.length) {
+  //             setGbooksInfo(anotherArr);
+  //           }
+  //         } else {
+  //           console.log(error);
+  //         }
+  //       });
+  //     }
+  //   }
+  // });
 
   return (
     <Container>
-      {gBooksInfo.map(book => (
+      {booksInfo.map(book => (
         <Book key={Math.random()} book={book} />
       ))}
     </Container>
