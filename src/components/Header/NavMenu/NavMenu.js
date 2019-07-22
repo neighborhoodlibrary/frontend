@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import SignInButton from "../../SignIn/SignInButton";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 
 const NavMenuDiv = styled.div`
   display: flex;
@@ -19,7 +24,7 @@ const NavMenuDiv = styled.div`
     font-family: "Merriweather Sans", sans-serif;
   }
 
-  @media(max-width: 800px){
+  @media (max-width: 800px) {
     justify-content: space-between;
   }
 `;
@@ -43,21 +48,28 @@ export default class NavMenu extends Component {
   render() {
     return (
       <NavMenuDiv>
-  
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-        <DropdownToggle caret>
-          Menu
-        </DropdownToggle>
-        <DropdownMenu>
-          <NavLink to="/shelf"><DropdownItem header>Shelf</DropdownItem></NavLink>
-          <DropdownItem divider />
-          <NavLink to="/shelf/borrowed"><DropdownItem>Borrowed</DropdownItem></NavLink>
-          <NavLink to="/shelf/loaned"><DropdownItem>Loaned</DropdownItem></NavLink>
-          <NavLink to="/shelf/library"><DropdownItem>Library</DropdownItem></NavLink>
-          <NavLink to="/shelf/add"><DropdownItem>Add A Book</DropdownItem></NavLink>
-        </DropdownMenu>
-      </Dropdown>
-      <SignInButton />
+          <DropdownToggle caret>Menu</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem header>
+              <NavLink to="/shelf">Shelf</NavLink>
+            </DropdownItem>
+            <DropdownItem divider />
+            <NavLink to="/shelf/borrowed">
+              <DropdownItem>Borrowed</DropdownItem>
+            </NavLink>
+            <NavLink to="/shelf/loaned">
+              <DropdownItem>Loaned</DropdownItem>
+            </NavLink>
+            <NavLink to="/shelf/library">
+              <DropdownItem>Library</DropdownItem>
+            </NavLink>
+            <NavLink to="/shelf/add">
+              <DropdownItem>Add A Book</DropdownItem>
+            </NavLink>
+          </DropdownMenu>
+        </Dropdown>
+        <SignInButton />
       </NavMenuDiv>
     );
   }
