@@ -74,7 +74,7 @@ export default function AddBookButton(props) {
     }
 
     return (
-        <Button onClick={addBook}>
+        <Button color="primary" onClick={addBook}>
             Add Book
         </Button>
     )

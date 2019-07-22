@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import { Card, CardBody, CardHeader, Button, Collapse } from 'reactstrap';
+import { Card, CardBody, CardHeader, Button, Collapse, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import AddBookButton from './AddBookButton';
 
 const AddBookCardDiv = styled.div`
@@ -31,16 +31,21 @@ const AddBookCardDiv = styled.div`
 export default class AddBookCard extends Component {
     constructor(props) {
         super(props);
+        this.state = { collapse: false, modal: false };
         this.toggle = this.toggle.bind(this);
-        this.state = { collapse: false };
-        this.toggle = this.toggle.bind(this);
+        this.togglem = this.togglem.bind(this);
         this.identifiers = this.identifiers.bind(this);
         this.authors = this.authors.bind(this);
       }
     
       toggle() {
         this.setState(state => ({ collapse: !state.collapse }));
-        console.log(this.props.book)
+      }
+
+      togglem() {
+        this.setState(prevState => ({
+          modal: !prevState.modal
+        }));
       }
 
       identifiers() {
@@ -93,8 +98,18 @@ export default class AddBookCard extends Component {
                             {this.identifiers()}
                         </Collapse>
                         <div class="buttonz">
-                            <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>More details...</Button>
-                            <AddBookButton book={this.props.book} />
+                            <Button color="info" onClick={this.toggle} style={{ marginBottom: '1rem' }}>More details...</Button>
+                            <Button color="success" onClick={this.togglem} >Add Book</Button>
+                            <Modal isOpen={this.state.modal} toggle={this.togglem} className={this.props.className}>
+                                <ModalHeader toggle={this.togglem}>Add to Library</ModalHeader>
+                                <ModalBody>
+                                    Are you sure you want to add {this.props.book.title} to your library?
+                                </ModalBody>
+                                <ModalFooter>
+                                    <AddBookButton onClick={this.togglem} book={this.props.book} />{' '}
+                                    <Button color="danger" onClick={this.togglem}>Cancel</Button>
+                                </ModalFooter>
+                            </Modal>
                         </div>
 
                     </CardBody>
