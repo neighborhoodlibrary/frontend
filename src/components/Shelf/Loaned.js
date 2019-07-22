@@ -36,7 +36,7 @@ const Loaned = () => {
   //   lang: "en"
   // };
 
-  useEffect(() => {
+  const getBooks = () => {
     let tempBooksArr = [];
     docRef
       .where("ownerId", "==", user.uid)
@@ -55,6 +55,28 @@ const Loaned = () => {
       .catch(error => {
         console.log("Error getting the docs:", error);
       });
+  };
+
+  useEffect(() => {
+    // let tempBooksArr = [];
+    // docRef
+    //   .where("ownerId", "==", user.uid)
+    //   .where("checkedOut", "==", true)
+    //   .get()
+    //   .then(querySnapshot => {
+    //     querySnapshot.forEach(doc => {
+    //       let book = doc.data();
+    //       // book.bookId = doc.id;
+    //       tempBooksArr.push(book);
+    //     });
+    //   })
+    //   .then(() => {
+    //     setBooksInfo(tempBooksArr);
+    //   })
+    //   .catch(error => {
+    //     console.log("Error getting the docs:", error);
+    //   });
+    getBooks();
   }, []);
   // useEffect(() => {
   //   let anotherArr = [];
@@ -85,7 +107,7 @@ const Loaned = () => {
   return (
     <Container>
       {booksInfo.map(book => (
-        <Book key={Math.random()} book={book} />
+        <Book key={Math.random()} book={book} getBooks={getBooks} />
       ))}
     </Container>
   );

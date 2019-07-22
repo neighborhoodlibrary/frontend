@@ -30,7 +30,7 @@ const Library = () => {
   const user = auth.currentUser;
   const docRef = firebase.firestore().collection("books");
 
-  useEffect(() => {
+  const getBooks = () => {
     let tempBooksArr = [];
     docRef
       .where("ownerId", "==", user.uid)
@@ -48,6 +48,27 @@ const Library = () => {
       .catch(error => {
         console.log("Error getting the documents:", error);
       });
+  };
+
+  useEffect(() => {
+    // let tempBooksArr = [];
+    // docRef
+    //   .where("ownerId", "==", user.uid)
+    //   .get()
+    //   .then(querySnapshot => {
+    //     querySnapshot.forEach(doc => {
+    //       let book = doc.data();
+    //       // book.bookId = doc.id;
+    //       tempBooksArr.push(book);
+    //     });
+    //   })
+    //   .then(() => {
+    //     setBooksInfo(tempBooksArr);
+    //   })
+    //   .catch(error => {
+    //     console.log("Error getting the documents:", error);
+    //   });
+    getBooks();
   }, []);
   // useEffect(() => {
   //   let anotherArr = [];
@@ -76,7 +97,7 @@ const Library = () => {
   return (
     <Container>
       {booksInfo.map(book => (
-        <Book key={Math.random()} book={book} />
+        <Book key={Math.random()} book={book} getBooks={getBooks} />
       ))}
     </Container>
   );
