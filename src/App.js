@@ -5,7 +5,7 @@ import UserState from "./context/user/UserState";
 import BookState from "./context/book/BookState";
 import Header from "./components/Header/Header";
 
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 
 import PrivateRoute from "./authentication/PrivateRoute";
 
@@ -31,17 +31,19 @@ function App() {
           <Router>
             <Route path="/" component={Header} />
             <LowerSection>
-              <Route exact path="/" component={Landing} />
-              <PrivateRoute exact path="/shelf" component={MyShelf} />
-              <PrivateRoute exact path="/shelf/borrowed" component={Borrowed} />
-              <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
-              <PrivateRoute exact path="/shelf/library" component={Library} />
-              <PrivateRoute exact path="/shelf/add" component={AddBook} />
-              <PrivateRoute
-                exact
-                path="/shelf/book/:id"
-                component={BookDetails}
-              />
+              <Switch>
+                <PrivateRoute exact path="/shelf" component={MyShelf} />
+                <PrivateRoute exact path="/shelf/borrowed" component={Borrowed} />
+                <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
+                <PrivateRoute exact path="/shelf/library" component={Library} />
+                <PrivateRoute exact path="/shelf/add" component={AddBook} />
+                <PrivateRoute
+                  exact
+                  path="/shelf/book/:id"
+                  component={BookDetails}
+                />
+                <Route exact path="/" component={Landing} />
+              </Switch>
             </LowerSection>
           </Router>
         </BookState>
