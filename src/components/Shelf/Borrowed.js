@@ -49,7 +49,7 @@ const Borrowed = () => {
   //   lang: "en"
   // };
 
-  useEffect(() => {
+  const getBooks = () => {
     let tempBooksArr = [];
     docRef
       .where("borrowerId", "==", user.uid)
@@ -67,6 +67,27 @@ const Borrowed = () => {
       .catch(error => {
         console.log("Error gettting the docs:", error);
       });
+  };
+
+  useEffect(() => {
+    // let tempBooksArr = [];
+    // docRef
+    //   .where("borrowerId", "==", user.uid)
+    //   .get()
+    //   .then(querySnapshot => {
+    //     querySnapshot.forEach(doc => {
+    //       let book = doc.data();
+    //       // book.bookId = doc.id;
+    //       tempBooksArr.push(book);
+    //     });
+    //   })
+    //   .then(() => {
+    //     setBooksInfo(tempBooksArr);
+    //   })
+    //   .catch(error => {
+    //     console.log("Error gettting the docs:", error);
+    //   });
+    getBooks();
   }, []);
 
   // useEffect(() => {
