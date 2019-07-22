@@ -13,7 +13,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         if (userContext.userState.loggedIn === true) {
           return <Component {...props} />;
         }
-        return <Redirect to="/" />;
       }}
     />
   );
