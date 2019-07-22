@@ -11,6 +11,10 @@ const UserState = props => {
 
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
+  const getUser = () => {
+    return state.user;
+  };
+
   const addUser = user => {
     dispatch({
       type: ADD_USER,
@@ -30,7 +34,8 @@ const UserState = props => {
       value={{
         userState: state,
         addUser,
-        setLogin
+        setLogin,
+        getUser
       }}
     >
       {props.children}
