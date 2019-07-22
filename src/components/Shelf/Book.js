@@ -1,5 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import UserContext from "../../context/user/userContext";
 import BookContext from "../../context/book/bookContext";
+//
+import firebase from "../../firebase/firebase.utils";
+
 import "firebase/auth";
 import styled from "styled-components";
 //
@@ -17,16 +21,44 @@ const CardDiv = styled.div`
 `;
 
 const LibraryBook = props => {
+  const db = firebase.firestore();
   const bookContext = useContext(BookContext);
+
+  const userContext = useContext(UserContext);
+  const [userInfo, getUserInfo] = useState({});
+
+  useEffect(() => {
+    getUserInfo(userContext.getUser());
+  }, []);
 
   const setBookFunc = () => {
     bookContext.setBook(props.book);
   };
+
+  const deleteBook = e => {
+    e.preventDefault();
+    console.log(props.book.id);
+    db.collection("books")
+      .doc(`${props.book.id}`)
+      .delete()
+      .then(() => console.log("deleted"))
+      .catch(error => console.log(error));
+  };
+
+  console.log(props);
+  console.log(userInfo);
   return (
     <CardDiv>
       <Card>
+        <CardHeader>
+          {props.book.title}
+          {props.book.ownerId !== userInfo.uid ? (
+            ""
+          ) : (
+            <button onClick={deleteBook}>delete</button>
+          )}
+        </CardHeader>
         <NavLink to={`/shelf/book/${props.book.bookId}`} onClick={setBookFunc}>
-          <CardHeader>{props.book.title}</CardHeader>
           <CardBody>
             <p>by: {props.book.authors}</p>
             <p>avgRating: {props.book.averageRating}</p>
