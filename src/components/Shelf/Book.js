@@ -1,12 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../../context/user/userContext";
 import BookContext from "../../context/book/bookContext";
-//
 import firebase from "../../firebase/firebase.utils";
-
 import "firebase/auth";
 import styled from "styled-components";
-//
 import { NavLink } from "react-router-dom";
 import { Card, CardHeader, CardBody } from "reactstrap";
 
@@ -22,9 +19,11 @@ const CardDiv = styled.div`
 
 const LibraryBook = props => {
   const db = firebase.firestore();
+
   const bookContext = useContext(BookContext);
 
   const userContext = useContext(UserContext);
+
   const [userInfo, getUserInfo] = useState({});
 
   useEffect(() => {
@@ -45,8 +44,6 @@ const LibraryBook = props => {
       .catch(error => console.log(error));
   };
 
-  console.log(props);
-  console.log(userInfo);
   return (
     <CardDiv>
       <Card>
