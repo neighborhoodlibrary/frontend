@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../../context/user/userContext";
 import BookContext from "../../context/book/bookContext";
+import { useAlert } from 'react-alert'
 //
 import firebase from "../../firebase/firebase.utils";
 
@@ -27,6 +28,8 @@ const LibraryBook = props => {
   const userContext = useContext(UserContext);
   const [userInfo, getUserInfo] = useState({});
 
+  const alert = useAlert()
+
   useEffect(() => {
     getUserInfo(userContext.getUser());
   }, []);
@@ -41,8 +44,11 @@ const LibraryBook = props => {
     db.collection("books")
       .doc(`${props.book.id}`)
       .delete()
-      .then(() => props.getBooks())
-      .catch(error => console.log(error));
+      .then(() => {
+        props.getBooks()
+        alert.success('Book deleted!')
+      })
+      .catch(error => alert.error('Unable to delete book!'));
   };
 
   console.log(props);

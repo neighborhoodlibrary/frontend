@@ -72,7 +72,7 @@ export default function AddBookButton(props) {
             id: idHold
           })
 
-        alert.show('Success!')
+        alert.success('Success!')
     
         console.log(bookobj)
     }
