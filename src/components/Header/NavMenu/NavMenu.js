@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import SignInButton from "../../SignIn/SignInButton";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 
 const NavMenuDiv = styled.div`
   display: flex;
@@ -19,7 +24,7 @@ const NavMenuDiv = styled.div`
     font-family: "Merriweather Sans", sans-serif;
   }
 
-  @media(max-width: 800px){
+  @media (max-width: 800px) {
     justify-content: space-between;
   }
 `;
@@ -43,8 +48,8 @@ export default class NavMenu extends Component {
   render() {
     return (
       <NavMenuDiv>
-  
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+
         <DropdownToggle caret>
           Menu
         </DropdownToggle>
@@ -58,6 +63,7 @@ export default class NavMenu extends Component {
         </DropdownMenu>
       </Dropdown>
       <SignInButton />
+
       </NavMenuDiv>
     );
   }
