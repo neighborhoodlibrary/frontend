@@ -5,7 +5,9 @@ import UserState from "./context/user/UserState";
 import BookState from "./context/book/BookState";
 import Header from "./components/Header/Header";
 
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 
 import PrivateRoute from "./authentication/PrivateRoute";
 
@@ -24,28 +26,37 @@ const LowerSection = styled.div`
   padding: 0px 20px;
 `;
 
+const alertOptions = {
+  timeout: 3000,
+  position: 'bottom center'
+}
+
 function App() {
   return (
     <div className="App">
       <UserState>
         <BookState>
-          <Router>
-            <Route path="/" component={Header} />
-            <LowerSection>
-              <Route exact path="/" component={Landing} />
-              <PrivateRoute exact path="/shelf" component={MyShelf} />
-              <PrivateRoute exact path="/shelf/borrowed" component={Borrowed} />
-              <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
-              <PrivateRoute exact path="/shelf/library" component={Library} />
-              <PrivateRoute exact path="/shelf/add" component={AddBook} />
-              <PrivateRoute exact path="/shelf/search" component={Search} />
-              <PrivateRoute
-                exact
-                path="/shelf/book/:id"
-                component={BookDetails}
-              />
-            </LowerSection>
-          </Router>
+          <AlertProvider template={AlertTemplate} {...alertOptions}>
+            <Router>
+              <Route path="/" component={Header} />
+              <LowerSection>
+                <Switch>
+                  <PrivateRoute exact path="/shelf" component={MyShelf} />
+                  <PrivateRoute exact path="/shelf/borrowed" component={Borrowed} />
+                  <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
+                  <PrivateRoute exact path="/shelf/library" component={Library} />
+                  <PrivateRoute exact path="/shelf/add" component={AddBook} />
+                  <PrivateRoute exact path="/shelf/search" component={Search} />
+                  <PrivateRoute
+                    exact
+                    path="/shelf/book/:id"
+                    component={BookDetails}
+                  />
+                  <Route exact path="/" component={Landing} />
+                </Switch>
+              </LowerSection>
+            </Router>
+          </AlertProvider>
         </BookState>
       </UserState>
     </div>

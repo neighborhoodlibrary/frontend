@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import BookContext from "../../context/book/bookContext";
 import styled from "styled-components";
-import { Button } from "reactstrap";
+import { withRouter } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -18,21 +18,23 @@ const BookHold = styled.div`
   box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
 `;
 
-const Book = () => {
+const Book = props => {
   const bookContext = useContext(BookContext);
   const [displayedBook, getDisplayedBook] = useState([]);
 
   useEffect(() => {
-    if (displayedBook.length === 0) {
-      getDisplayedBook(bookContext.getBook());
-    }
+    getDisplayedBook(bookContext.getBook());
   }, []);
-  console.log(displayedBook);
+
+  const goBack = e => {
+    props.history.goBack();
+  };
 
   return (
     <Container>
       <BookHold>
         <img src={displayedBook.googThumbnail} alt="book_thumb" />
+        <button onClick={goBack}>X</button>
         <p>Title: {displayedBook.title}</p>
         <p>
           {!displayedBook.authors
@@ -67,4 +69,4 @@ const Book = () => {
   );
 };
 
-export default Book;
+export default withRouter(Book);

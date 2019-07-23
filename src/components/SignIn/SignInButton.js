@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../../context/user/userContext";
 import firebase from "../../firebase/firebase.utils";
-import styled from 'styled-components';
+import styled from "styled-components";
 import "firebase/auth";
 
 const SIButton = styled.button`
@@ -44,53 +44,12 @@ const SIButton = styled.button`
  
 `;
 
-export default function SignInButton() {
+export default function SignInButton(props) {
   const userContext = useContext(UserContext);
 
   const auth = firebase.auth();
 
   const db = firebase.firestore();
-
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (loggedIn === false) {
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          var curUser = auth.currentUser;
-
-          var varUser = {
-            displayName: "Holder"
-          };
-
-          // db.collection("users")
-          //   .doc(curUser.uid)
-          //   .get()
-          //   .then(ss =>{
-          //     varUser = ss.data();
-          //     console.log(varUser)
-          //   })
-          //   .catch(error => {
-          //     console.log(error)
-          //   })
-
-          //   console.log(varUser)
-          
-
-          var loginObj = {
-            user: curUser,
-            loggedIn: true
-          }
-          userContext.setLogin(loginObj);
-          loggedInToTrue();
-        }
-      });
-    }
-  });
-
-  const loggedInToTrue = () => {
-    setLoggedIn(true);
-  };
 
   const provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
@@ -118,17 +77,9 @@ export default function SignInButton() {
         .then(function() {});
     });
 
-  function signOut() {
-    auth
-      .signOut()
-      .then(function() {})
-      .catch(function(error) {});
-    userContext.setLogin(false);
-  }
-
   function display() {
     if (userContext.userState.loggedIn === true) {
-      return <SIButton onClick={signOut}>Sign Out</SIButton>;
+      return <SIButton onClick={props.signOut}>Sign Out</SIButton>;
     } else {
       return <SIButton onClick={firstTimeLogin}>Sign In</SIButton>;
     }
