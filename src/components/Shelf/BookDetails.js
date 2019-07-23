@@ -23,9 +23,7 @@ const Book = props => {
   const [displayedBook, getDisplayedBook] = useState([]);
 
   useEffect(() => {
-    if (displayedBook.length === 0) {
-      getDisplayedBook(bookContext.getBook());
-    }
+    getDisplayedBook(bookContext.getBook());
   }, []);
 
   const goBack = e => {

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../../context/user/userContext";
 import firebase from "../../firebase/firebase.utils";
-import styled from 'styled-components';
+import styled from "styled-components";
 import "firebase/auth";
 
 const SIButton = styled.button`
@@ -59,28 +59,10 @@ export default function SignInButton() {
         if (user) {
           var curUser = auth.currentUser;
 
-          var varUser = {
-            displayName: "Holder"
-          };
-
-          // db.collection("users")
-          //   .doc(curUser.uid)
-          //   .get()
-          //   .then(ss =>{
-          //     varUser = ss.data();
-          //     console.log(varUser)
-          //   })
-          //   .catch(error => {
-          //     console.log(error)
-          //   })
-
-          //   console.log(varUser)
-          
-
           var loginObj = {
             user: curUser,
             loggedIn: true
-          }
+          };
           userContext.setLogin(loginObj);
           loggedInToTrue();
         }
