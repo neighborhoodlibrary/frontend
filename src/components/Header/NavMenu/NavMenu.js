@@ -48,6 +48,7 @@ export default class NavMenu extends Component {
     return (
       <NavMenuDiv>
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+
           <DropdownToggle caret>Menu</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf">
@@ -66,8 +67,10 @@ export default class NavMenu extends Component {
             <NavLink to="/shelf/add">
               <DropdownItem>Add A Book</DropdownItem>
             </NavLink>
+            <NavLink to="/shelf/search"><Dropdown>Search</Dropdown></NavLink>
           </DropdownMenu>
         </Dropdown>
+
       </NavMenuDiv>
     );
   }

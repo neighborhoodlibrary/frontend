@@ -18,6 +18,7 @@ import MyShelf from "./views/MyShelf/MyShelf";
 
 import styled from "styled-components";
 import AddBook from "./components/AddBook/AddBook";
+import Search from "./components/Search/Search";
 //
 import BookDetails from "./components/Shelf/BookDetails";
 
@@ -45,6 +46,7 @@ function App() {
                   <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
                   <PrivateRoute exact path="/shelf/library" component={Library} />
                   <PrivateRoute exact path="/shelf/add" component={AddBook} />
+                  <PrivateRoute exact path="/shelf/search" component={Search} />
                   <PrivateRoute
                     exact
                     path="/shelf/book/:id"
