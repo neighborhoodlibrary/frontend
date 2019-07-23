@@ -49,27 +49,21 @@ export default class NavMenu extends Component {
     return (
       <NavMenuDiv>
         <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-          <DropdownToggle caret>Menu</DropdownToggle>
-          <DropdownMenu>
-            <DropdownItem header>
-              <NavLink to="/shelf">Shelf</NavLink>
-            </DropdownItem>
-            <DropdownItem divider />
-            <NavLink to="/shelf/borrowed">
-              <DropdownItem>Borrowed</DropdownItem>
-            </NavLink>
-            <NavLink to="/shelf/loaned">
-              <DropdownItem>Loaned</DropdownItem>
-            </NavLink>
-            <NavLink to="/shelf/library">
-              <DropdownItem>Library</DropdownItem>
-            </NavLink>
-            <NavLink to="/shelf/add">
-              <DropdownItem>Add A Book</DropdownItem>
-            </NavLink>
-          </DropdownMenu>
-        </Dropdown>
-        <SignInButton />
+
+        <DropdownToggle caret>
+          Menu
+        </DropdownToggle>
+        <DropdownMenu>
+          <NavLink to="/shelf"><DropdownItem>Shelf</DropdownItem></NavLink>
+          <DropdownItem divider />
+          <NavLink to="/shelf/borrowed"><DropdownItem>Borrowed</DropdownItem></NavLink>
+          <NavLink to="/shelf/loaned"><DropdownItem>Loaned</DropdownItem></NavLink>
+          <NavLink to="/shelf/library"><DropdownItem>Library</DropdownItem></NavLink>
+          <NavLink to="/shelf/add"><DropdownItem>Add A Book</DropdownItem></NavLink>
+        </DropdownMenu>
+      </Dropdown>
+      <SignInButton />
+
       </NavMenuDiv>
     );
   }
