@@ -49,7 +49,7 @@ export default class NavMenu extends Component {
           Menu
         </DropdownToggle>
         <DropdownMenu>
-          <NavLink to="/shelf"><DropdownItem header>Shelf</DropdownItem></NavLink>
+          <NavLink to="/shelf"><DropdownItem>Shelf</DropdownItem></NavLink>
           <DropdownItem divider />
           <NavLink to="/shelf/borrowed"><DropdownItem>Borrowed</DropdownItem></NavLink>
           <NavLink to="/shelf/loaned"><DropdownItem>Loaned</DropdownItem></NavLink>
