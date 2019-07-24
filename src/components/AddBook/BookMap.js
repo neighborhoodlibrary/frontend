@@ -36,7 +36,7 @@ export default function BookMap(props) {
                 ))}
                 </React.Fragment>
             ) : (
-                <div className="noresults">0 results found.</div>
+                <div className="noresults">Search above</div>
             )}
         </BookMapDiv>
     )

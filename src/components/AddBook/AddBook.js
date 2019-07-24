@@ -9,6 +9,13 @@ const AddBookDiv = styled.div`
   display: flex;
   flex-direction: column;
   font-family: 'Merriweather Sans', sans-serif;
+
+  #sorryToInform {
+    padding: 15px;
+    font-size: 1.2em;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const AddBookForm = styled.div`
@@ -157,7 +164,7 @@ export default class AddBook extends Component {
                 <Button>Search</Button>
               </AddBookForm>
         </Form>
-        <BookMap resultsarr={this.state.results.docs ? this.state.results.docs : this.state.results} />
+        {this.state.results ? (<BookMap resultsarr={this.state.results.docs ? this.state.results.docs : this.state.results} /> ) : <div id="sorryToInform">No results found</div>}
       </AddBookDiv>
     );
   }
