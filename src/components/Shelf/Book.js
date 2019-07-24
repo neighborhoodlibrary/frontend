@@ -9,7 +9,7 @@ import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import { Card, CardHeader, CardBody, Button } from "reactstrap";
 
 const CardDiv = styled.div`
   margin: 15px;
@@ -19,6 +19,18 @@ const CardDiv = styled.div`
     font-family: "Merriweather Sans", sans-serif;
     color: black;
   }
+`;
+
+const CardHeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CardBodyDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const LibraryBook = props => {
@@ -56,18 +68,24 @@ const LibraryBook = props => {
     <CardDiv>
       <Card>
         <CardHeader>
-          {props.book.title}
-          {props.book.ownerId !== userInfo.uid ? (
-            ""
-          ) : (
-            <button onClick={deleteBook}>delete</button>
-          )}
+          <CardHeaderDiv>
+            {props.book.title}
+            {props.book.ownerId !== userInfo.uid ? (
+              ""
+            ) : (
+              <Button color="danger" onClick={deleteBook}>
+                Delete Book
+              </Button>
+            )}
+          </CardHeaderDiv>
         </CardHeader>
-        <NavLink to={`/shelf/book/${props.book.bookId}`} onClick={setBookFunc}>
+        <NavLink to={`/shelf/book/${props.book.id}`} onClick={setBookFunc}>
           <CardBody>
-            <p>by: {props.book.authors}</p>
-            <p>avgRating: {props.book.averageRating}</p>
-            <img src={props.book.googThumbnail} alt="book_thumb" />
+            <CardBodyDiv>
+              <p>by: {props.book.authors}</p>
+              <img src={props.book.googThumbnail} alt="book_thumb" />
+              <p>avgRating: {props.book.averageRating}</p>
+            </CardBodyDiv>
           </CardBody>
         </NavLink>
       </Card>
