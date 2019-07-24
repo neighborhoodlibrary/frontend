@@ -32,7 +32,7 @@ export default function BookMap(props) {
             {props.resultsarr !== undefined ? (
                 <React.Fragment>
                 {props.resultsarr.map(book => (
-                    <AddBookCard book={book} key={(Date.now() + book.isbn[0])} />
+                    <AddBookCard book={book} key={(Date.now() + Math.random())} />
                 ))}
                 </React.Fragment>
             ) : (
