@@ -34,8 +34,16 @@ const CardHeaderDiv = styled.div`
 `;
 
 const CardInfoDiv = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  // display: grid;
+  // grid-gap: 10px;
+  // grid-template-columns: 1fr 1fr;
+  // justify-content: center;
+
+  #centering{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const Book = props => {
@@ -65,23 +73,23 @@ const Book = props => {
             </CardHeaderDiv>
           </CardHeader>
           <CardBody>
-            <Container>
-                <CardInfoDiv>
-                <img src={displayedBook.thumbnail} alt="book_thumb" />
-                  <p>
-                    {!displayedBook.authors
-                      ? ""
-                      : displayedBook.authors.length === 1
-                      ? `Author: ${displayedBook.authors[0]}`
-                      : `Authors: ${displayedBook.authors.map(
-                          author => author
-                        )}`}
-                  </p>
-                  <p>Average Rating: {displayedBook.averageRating}</p>
-                  <p>Description: {displayedBook.description}</p>
-                  <p>Page Count: {displayedBook.pageCount}</p>
-                </CardInfoDiv>
-            </Container>
+            <CardInfoDiv>
+            <div id="centering">
+              <img src={displayedBook.googThumbnail} alt="book_thumb" />
+            </div>
+              <p>
+                {!displayedBook.authors
+                  ? ""
+                  : displayedBook.authors.length === 1
+                  ? `Author: ${displayedBook.authors[0]}`
+                  : `Authors: ${displayedBook.authors.map(
+                      author => author
+                    )}`}
+              </p>
+              <p>Average Rating: {displayedBook.averageRating}</p>
+              <p>Description: {displayedBook.description}</p>
+              <p>Page Count: {displayedBook.pageCount}</p>
+            </CardInfoDiv>
           </CardBody>
           <CardHeader>
             <CardHeaderDiv>
