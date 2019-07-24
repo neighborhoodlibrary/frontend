@@ -66,7 +66,7 @@ const Book = props => {
         <Card>
           <CardHeader>
             <CardHeaderDiv>
-              <p>Title: {displayedBook.title}</p>
+              <h5>{displayedBook.title}</h5>
               <Button color="secondary" onClick={goBack}>
                 Back
               </Button>

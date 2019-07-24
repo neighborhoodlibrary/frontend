@@ -9,22 +9,12 @@ import {
 } from "reactstrap";
 
 const NavMenuDiv = styled.div`
-  display: flex;
-  align-items: center;
-
-  a {
-    // margin: 0px 5px;
-    // background-color: #f0efed;
-    // color: #1a1919;
-    // font-size: 0.95em;
-    // padding: 6px 11px;
-    // border-radius: 2px;
-    // text-decoration: none;
-    font-family: "Merriweather Sans", sans-serif;
-  }
+  display: grid;
+  align-items: end;
+  margin: 0px 8px;
 
   @media (max-width: 800px) {
-    justify-content: space-between;
+    justify-content: end;
   }
 `;
 

@@ -8,13 +8,13 @@ const AddBookCardDiv = styled.div`
     font-family: 'Merriweather Sans';
 
     .imghold {
-        display: flex;
+        display: grid;
         justify-content: center;
         align-items: center;
         width: 100%;
 
         img{
-            width: 200px;
+            max-width: 200px;
             padding: 5px;
             border-radius: 1px;
         }
