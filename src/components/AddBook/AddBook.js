@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import BookMap from "./BookMap";
 import styled from 'styled-components';
-import { Form, Input, Button, FormGroup } from 'reactstrap';
+import { Form, Input, Button } from 'reactstrap';
 
-var booksApi = require("google-books-search");
+// var booksApi = require("google-books-search");
 
 const AddBookDiv = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const AddBookDiv = styled.div`
   font-family: 'Merriweather Sans', sans-serif;
 `;
 
-const AddBookForm = styled.form`
+const AddBookForm = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -51,7 +51,7 @@ export default class AddBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: "query",
+      type: "title",
       entry: "",
       results: [],
       bookData: null
@@ -69,7 +69,7 @@ export default class AddBook extends Component {
       });
     } else if (prevState.results !== this.state.results) {
       this.setState({
-        type: null
+        type: "title"
       });
     }
   }
@@ -83,14 +83,15 @@ export default class AddBook extends Component {
   formSubmit = e => {
     e.preventDefault();
 
-    var booksOptions = {
-      field: `${this.state.type}`,
-      offset: 0,
-      limit: 20,
-      type: "books",
-      order: "relevance",
-      lang: "en"
-    };
+    // var booksOptions = {
+    //   field: `${this.state.type}`,
+    //   offset: 0,
+    //   limit: 20,
+    //   type: "books",
+    //   order: "relevance",
+    //   lang: "en"
+    // };
+    
     let something = results => {
       this.setState({
         results
@@ -107,7 +108,7 @@ export default class AddBook extends Component {
     // });
 
     var searchType = {
-      query: 'q=',
+      title: 'q=',
       author: 'author=',
       isbn: 'isbn='
     }  
