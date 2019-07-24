@@ -18,7 +18,7 @@ const ContainerDiv = styled.div`
 `;
 
 const BookHold = styled.div`
-  width: 50%;
+  width: 75%;
   padding: 17px;
   border-radius: 3px;
   border: 1px solid rgb(0, 0, 0, 0.2);
@@ -34,10 +34,8 @@ const CardHeaderDiv = styled.div`
 `;
 
 const CardInfoDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 `;
 
 const Book = props => {
@@ -51,6 +49,8 @@ const Book = props => {
   const goBack = e => {
     props.history.goBack();
   };
+
+  console.log(displayedBook)
 
   return (
     <ContainerDiv>
@@ -66,46 +66,21 @@ const Book = props => {
           </CardHeader>
           <CardBody>
             <Container>
-              <Row>
-                <Col xs="6">
-                  <Card>
-                    <CardInfoDiv>
-                      <p>
-                        {!displayedBook.authors
-                          ? ""
-                          : displayedBook.authors.length === 1
-                          ? `Author: ${displayedBook.authors[0]}`
-                          : `Authors: ${displayedBook.authors.map(
-                              author => author
-                            )}`}
-                      </p>
-                      <img src={displayedBook.googThumbnail} alt="book_thumb" />
-                      <p>Average Rating: {displayedBook.averageRating}</p>
-                      <p>
-                        {!displayedBook.googIi
-                          ? ""
-                          : displayedBook.googIi.map(ident => {
-                              return Object.entries(ident)
-                                .reverse()
-                                .map(([key, value]) => (
-                                  <div>
-                                    {key}: {value}
-                                  </div>
-                                ));
-                            })}
-                      </p>
-                    </CardInfoDiv>
-                  </Card>
-                </Col>
-                <Col xs="6">
-                  <Card>
-                    <CardInfoDiv>
-                      <p>Description: {displayedBook.description}</p>
-                      <p>Page Count: {displayedBook.pageCount}</p>
-                    </CardInfoDiv>
-                  </Card>
-                </Col>
-              </Row>
+                <CardInfoDiv>
+                <img src={displayedBook.thumbnail} alt="book_thumb" />
+                  <p>
+                    {!displayedBook.authors
+                      ? ""
+                      : displayedBook.authors.length === 1
+                      ? `Author: ${displayedBook.authors[0]}`
+                      : `Authors: ${displayedBook.authors.map(
+                          author => author
+                        )}`}
+                  </p>
+                  <p>Average Rating: {displayedBook.averageRating}</p>
+                  <p>Description: {displayedBook.description}</p>
+                  <p>Page Count: {displayedBook.pageCount}</p>
+                </CardInfoDiv>
             </Container>
           </CardBody>
           <CardHeader>
