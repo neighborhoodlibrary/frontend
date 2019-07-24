@@ -3,6 +3,7 @@ import UserContext from "../../context/user/userContext";
 import firebase from "../../firebase/firebase.utils";
 import styled from "styled-components";
 import "firebase/auth";
+import { NavLink } from "react-router-dom";
 
 const SIButton = styled.button`
   margin: 0px 5px;
@@ -79,9 +80,17 @@ export default function SignInButton(props) {
 
   function display() {
     if (userContext.userState.loggedIn === true) {
-      return <SIButton onClick={props.signOut}>Sign Out</SIButton>;
+      return (
+        <NavLink to="/">
+          <SIButton onClick={props.signOut}>Sign Out</SIButton>
+        </NavLink>
+      );
     } else {
-      return <SIButton onClick={firstTimeLogin}>Sign In</SIButton>;
+      return (
+        <NavLink to="/shelf">
+          <SIButton onClick={firstTimeLogin}>Sign In</SIButton>
+        </NavLink>
+      );
     }
   }
 
