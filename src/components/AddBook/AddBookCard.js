@@ -27,6 +27,10 @@ const AddBookCardDiv = styled.div`
         justify-content: center;
         padding-top: 10px;
     }
+
+    h6 {
+        display: flex;
+    }
 `;
 export default class AddBookCard extends Component {
     constructor(props) {
@@ -60,14 +64,24 @@ export default class AddBookCard extends Component {
       }
 
       authors() {
-          if(this.props.book.authors){
-          return (this.props.book.authors.map(author => {
-              return <div>{author}</div>
+          if(this.props.book.author_name){
+          return (this.props.book.author_name.map(author => {
+              return <div>by: {author}</div>
           }
             ))
         } else {
             return <div>N/A</div>
         }
+      }
+
+      coverPull(){
+          if(this.props.book.cover_i){
+              var coverUrl = "http://covers.openlibrary.org/b/id/" + this.props.book.cover_i + "-M.jpg";
+              return coverUrl
+          } else if (this.props.book.isbn) {
+                var coverUrl = "http://covers.openlibrary.org/b/isbn/" + this.props.book.isbn[0] + "-M.jpg";
+                return coverUrl
+          }
       }
 
     
@@ -79,16 +93,16 @@ export default class AddBookCard extends Component {
                         {this.props.book.title}
                     </CardHeader>
                     <CardHeader tag="h6">
-                       by: {this.authors()}
+                       {this.authors()}
                     </CardHeader>
                     <div class="imghold">
-                        <img alt="thumbnail" width="50%" src={this.props.book.thumbnail} />
+                        <img alt="thumbnail" width="50%" src={this.coverPull()} />
                     </div>
                     <CardBody>
                         <Collapse isOpen={this.state.collapse}>
                             <CardHeader>Page Count: {this.props.book.pageCount}</CardHeader>
                             <CardHeader>Publisher: {this.props.book.publisher}</CardHeader>
-                            <CardHeader>Published: {this.props.book.publishedDate}</CardHeader>
+                            <CardHeader>Published: {this.props.book.first_publish_year}</CardHeader>
                             <CardHeader>Description: </CardHeader>
                                 <div class="descHold">
                                     {this.props.book.description}

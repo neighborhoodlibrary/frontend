@@ -28,6 +28,16 @@ export default function AddBookButton(props) {
             bookobj.description = "No description found"
         }
 
+        if(bookobj.cover_i){
+            bookobj.thumbnail = "http://covers.openlibrary.org/b/id/" + bookobj.cover_i + "-M.jpg";
+            //TO BE REMOVED
+            bookobj.googThumbnail = "http://covers.openlibrary.org/b/id/" + bookobj.cover_i + "-M.jpg";
+        } else if (bookobj.isbn) {
+            bookobj.thumbnail = "http://covers.openlibrary.org/b/isbn/" + bookobj.isbn[0] + "-M.jpg";
+            bookobj.googThumbnail = "http://covers.openlibrary.org/b/isbn/" + bookobj.isbn[0] + "-M.jpg";
+        }
+
+
         if(!bookobj.subtitle) {
             bookobj.subtitle = ""
         }
@@ -46,6 +56,13 @@ export default function AddBookButton(props) {
 
         if(bookobj.industryIdentifiers){
             var isbnhold = bookobj.industryIdentifiers
+        } else {
+            var isbnhold =
+                [{
+                    type: "ISBN",
+                    identifier: bookobj.isbn[0]
+                }]
+
         }
 
         var idHold = uniqueID("nl-");
@@ -57,13 +74,11 @@ export default function AddBookButton(props) {
             subtitle: bookobj.subtitle,
             authors: bookobj.authors,
             description: bookobj.description,
-            language: bookobj.language,
             pageCount: bookobj.pageCount,
             publishedDate: bookobj.publishedDate,
             publisher: bookobj.publisher,
             thumbnail: '',
             googThumbnail: bookobj.thumbnail,
-            googleId: bookobj.id,
             googIi: isbnhold,
             isbn: isbnhold,
             checkedOut: false,

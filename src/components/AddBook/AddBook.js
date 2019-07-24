@@ -51,7 +51,7 @@ export default class AddBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: null,
+      type: "query",
       entry: "",
       results: [],
       bookData: null
@@ -97,14 +97,37 @@ export default class AddBook extends Component {
       });
     };
 
-    booksApi.search(this.state.entry, booksOptions, function(
-      error,
-      results,
-      apiResponse
-    ) {
-      console.log(results);
-      something(results);
-    });
+    // booksApi.search(this.state.entry, booksOptions, function(
+    //   error,
+    //   results,
+    //   apiResponse
+    // ) {
+    //   console.log(results);
+    //   something(results);
+    // });
+
+    var searchType = {
+      query: 'q=',
+      author: 'author=',
+      isbn: 'isbn='
+    }  
+
+    var query = this.state.entry;
+    var rp = require("request-promise");
+    var url = "https://openlibrary.org/search.json?" +
+    searchType[this.state.type] + query;
+
+    rp({
+        url: url,
+        json: true
+    }).catch(function(err){
+        console.log(err)
+    }).then(function (body) {
+        console.log(body)
+        something(body);
+    })
+
+
   };
 
   render() {
@@ -126,7 +149,7 @@ export default class AddBook extends Component {
                 <Button>Search</Button>
               </AddBookForm>
         </Form>
-        <BookMap resultsarr={this.state.results} />
+        <BookMap resultsarr={this.state.results.docs} />
       </AddBookDiv>
     );
   }
