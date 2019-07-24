@@ -32,11 +32,11 @@ export default function BookMap(props) {
             {props.resultsarr !== undefined ? (
                 <React.Fragment>
                 {props.resultsarr.map(book => (
-                    <AddBookCard book={book} key={book.id} />
+                    <AddBookCard book={book} key={(Date.now() + Math.random())} />
                 ))}
                 </React.Fragment>
             ) : (
-                <div class="noresults">0 results found.</div>
+                <div className="noresults">0 results found.</div>
             )}
         </BookMapDiv>
     )

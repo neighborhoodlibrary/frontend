@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import BookMap from "./BookMap";
 import styled from 'styled-components';
-import { Form, Input, Button, FormGroup } from 'reactstrap';
+import { Form, Input, Button } from 'reactstrap';
 
-var booksApi = require("google-books-search");
+// var booksApi = require("google-books-search");
 
 const AddBookDiv = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const AddBookDiv = styled.div`
   font-family: 'Merriweather Sans', sans-serif;
 `;
 
-const AddBookForm = styled.form`
+const AddBookForm = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -51,7 +51,7 @@ export default class AddBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: null,
+      type: "title",
       entry: "",
       results: [],
       bookData: null
@@ -69,7 +69,7 @@ export default class AddBook extends Component {
       });
     } else if (prevState.results !== this.state.results) {
       this.setState({
-        type: null
+        type: "title"
       });
     }
   }
@@ -83,28 +83,52 @@ export default class AddBook extends Component {
   formSubmit = e => {
     e.preventDefault();
 
-    var booksOptions = {
-      field: `${this.state.type}`,
-      offset: 0,
-      limit: 20,
-      type: "books",
-      order: "relevance",
-      lang: "en"
-    };
+    // var booksOptions = {
+    //   field: `${this.state.type}`,
+    //   offset: 0,
+    //   limit: 20,
+    //   type: "books",
+    //   order: "relevance",
+    //   lang: "en"
+    // };
+    
     let something = results => {
       this.setState({
         results
       });
     };
 
-    booksApi.search(this.state.entry, booksOptions, function(
-      error,
-      results,
-      apiResponse
-    ) {
-      console.log(results);
-      something(results);
-    });
+    // booksApi.search(this.state.entry, booksOptions, function(
+    //   error,
+    //   results,
+    //   apiResponse
+    // ) {
+    //   console.log(results);
+    //   something(results);
+    // });
+
+    var searchType = {
+      title: 'q=',
+      author: 'author=',
+      isbn: 'isbn='
+    }  
+
+    var query = this.state.entry;
+    var rp = require("request-promise");
+    var url = "https://openlibrary.org/search.json?" +
+    searchType[this.state.type] + query;
+
+    rp({
+        url: url,
+        json: true
+    }).catch(function(err){
+        console.log(err)
+    }).then(function (body) {
+        console.log(body)
+        something(body);
+    })
+
+
   };
 
   render() {
@@ -126,7 +150,7 @@ export default class AddBook extends Component {
                 <Button>Search</Button>
               </AddBookForm>
         </Form>
-        <BookMap resultsarr={this.state.results} />
+        <BookMap resultsarr={this.state.results.docs} />
       </AddBookDiv>
     );
   }
