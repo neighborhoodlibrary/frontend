@@ -12,6 +12,7 @@
     "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.8.6",
     "react-google-maps": "^9.4.5",
+    "react-input-slider": "^5.0.15",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
