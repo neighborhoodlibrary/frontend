@@ -17,6 +17,7 @@
     "react-scripts": "3.0.1",
     "react-transition-group": "^4.2.1",
     "reactstrap": "^8.0.1",
+    "recompose": "^0.30.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "styled-components": "^4.3.2",
