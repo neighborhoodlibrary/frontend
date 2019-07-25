@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
 import MainShelf from '../../components/Shelf/MainShelf';
-import styled from 'styled-components';
-
-const MainContainer = styled.div`
-
-`
+import React, { Component } from 'react'
 
 export default class MyShelf extends Component {
     render() {
         return (
-                <MainContainer>
-                    <MainShelf />
-                </MainContainer>
+            <div>
+                <MainShelf />
+            </div>
+
         )
     }
 }

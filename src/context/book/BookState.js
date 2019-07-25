@@ -1,22 +1,32 @@
 import BookContext from "./bookContext";
 import React, { useReducer } from "react";
 import BookReducer from "./bookReducer";
-import { GET_BOOKS } from "../types";
+import { SET_BOOK } from "../types";
 
 const BookState = props => {
   const initialState = {
-    books: []
+    book: {}
   };
 
   const [state, dispatch] = useReducer(BookReducer, initialState);
 
-  const getBooks = () => {};
+  const getBook = () => {
+    return state.book;
+  };
+
+  const setBook = book => {
+    dispatch({
+      type: SET_BOOK,
+      payload: book
+    });
+  };
 
   return (
     <BookContext.Provider
       value={{
-        books: state,
-        getBooks
+        bookState: state,
+        setBook,
+        getBook
       }}
     >
       {props.children}

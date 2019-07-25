@@ -3,45 +3,60 @@ import "./App.css";
 import Landing from "./views/Landing";
 import UserState from "./context/user/UserState";
 import BookState from "./context/book/BookState";
-import Header from './components/Header/Header';
-import MainShelf from './components/Shelf/MainShelf';
+import Header from "./components/Header/Header";
 
-import { Route, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 
-import PrivateRoute from './authentication/PrivateRoute';
+import PrivateRoute from "./authentication/PrivateRoute";
 
-import Borrowed from './components/Shelf/Borrowed';
-import Loaned from './components/Shelf/Loaned';
-import Library from './components/Shelf/Library';
+import Borrowed from "./components/Shelf/Borrowed";
+import Loaned from "./components/Shelf/Loaned";
+import Library from "./components/Shelf/Library";
 import MyShelf from "./views/MyShelf/MyShelf";
 
-import styled from 'styled-components';
+import styled from "styled-components";
+import AddBook from "./components/AddBook/AddBook";
+import Search from "./components/Search/Search";
+//
+import BookDetails from "./components/Shelf/BookDetails";
 
 const LowerSection = styled.div`
-  padding: 0px 10px;
+  padding: 0px 20px;
 `;
 
+const alertOptions = {
+  timeout: 3000,
+  position: 'bottom center'
+}
+
 function App() {
-
-  const userKey = Object.keys(window.localStorage)
-  .filter(it => it.startsWith('firebase:authUser'))[0];
-
-  console.log(userKey)
-
   return (
     <div className="App">
       <UserState>
         <BookState>
-          <Router>
+          <AlertProvider template={AlertTemplate} {...alertOptions}>
+            <Router>
               <Route path="/" component={Header} />
               <LowerSection>
-                <Route exact path="/" component={Landing} />
-                <PrivateRoute exact path='/shelf' component={MyShelf} />
-                <PrivateRoute exact path='/shelf/borrowed' component={Borrowed} />
-                <PrivateRoute exact path='/shelf/loaned' component={Loaned} />
-                <PrivateRoute exact path='/shelf/library' component={Library} />
+                <Switch>
+                  <PrivateRoute exact path="/shelf" component={MyShelf} />
+                  <PrivateRoute exact path="/shelf/borrowed" component={Borrowed} />
+                  <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
+                  <PrivateRoute exact path="/shelf/library" component={Library} />
+                  <PrivateRoute exact path="/shelf/add" component={AddBook} />
+                  <PrivateRoute exact path="/shelf/search" component={Search} />
+                  <PrivateRoute
+                    exact
+                    path="/shelf/book/:id"
+                    component={BookDetails}
+                  />
+                  <Route exact path="/" component={Landing} />
+                </Switch>
               </LowerSection>
-          </Router> 
+            </Router>
+          </AlertProvider>
         </BookState>
       </UserState>
     </div>

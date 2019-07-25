@@ -1,11 +1,65 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from "react";
+import firebase from "../../firebase/firebase.utils";
+import "firebase/auth";
+import Book from "./Book";
+import styled from "styled-components";
 
-export default class Borrowed extends Component {
-    render() {
-        return (
-            <div>
-                Borrowed
-            </div>
-        )
-    }
-}
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 870px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const Borrowed = () => {
+  const [booksInfo, setBooksInfo] = useState([]);
+
+  const auth = firebase.auth();
+
+  const user = auth.currentUser;
+
+  const docRef = firebase.firestore().collection("books");
+
+  const getBooks = () => {
+    let tempBooksArr = [];
+    docRef
+      .where("borrowerId", "==", user.uid)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          let book = doc.data();
+          tempBooksArr.push(book);
+        });
+      })
+      .then(() => {
+        setBooksInfo(tempBooksArr);
+      })
+      .catch(error => {
+        console.log("Error gettting the docs:", error);
+      });
+  };
+
+  useEffect(() => {
+    getBooks();
+  }, []);
+
+  return (
+    <Container>
+      {booksInfo.map(book => (
+        <Book key={Math.random()} book={book} />
+      ))}
+    </Container>
+  );
+};
+
+export default Borrowed;

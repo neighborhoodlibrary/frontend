@@ -1,4 +1,4 @@
-import { ADD_USER, GET_USER, SET_LOGIN } from "../types";
+import { ADD_USER, SET_LOGIN } from "../types";
 
 export default (state, action) => {
   switch (action.type) {
@@ -12,7 +12,8 @@ export default (state, action) => {
     case SET_LOGIN:
       return {
         ...state,
-        loggedIn: action.payload
+        loggedIn: action.payload.loggedIn,
+        user: action.payload.user
       };
     default:
       return state;

@@ -1,16 +1,43 @@
-import React from 'react'
+import React from 'react';
+import AddBookCard from './AddBookCard';
+import styled from 'styled-components';
 
-export default function BookMap(props) {
-    if(props.results){
-        return(
-            <React.Fragment>
-                {props.results.map(book => (
-                    <div>{book.title}</div>
-                ))}
-            </React.Fragment>
-        )
-    } else {
-        return <div>No results...</div>
+const BookMapDiv = styled.div`
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    @media(max-width: 1100px){
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
+    @media(max-width: 870px){
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media(max-width: 550px){
+        grid-template-columns: 1fr;
+    }
+
+    .noresults {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+`;
+
+export default function BookMap(props) {
+    return (
+        <BookMapDiv>
+            {props.resultsarr !== undefined ? (
+                <React.Fragment>
+                {props.resultsarr.map(book => (
+                    <AddBookCard book={book} key={(Date.now() + Math.random())} />
+                ))}
+                </React.Fragment>
+            ) : (
+                <div className="noresults">Search above</div>
+            )}
+        </BookMapDiv>
+    )
 }

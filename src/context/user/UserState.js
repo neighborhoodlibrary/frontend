@@ -1,7 +1,7 @@
 import UserContext from "./userContext";
 import React, { useReducer } from "react";
 import UserReducer from "./userReducer";
-import { GET_USER, ADD_USER, SET_LOGIN } from "../types";
+import { ADD_USER, SET_LOGIN } from "../types";
 
 const UserState = props => {
   const initialState = {
@@ -11,6 +11,10 @@ const UserState = props => {
 
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
+  const getUser = () => {
+    return state.user;
+  };
+
   const addUser = user => {
     dispatch({
       type: ADD_USER,
@@ -18,10 +22,10 @@ const UserState = props => {
     });
   };
 
-  const setLogin = login => {
+  const setLogin = loginObj => {
     dispatch({
       type: SET_LOGIN,
-      payload: login
+      payload: loginObj
     });
   };
 
@@ -30,7 +34,8 @@ const UserState = props => {
       value={{
         userState: state,
         addUser,
-        setLogin
+        setLogin,
+        getUser
       }}
     >
       {props.children}
