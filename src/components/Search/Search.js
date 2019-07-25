@@ -19,6 +19,9 @@ import {
   Button
 } from "reactstrap";
 
+import firebase from "../../firebase/firebase.utils";
+import { useAlert } from "react-alert";
+
 const ContainerDiv = styled.div`
   max-width: 98vw;
   display: flex;
@@ -32,6 +35,12 @@ const MapContainer = styled.div`
 `;
 
 export default function Search() {
+  const auth = firebase.auth();
+  const user = auth.currentUser;
+  const db = firebase.firestore();
+  const userDocRef = db.collection("users").doc(user.uid);
+  const alert = useAlert();
+
   const [markerPosition, setMarkerPosition] = useState({});
   const [isMarkerShown, setIsMarkerShown] = useState(false);
   const [defaultCenter, setDefaultCenter] = useState({});
@@ -77,6 +86,37 @@ export default function Search() {
     setDefaultZoom(12.5);
   };
 
+  const submitCoordinates = e => {
+    e.preventDefault();
+    console.log(userDocRef);
+    if (markerPosition.lat && markerPosition.lng) {
+      return db.runTransaction(transaction => {
+        return transaction
+          .get(userDocRef)
+          .then(userDoc => {
+            console.log(userDoc);
+            if (!userDoc) {
+              throw "Doc does not exist.";
+            }
+            const newCoordinates = new firebase.firestore.GeoPoint(
+              markerPosition.lat,
+              markerPosition.lng
+            );
+            transaction.update(userDocRef, { coordinates: newCoordinates });
+          })
+          .then(() => {
+            console.log("Transaction successfully committed!");
+            alert.success("Transaction successfully committed!");
+          })
+          .catch(error => {
+            console.log("Transaction failed: ", error);
+          });
+      });
+    } else {
+      alert.error("Must select a marker before submission.");
+    }
+  };
+
   return (
     <ContainerDiv>
       <Col xs="12" md="6">
@@ -109,7 +149,9 @@ export default function Search() {
             </CardText>
           </CardBody>
           <CardFooter>
-            <Button color="primary">Submit Location</Button>
+            <Button color="primary" onClick={submitCoordinates}>
+              Submit Location
+            </Button>
           </CardFooter>
         </Card>
       </Col>
