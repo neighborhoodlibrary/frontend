@@ -6,8 +6,8 @@ import BookState from "./context/book/BookState";
 import Header from "./components/Header/Header";
 
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import { Provider as AlertProvider } from 'react-alert'
-import AlertTemplate from 'react-alert-template-basic'
+import { Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 
 import PrivateRoute from "./authentication/PrivateRoute";
 
@@ -18,7 +18,7 @@ import MyShelf from "./views/MyShelf/MyShelf";
 
 import styled from "styled-components";
 import AddBook from "./components/AddBook/AddBook";
-import Search from "./components/Search/Search";
+import Map from "./components/Map/Map";
 //
 import BookDetails from "./components/Shelf/BookDetails";
 
@@ -28,8 +28,8 @@ const LowerSection = styled.div`
 
 const alertOptions = {
   timeout: 3000,
-  position: 'bottom center'
-}
+  position: "bottom center"
+};
 
 function App() {
   return (
@@ -42,11 +42,19 @@ function App() {
               <LowerSection>
                 <Switch>
                   <PrivateRoute exact path="/shelf" component={MyShelf} />
-                  <PrivateRoute exact path="/shelf/borrowed" component={Borrowed} />
+                  <PrivateRoute
+                    exact
+                    path="/shelf/borrowed"
+                    component={Borrowed}
+                  />
                   <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
-                  <PrivateRoute exact path="/shelf/library" component={Library} />
+                  <PrivateRoute
+                    exact
+                    path="/shelf/library"
+                    component={Library}
+                  />
                   <PrivateRoute exact path="/shelf/add" component={AddBook} />
-                  <PrivateRoute exact path="/shelf/search" component={Search} />
+                  <PrivateRoute exact path="/shelf/map" component={Map} />
                   <PrivateRoute
                     exact
                     path="/shelf/book/:id"
