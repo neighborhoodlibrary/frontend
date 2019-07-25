@@ -61,13 +61,11 @@ export default function SignInButton(props) {
     auth
       .signInWithPopup(provider)
       .then(result => {
-        console.log(result.user.uid);
         const { displayName, email, photoURL, uid } = result.user;
         const docRef = db.collection("users").doc(uid);
         docRef.get().then(doc => {
           if (doc.exists) {
             userContext.addUser(result.user);
-            console.log("Document data:", doc.data());
           } else {
             docRef.set({
               displayName,
