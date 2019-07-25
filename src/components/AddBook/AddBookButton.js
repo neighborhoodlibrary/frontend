@@ -35,6 +35,15 @@ export default function AddBookButton(props) {
         } else if (bookobj.isbn) {
             bookobj.thumbnail = "http://covers.openlibrary.org/b/isbn/" + bookobj.isbn[0] + "-M.jpg";
             bookobj.googThumbnail = "http://covers.openlibrary.org/b/isbn/" + bookobj.isbn[0] + "-M.jpg";
+        } else if (bookobj.id_goodreads) {
+            bookobj.thumbnail = "http://covers.openlibrary.org/b/goodreads/" + bookobj.id_goodreads[0] + "-M.jpg";
+            bookobj.googThumbnail = "http://covers.openlibrary.org/b/goodreads/" + bookobj.id_goodreads[0] + "-M.jpg";
+        } else if (bookobj.id_oclc) {
+            bookobj.thumbnail = "http://covers.openlibrary.org/b/oclc/" + bookobj.id_ocld[0] + "-M.jpg";
+            bookobj.googThumbnail = "http://covers.openlibrary.org/b/oclc/" + bookobj.id_ocld[0] + "-M.jpg";
+        } else if (bookobj.id_librarything) {
+            bookobj.thumbnail = "http://covers.openlibrary.org/b/librarything/" + bookobj.id_librarything[0] + "-M.jpg";
+            bookobj.googThumbnail = "http://covers.openlibrary.org/b/librarything/" + bookobj.id_librarything[0] + "-M.jpg";
         }
 
 

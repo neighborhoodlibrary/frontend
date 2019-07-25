@@ -1,49 +1,33 @@
 import React, { Component } from "react";
 import BookMap from "./BookMap";
 import styled from 'styled-components';
-import { Form, Input, Button } from 'reactstrap';
+import { Form, Input, Button, Label } from 'reactstrap';
 
-// var booksApi = require("google-books-search");
+var booksApi = require("google-books-search");
 
 const AddBookDiv = styled.div`
   display: flex;
   flex-direction: column;
   font-family: 'Merriweather Sans', sans-serif;
+
+  #sorryToInform {
+    padding: 15px;
+    font-size: 1.2em;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const AddBookForm = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr .8fr;
+  grid-gap: 10px;
 
-  input {
-    width: 50%;
-  }
-
-  select {
-    width: 10%;
-  }
-
-  button {
-    width: 10%;
-  }
 
   @media(max-width: 800px){
     flex-direction: column;
     align-items: center;
-
-    input {
-      width: 75%
-      margin: 10px;
-    }
-  
-    select {
-      width: 30%
-    }
-  
-    button {
-      width: 20%
-    }
   }
 `;
 
@@ -54,25 +38,27 @@ export default class AddBook extends Component {
       type: "title",
       entry: "",
       results: [],
-      bookData: null
+      bookData: null,
+      apiChoice: "google"
     };
+    this.formSubmit = this.formSubmit.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.results === null) {
-      this.setState({
-        results: []
-      })
-    } else if (prevState.results === undefined){
-      this.setState({
-        results: []
-      });
-    } else if (prevState.results !== this.state.results) {
-      this.setState({
-        type: "title"
-      });
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.results === null) {
+  //     this.setState({
+  //       results: []
+  //     })
+  //   } else if (prevState.results === undefined){
+  //     this.setState({
+  //       results: []
+  //     });
+  //   } else if (prevState.results !== this.state.results) {
+  //     this.setState({
+  //       type: "title"
+  //     });
+  //   }
+  // }
 
   handleChanges = e => {
     this.setState({
@@ -83,52 +69,67 @@ export default class AddBook extends Component {
   formSubmit = e => {
     e.preventDefault();
 
-    // var booksOptions = {
-    //   field: `${this.state.type}`,
-    //   offset: 0,
-    //   limit: 20,
-    //   type: "books",
-    //   order: "relevance",
-    //   lang: "en"
-    // };
-    
+    this.setState({
+      results: []
+    });
+
     let something = results => {
       this.setState({
         results
       });
     };
 
-    // booksApi.search(this.state.entry, booksOptions, function(
-    //   error,
-    //   results,
-    //   apiResponse
-    // ) {
-    //   console.log(results);
-    //   something(results);
-    // });
+    if(this.state.apiChoice === "google") {
 
-    var searchType = {
-      title: 'q=',
-      author: 'author=',
-      isbn: 'isbn='
-    }  
+      var booksOptions = {
+        field: `${this.state.type}`,
+        offset: 0,
+        limit: 20,
+        type: "books",
+        order: "relevance",
+        lang: "en"
+      };
+  
+      booksApi.search(this.state.entry, booksOptions, function(
+        error,
+        results,
+        apiResponse
+      ) {
+        console.log(results);
+        something(results);
+      });
 
-    var query = this.state.entry;
-    var rp = require("request-promise");
-    var url = "https://openlibrary.org/search.json?" +
-    searchType[this.state.type] + query;
+      return console.log("Success");
+    } else if (this.state.apiChoice === "ol"){
+        var searchType = {
+          title: 'q=',
+          author: 'author=',
+          isbn: 'isbn='
+        }  
+    
+        var query = this.state.entry;
+        var rp = require("request-promise");
+        var url = "https://openlibrary.org/search.json?" +
+        searchType[this.state.type] + query;
+    
+        rp({
+            url: url,
+            json: true
+        }).then(function (body) {
+            console.log(body)
+            something(body);
+        }).catch(function(err){
+          console.log(err)
+        })
 
-    rp({
-        url: url,
-        json: true
-    }).catch(function(err){
-        console.log(err)
-    }).then(function (body) {
-        console.log(body)
-        something(body);
+        return console.log("Success")
+    }
+
+    this.setState({
+      entry: ""
     })
 
-
+    return console.log("formSubmit complete")
   };
 
   render() {
@@ -136,21 +137,34 @@ export default class AddBook extends Component {
       <AddBookDiv>
         <Form onSubmit={this.formSubmit}>
               <AddBookForm>
-                <Input type="select" onChange={this.handleChanges} name="type">
-                  <option value="title">Title</option>
-                  <option value="author">Author</option>
-                  <option value="isbn">ISBN</option>
-                </Input>
-                <Input
-                  placeholder={this.state.type === null ? "title" : this.state.type}
-                  onChange={this.handleChanges}
-                  name="entry"
-                  value={this.state.value}
-                />
+                <div>
+                  <Label>Api Choice</Label>
+                  <Input type="select" onChange={this.handleChanges} name="apiChoice">
+                    <option name="google" value="google">Google</option>
+                    <option name= "ol" value="ol">Open Library</option>
+                  </Input>
+                </div>
+                <div>
+                  <Label>Search Type</Label>
+                  <Input type="select" onChange={this.handleChanges} name="type">
+                    <option name="title" value="title">Title</option>
+                    <option name="author" value="author">Author</option>
+                    <option name="isbn" value="isbn">ISBN</option>
+                  </Input>
+                </div>
+                <div>
+                  <Label>Entry</Label>
+                  <Input
+                    placeholder={this.state.type === null ? "title" : this.state.type}
+                    onChange={this.handleChanges}
+                    name="entry"
+                    value={this.state.value}
+                  />
+                </div>
                 <Button>Search</Button>
               </AddBookForm>
         </Form>
-        <BookMap resultsarr={this.state.results.docs} />
+        {this.state.results ? (<BookMap resultsarr={this.state.results.docs ? this.state.results.docs : this.state.results} /> ) : <div id="sorryToInform">No results found</div>}
       </AddBookDiv>
     );
   }
