@@ -8,9 +8,26 @@ import {
 import { compose, withProps } from "recompose";
 import styled from "styled-components";
 
+import {
+  Col,
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  CardText,
+  CardFooter,
+  Button
+} from "reactstrap";
+
+const ContainerDiv = styled.div`
+  max-width: 98vw;
+  display: flex;
+  justify-content: space-around;
+`;
+
 const MapContainer = styled.div`
   margin: auto;
-  width: 75vw;
+  width: 50vw;
   height: 75vh;
 `;
 
@@ -60,10 +77,42 @@ export default function Search() {
     setDefaultZoom(12.5);
   };
 
-  console.log(markerPosition);
   return (
-    <MapContainer>
-      <MapComponent />
-    </MapContainer>
+    <ContainerDiv>
+      <Col xs="12" md="6">
+        <MapContainer>
+          <MapComponent />
+        </MapContainer>
+      </Col>
+      <Col xs="12" md="4">
+        <Card>
+          <CardHeader tag="h3">Set-Up Personal Library Location</CardHeader>
+          <CardBody>
+            <CardTitle>
+              <b>Please click on the map to create a marker</b>
+            </CardTitle>
+            <CardText>
+              This will return coordinates to initialize your personal library
+              location
+            </CardText>
+            <CardText>
+              <b>Latitude:</b>
+              {markerPosition.lat
+                ? `  ${markerPosition.lat}`
+                : " No marker initialized"}
+            </CardText>
+            <CardText>
+              <b>Longitude:</b>
+              {markerPosition.lng
+                ? `  ${markerPosition.lng}`
+                : " No marker initialized"}
+            </CardText>
+          </CardBody>
+          <CardFooter>
+            <Button color="primary">Submit Location</Button>
+          </CardFooter>
+        </Card>
+      </Col>
+    </ContainerDiv>
   );
 }
