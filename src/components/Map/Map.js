@@ -34,7 +34,7 @@ const MapContainer = styled.div`
   height: 75vh;
 `;
 
-export default function Search() {
+export default function Map() {
   const auth = firebase.auth();
   const user = auth.currentUser;
   const db = firebase.firestore();
