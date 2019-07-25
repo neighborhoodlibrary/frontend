@@ -19,6 +19,9 @@ import {
   Button
 } from "reactstrap";
 
+import firebase from "../../firebase/firebase.utils";
+import { useAlert } from "react-alert";
+
 const ContainerDiv = styled.div`
   max-width: 98vw;
   display: flex;
@@ -32,6 +35,12 @@ const MapContainer = styled.div`
 `;
 
 export default function Search() {
+  const auth = firebase.auth();
+  const user = auth.currentUser;
+  const db = firebase.firestore();
+  const userDocRef = db.collection("users").doc(user.uid);
+  const alert = useAlert();
+
   const [markerPosition, setMarkerPosition] = useState({});
   const [isMarkerShown, setIsMarkerShown] = useState(false);
   const [defaultCenter, setDefaultCenter] = useState({});
@@ -39,10 +48,33 @@ export default function Search() {
 
   useEffect(() => {
     setDefaultCenter({
-      lat: 40.712776,
-      lng: -74.005974
+      lat: 39.11599111031897,
+      lng: -95.63578119495679
     });
-    setDefaultZoom(10);
+    setDefaultZoom(4.5);
+    userDocRef
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          if (doc.data().coordinates) {
+            setDefaultCenter({
+              lat: Number(doc.data().coordinates.latitude),
+              lng: Number(doc.data().coordinates.longitude)
+            });
+            setDefaultZoom(12.5);
+            setMarkerPosition({
+              lat: Number(doc.data().coordinates.latitude),
+              lng: Number(doc.data().coordinates.longitude)
+            });
+            setIsMarkerShown(true);
+          }
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch(error => {
+        console.log("Error getting the document:", error);
+      });
   }, []);
 
   const MapComponent = compose(
@@ -68,13 +100,43 @@ export default function Search() {
   const handleMarkerClick = e => {
     let lat = e.latLng.lat();
     let lng = e.latLng.lng();
-    setIsMarkerShown(true);
     setMarkerPosition({
       lat,
       lng
     });
+    setIsMarkerShown(true);
     setDefaultCenter({ lat, lng });
     setDefaultZoom(12.5);
+  };
+
+  const submitCoordinates = () => {
+    if (markerPosition.lat && markerPosition.lng) {
+      return db.runTransaction(transaction => {
+        return transaction
+          .get(userDocRef)
+          .then(userDoc => {
+            console.log(userDoc);
+            if (!userDoc) {
+              throw "Doc does not exist.";
+            }
+            const newCoordinates = new firebase.firestore.GeoPoint(
+              markerPosition.lat,
+              markerPosition.lng
+            );
+            transaction.update(userDocRef, { coordinates: newCoordinates });
+          })
+          .then(() => {
+            console.log("Transaction successfully committed!");
+            alert.success("Transaction successfully committed!");
+          })
+          .catch(error => {
+            console.log("Transaction failed: ", error);
+            alert.error("Transaction failed");
+          });
+      });
+    } else {
+      alert.error("Must select a marker before submission.");
+    }
   };
 
   return (
@@ -109,7 +171,9 @@ export default function Search() {
             </CardText>
           </CardBody>
           <CardFooter>
-            <Button color="primary">Submit Location</Button>
+            <Button color="primary" onClick={submitCoordinates}>
+              Submit Location
+            </Button>
           </CardFooter>
         </Card>
       </Col>

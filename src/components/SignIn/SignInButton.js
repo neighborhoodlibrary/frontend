@@ -25,7 +25,7 @@ export default function SignInButton(props) {
           displayName,
           email,
           photoURL,
-          zipcode: null,
+          coordinates: null,
           books: [],
           loaned: [],
           borrowed: []
