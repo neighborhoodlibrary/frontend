@@ -61,13 +61,15 @@ export default function SignInButton(props) {
     auth
       .signInWithPopup(provider)
       .then(result => {
-        console.log(result.additionalUserInfo);
-        if (result.additionalUserInfo.isNewUser === true) {
-          const { displayName, email, photoURL, uid } = result.user;
-
-          db.collection("users")
-            .doc(uid)
-            .set({
+        console.log(result.user.uid);
+        const { displayName, email, photoURL, uid } = result.user;
+        const docRef = db.collection("users").doc(uid);
+        docRef.get().then(doc => {
+          if (doc.exists) {
+            userContext.addUser(result.user);
+            console.log("Document data:", doc.data());
+          } else {
+            docRef.set({
               displayName,
               email,
               photoURL,
@@ -76,8 +78,9 @@ export default function SignInButton(props) {
               loaned: [],
               borrowed: []
             });
-        }
-        userContext.addUser(result.user);
+            userContext.addUser(result.user);
+          }
+        });
       })
       .then(() => {
         alert.success("Login successfull");
