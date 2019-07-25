@@ -9,13 +9,28 @@ import { compose, withProps } from "recompose";
 import firebase from "../../firebase/firebase.utils";
 import styled from "styled-components";
 import Slider from "react-input-slider";
+import {
+  Form,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  Button,
+  Label
+} from "reactstrap";
 
 //
 
 const ContainerDiv = styled.div`
   max-width: 98vw;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const LeftContainerDiv = styled.div`
   flex-direction: column;
+`;
+const LookupContainerDiv = styled.div`
+  flex-direction: row;
 `;
 
 const SliderContainerDiv = styled.div`
@@ -25,6 +40,10 @@ const MapContainerDiv = styled.div`
   width: 20vw;
   height: 40vh;
   align-self: flex-start;
+`;
+const RightContainerDiv = styled.div`
+  min-width: 50vw;
+  text-align: center;
 `;
 
 const Search = () => {
@@ -127,23 +146,43 @@ const Search = () => {
 
   return (
     <ContainerDiv>
-      <SliderContainerDiv>
-        <h5>Choose desired distance to search for other personal libraries.</h5>
-        <div>{`Distance: ${distanceValue} ${
-          distanceValue === "Global" ? "search" : "miles"
-        }`}</div>
-        <Slider
-          axis="x"
-          xstep={0.1}
-          xmin={0.1}
-          xmax={1}
-          x={sliderValue.x}
-          onChange={({ x }) => setSliderValue({ x: parseFloat(x.toFixed(2)) })}
-        />
-      </SliderContainerDiv>
-      <MapContainerDiv>
-        <MapComponent />
-      </MapContainerDiv>
+      <LeftContainerDiv>
+        <LookupContainerDiv>
+          <Form>
+            <Label tag="h5">Search For Books</Label>
+            <InputGroup>
+              <Input type="text" />
+              <InputGroupAddon addonType="append">
+                <Button>Submit</Button>
+              </InputGroupAddon>
+            </InputGroup>
+          </Form>
+        </LookupContainerDiv>
+        <SliderContainerDiv>
+          <h5>
+            Choose desired distance to search for other personal libraries.
+          </h5>
+          <div>{`Distance: ${distanceValue} ${
+            distanceValue === "Global" ? "search" : "miles"
+          }`}</div>
+          <Slider
+            axis="x"
+            xstep={0.1}
+            xmin={0.1}
+            xmax={1}
+            x={sliderValue.x}
+            onChange={({ x }) =>
+              setSliderValue({ x: parseFloat(x.toFixed(2)) })
+            }
+          />
+        </SliderContainerDiv>
+        <MapContainerDiv>
+          <MapComponent />
+        </MapContainerDiv>
+      </LeftContainerDiv>
+      <RightContainerDiv>
+        <div>Book results</div>
+      </RightContainerDiv>
     </ContainerDiv>
   );
 };
