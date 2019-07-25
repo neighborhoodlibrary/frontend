@@ -51,7 +51,7 @@ export default function Map() {
       lat: 39.11599111031897,
       lng: -95.63578119495679
     });
-    setDefaultZoom(4.5);
+    setDefaultZoom(4);
     userDocRef
       .get()
       .then(doc => {
@@ -61,7 +61,7 @@ export default function Map() {
               lat: Number(doc.data().coordinates.latitude),
               lng: Number(doc.data().coordinates.longitude)
             });
-            setDefaultZoom(12.5);
+            setDefaultZoom(13);
             setMarkerPosition({
               lat: Number(doc.data().coordinates.latitude),
               lng: Number(doc.data().coordinates.longitude)
@@ -106,7 +106,7 @@ export default function Map() {
     });
     setIsMarkerShown(true);
     setDefaultCenter({ lat, lng });
-    setDefaultZoom(12.5);
+    setDefaultZoom(13);
   };
 
   const submitCoordinates = () => {
