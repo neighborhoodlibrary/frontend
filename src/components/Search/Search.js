@@ -19,6 +19,7 @@ import {
 } from "reactstrap";
 
 //
+import { GoogleApiWrapper } from "google-maps-react";
 
 const ContainerDiv = styled.div`
   max-width: 98vw;
@@ -46,7 +47,7 @@ const RightContainerDiv = styled.div`
   text-align: center;
 `;
 
-const Search = () => {
+const Search = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
   const db = firebase.firestore();
@@ -139,10 +140,38 @@ const Search = () => {
     withScriptjs,
     withGoogleMap
   )(() => (
-    <GoogleMap defaultCenter={defaultCenter} defaultZoom={defaultZoom}>
+    <GoogleMap
+      defaultCenter={defaultCenter}
+      defaultZoom={defaultZoom}
+      google={window.google}
+    >
       {isMarkerShown && <Marker position={markerPosition} />}
     </GoogleMap>
   ));
+
+  console.log(props.google);
+
+  const distanceFunc = () => {
+    let service = new props.google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: ["33.86856646331403,-117.92422112861647"],
+        destinations: ["33.83112823257978,-117.91237843968082"],
+        travelMode: "DRIVING",
+        unitSystem: props.google.maps.UnitSystem.IMPERIAL
+      },
+      (res, status) => {
+        console.log(res);
+        if (status === "OK") {
+          console.log("ok");
+        } else {
+          console.log("Error getting the distances");
+        }
+      }
+    );
+  };
+
+  distanceFunc();
 
   return (
     <ContainerDiv>
@@ -187,4 +216,6 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyCi5wZjD4l6a21sBpeJM_jLEmWwUtqvucQ"
+})(Search);
