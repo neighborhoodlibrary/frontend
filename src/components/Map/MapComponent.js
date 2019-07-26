@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  GoogleMap,
-  withScriptjs,
-  withGoogleMap,
-  Marker
-} from "react-google-maps";
-import { compose, withProps } from "recompose";
+import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import styled from "styled-components";
-
 import {
   Col,
   Card,
@@ -18,7 +11,6 @@ import {
   CardFooter,
   Button
 } from "reactstrap";
-
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
 
@@ -34,7 +26,7 @@ const MapContainer = styled.div`
   height: 75vh;
 `;
 
-export default function Map() {
+const MapComponent = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
   const db = firebase.firestore();
@@ -42,7 +34,6 @@ export default function Map() {
   const alert = useAlert();
 
   const [markerPosition, setMarkerPosition] = useState({});
-  const [isMarkerShown, setIsMarkerShown] = useState(false);
   const [defaultCenter, setDefaultCenter] = useState({});
   const [defaultZoom, setDefaultZoom] = useState(0);
 
@@ -61,12 +52,11 @@ export default function Map() {
               lat: Number(doc.data().coordinates.latitude),
               lng: Number(doc.data().coordinates.longitude)
             });
-            setDefaultZoom(13);
+            setDefaultZoom(14);
             setMarkerPosition({
               lat: Number(doc.data().coordinates.latitude),
               lng: Number(doc.data().coordinates.longitude)
             });
-            setIsMarkerShown(true);
           }
         } else {
           console.log("No such document!");
@@ -77,36 +67,15 @@ export default function Map() {
       });
   }, []);
 
-  const MapComponent = compose(
-    withProps({
-      googleMapURL:
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCi5wZjD4l6a21sBpeJM_jLEmWwUtqvucQ",
-      loadingElement: <div style={{ height: "100%" }} />,
-      containerElement: <div style={{ height: "100%" }} />,
-      mapElement: <div style={{ height: "100%" }} />
-    }),
-    withScriptjs,
-    withGoogleMap
-  )(() => (
-    <GoogleMap
-      defaultZoom={defaultZoom}
-      defaultCenter={defaultCenter}
-      onClick={handleMarkerClick}
-    >
-      {isMarkerShown && <Marker position={markerPosition} />}
-    </GoogleMap>
-  ));
-
-  const handleMarkerClick = e => {
+  const handleMapClick = (mapProps, map, e) => {
     let lat = e.latLng.lat();
     let lng = e.latLng.lng();
     setMarkerPosition({
       lat,
       lng
     });
-    setIsMarkerShown(true);
     setDefaultCenter({ lat, lng });
-    setDefaultZoom(13);
+    setDefaultZoom(14);
   };
 
   const submitCoordinates = () => {
@@ -143,7 +112,14 @@ export default function Map() {
     <ContainerDiv>
       <Col xs="12" md="6">
         <MapContainer>
-          <MapComponent />
+          <Map
+            google={props.google}
+            center={defaultCenter}
+            zoom={defaultZoom}
+            onClick={handleMapClick}
+          >
+            <Marker position={markerPosition} />
+          </Map>
         </MapContainer>
       </Col>
       <Col xs="12" md="4">
@@ -179,4 +155,8 @@ export default function Map() {
       </Col>
     </ContainerDiv>
   );
-}
+};
+
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyCi5wZjD4l6a21sBpeJM_jLEmWwUtqvucQ"
+})(MapComponent);

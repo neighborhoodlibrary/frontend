@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  GoogleMap,
-  withScriptjs,
-  withGoogleMap,
-  Marker
-} from "react-google-maps";
-import { compose, withProps } from "recompose";
+import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import firebase from "../../firebase/firebase.utils";
 import styled from "styled-components";
 import Slider from "react-input-slider";
 import {
+  Col,
   Form,
   Input,
   InputGroup,
@@ -18,22 +13,15 @@ import {
   Label
 } from "reactstrap";
 
-//
-import { GoogleApiWrapper } from "google-maps-react";
-
 const ContainerDiv = styled.div`
   max-width: 98vw;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
-const LeftContainerDiv = styled.div`
-  flex-direction: column;
-`;
 const LookupContainerDiv = styled.div`
   flex-direction: row;
 `;
-
 const SliderContainerDiv = styled.div`
   margin-bottom: 2rem;
 `;
@@ -41,10 +29,6 @@ const MapContainerDiv = styled.div`
   width: 20vw;
   height: 40vh;
   align-self: flex-start;
-`;
-const RightContainerDiv = styled.div`
-  min-width: 50vw;
-  text-align: center;
 `;
 
 const Search = props => {
@@ -56,7 +40,7 @@ const Search = props => {
   const [defaultCenter, setDefaultCenter] = useState({});
   const [defaultZoom, setDefaultZoom] = useState(0);
   const [markerPosition, setMarkerPosition] = useState({});
-  const [isMarkerShown, setIsMarkerShown] = useState(false);
+
   //
   const [sliderValue, setSliderValue] = useState({ x: 0.1 });
   const [distanceValue, setDistanceValue] = useState("");
@@ -81,7 +65,6 @@ const Search = props => {
               lat: Number(doc.data().coordinates.latitude),
               lng: Number(doc.data().coordinates.longitude)
             });
-            setIsMarkerShown(true);
           }
         } else {
           console.log("No such document!");
@@ -129,28 +112,6 @@ const Search = props => {
     }
   });
 
-  const MapComponent = compose(
-    withProps({
-      googleMapURL:
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyCi5wZjD4l6a21sBpeJM_jLEmWwUtqvucQ",
-      loadingElement: <div style={{ height: "100%" }} />,
-      containerElement: <div style={{ height: "100%" }} />,
-      mapElement: <div style={{ height: "100%" }} />
-    }),
-    withScriptjs,
-    withGoogleMap
-  )(() => (
-    <GoogleMap
-      defaultCenter={defaultCenter}
-      defaultZoom={defaultZoom}
-      google={window.google}
-    >
-      {isMarkerShown && <Marker position={markerPosition} />}
-    </GoogleMap>
-  ));
-
-  console.log(props.google);
-
   const distanceFunc = () => {
     let service = new props.google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
@@ -175,7 +136,7 @@ const Search = props => {
 
   return (
     <ContainerDiv>
-      <LeftContainerDiv>
+      <Col xs="12" md="6">
         <LookupContainerDiv>
           <Form>
             <Label tag="h5">Search For Books</Label>
@@ -206,12 +167,14 @@ const Search = props => {
           />
         </SliderContainerDiv>
         <MapContainerDiv>
-          <MapComponent />
+          <Map google={props.google} center={defaultCenter} zoom={defaultZoom}>
+            <Marker position={markerPosition} />
+          </Map>
         </MapContainerDiv>
-      </LeftContainerDiv>
-      <RightContainerDiv>
+      </Col>
+      <Col xs="12" md="6">
         <div>Book results</div>
-      </RightContainerDiv>
+      </Col>
     </ContainerDiv>
   );
 };
