@@ -12,6 +12,7 @@ import {
   Button,
   Label
 } from "reactstrap";
+import { GeoFire } from "geofire";
 
 const ContainerDiv = styled.div`
   max-width: 98vw;
@@ -37,6 +38,9 @@ const Search = props => {
   const db = firebase.firestore();
   const userDocRef = db.collection("users").doc(user.uid);
   //
+  const firebaseRef = firebase.database().ref("coordinates");
+  const geoFire = new GeoFire(firebaseRef);
+  //
   const [defaultCenter, setDefaultCenter] = useState({});
   const [defaultZoom, setDefaultZoom] = useState(0);
   const [markerPosition, setMarkerPosition] = useState({});
@@ -51,28 +55,49 @@ const Search = props => {
       lng: -95.63578119495679
     });
     setDefaultZoom(4);
-    userDocRef
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          if (doc.data().coordinates) {
-            setDefaultCenter({
-              lat: Number(doc.data().coordinates.latitude),
-              lng: Number(doc.data().coordinates.longitude)
-            });
-            setDefaultZoom(13);
-            setMarkerPosition({
-              lat: Number(doc.data().coordinates.latitude),
-              lng: Number(doc.data().coordinates.longitude)
-            });
-          }
+    geoFire.get(user.uid).then(
+      location => {
+        if (location) {
+          setDefaultCenter({
+            lat: Number(location[0]),
+            lng: Number(location[1])
+          });
+          setDefaultZoom(13);
+          setMarkerPosition({
+            lat: Number(location[0]),
+            lng: Number(location[1])
+          });
         } else {
-          console.log("No such document!");
+          console.log("Provided key is not in GeoFire");
         }
-      })
-      .catch(error => {
-        console.log("Error getting the document:", error);
-      });
+      },
+      error => {
+        console.log("Error: " + error);
+      }
+    );
+    // userDocRef
+    //   .get()
+    //   .then(doc => {
+    //     console.log(
+    //   if (doc.exists) {
+    //     if (doc.data().coordinates) {
+    //       setDefaultCenter({
+    //         lat: Number(doc.data().coordinates.latitude),
+    //         lng: Number(doc.data().coordinates.longitude)
+    //       });
+    //       setDefaultZoom(13);
+    //       setMarkerPosition({
+    //         lat: Number(doc.data().coordinates.latitude),
+    //         lng: Number(doc.data().coordinates.longitude)
+    //       });
+    //     }
+    //   } else {
+    //     console.log("No such document!");
+    //   }
+    // })
+    // .catch(error => {
+    //   console.log("Error getting the document:", error);
+    // });
   }, {});
 
   useEffect(() => {
@@ -112,27 +137,27 @@ const Search = props => {
     }
   });
 
-  const distanceFunc = () => {
-    let service = new props.google.maps.DistanceMatrixService();
-    service.getDistanceMatrix(
-      {
-        origins: ["33.86856646331403,-117.92422112861647"],
-        destinations: ["33.83112823257978,-117.91237843968082"],
-        travelMode: "DRIVING",
-        unitSystem: props.google.maps.UnitSystem.IMPERIAL
-      },
-      (res, status) => {
-        console.log(res);
-        if (status === "OK") {
-          console.log("ok");
-        } else {
-          console.log("Error getting the distances");
-        }
-      }
-    );
-  };
+  // const distanceFunc = () => {
+  //   let service = new props.google.maps.DistanceMatrixService();
+  //   service.getDistanceMatrix(
+  //     {
+  //       origins: ["33.86856646331403,-117.92422112861647"],
+  //       destinations: ["33.83112823257978,-117.91237843968082"],
+  //       travelMode: "DRIVING",
+  //       unitSystem: props.google.maps.UnitSystem.IMPERIAL
+  //     },
+  //     (res, status) => {
+  //       console.log(res);
+  //       if (status === "OK") {
+  //         console.log("ok");
+  //       } else {
+  //         console.log("Error getting the distances");
+  //       }
+  //     }
+  //   );
+  // };
 
-  distanceFunc();
+  // distanceFunc();
 
   return (
     <ContainerDiv>
