@@ -14,6 +14,8 @@ import {
 } from "reactstrap";
 import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
+//
+import Book from "../Shelf/Book";
 
 const ContainerDiv = styled.div`
   max-width: 98vw;
@@ -37,19 +39,34 @@ const ButtonContainerDiv = styled.div`
 const SliderContainerDiv = styled.div`
   margin-bottom: 2rem;
 `;
-const MapContainerDiv = styled.div`
-  height: 45vh;
-  width: 10vw;
-  align-self: flex-start;
-`;
+
 const mapStyle = {
-  width: "90%"
+  height: "55vh",
+  width: "40vw"
 };
+
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 870px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr;
+  }
+`;
 
 const Search = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
   const alert = useAlert();
+  const docRef = firebase.firestore().collection("books");
   //
   const firebaseRef = firebase.database().ref("coordinates");
   const geoFire = new GeoFire(firebaseRef);
@@ -65,6 +82,8 @@ const Search = props => {
   //
   const [activeMarker, setActiveMarker] = useState({});
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  //
+  const [booksArray, setBooksArray] = useState([]);
 
   useEffect(() => {
     setDefaultCenter({
@@ -143,7 +162,11 @@ const Search = props => {
 
   const populateLibraryFunc = e => {
     e.preventDefault();
-    const radiusInKm = distanceValue * 1.60934;
+    let searchDistance = distanceValue;
+    if (searchDistance === "Global") {
+      searchDistance = 3958.8;
+    }
+    const radiusInKm = searchDistance * 1.60934;
     const geoQuery = geoFire.query({
       center: [defaultCenter.lat, defaultCenter.lng],
       radius: radiusInKm
@@ -180,6 +203,31 @@ const Search = props => {
     setActiveMarker(marker);
     setShowingInfoWindow(true);
   };
+
+  const searchBooksFunc = () => {
+    console.log(resultsArray);
+    let tempBooksArr = [];
+    for (let i = 0; i < resultsArray.length; i++) {
+      let userId = resultsArray[i].userId;
+      docRef
+        .where("ownerId", "==", userId)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            let book = doc.data();
+            tempBooksArr.push(book);
+          });
+        })
+        .then(() => {
+          setBooksArray(tempBooksArr);
+        })
+        .catch(error => {
+          console.log("Error getting the documents:", error);
+        });
+    }
+  };
+
+  console.log(booksArray);
 
   return (
     <ContainerDiv>
@@ -222,37 +270,41 @@ const Search = props => {
             </ButtonContainerDiv>
           </DistanceContainerDiv>
         </Form>
-        <MapContainerDiv>
-          <Map
-            google={props.google}
-            center={defaultCenter}
-            zoom={defaultZoom}
-            style={mapStyle}
-            onClick={onMapClick}
-          >
-            <Marker position={markerPosition} />
-            {resultsArray.length > 0
-              ? resultsArray.map(result => (
-                  <Marker
-                    key={Math.random()}
-                    position={{ lat: result.lat, lng: result.lng }}
-                    name={result.distance}
-                    // label={`${result.userId}`}
-                    onClick={onMarkerClick}
-                  />
-                ))
-              : ""}
-            <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
-              <p>
-                Distance from your location:{" "}
-                {Math.round(activeMarker.name * 100) / 100} miles
-              </p>
-            </InfoWindow>
-          </Map>
-        </MapContainerDiv>
+        <Map
+          google={props.google}
+          center={defaultCenter}
+          zoom={defaultZoom}
+          style={mapStyle}
+          onClick={onMapClick}
+        >
+          <Marker position={markerPosition} />
+          {resultsArray.length > 0
+            ? resultsArray.map(result => (
+                <Marker
+                  key={Math.random()}
+                  position={{ lat: result.lat, lng: result.lng }}
+                  name={result.distance}
+                  // label={`${result.userId}`}
+                  onClick={onMarkerClick}
+                />
+              ))
+            : ""}
+          <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
+            <p>
+              Distance from your location:{" "}
+              {Math.round(activeMarker.name * 100) / 100} miles
+            </p>
+          </InfoWindow>
+        </Map>
       </Col>
       <Col xs="12" md="6">
         <div>Book results</div>
+        <Button onClick={searchBooksFunc}>Search for Books</Button>
+        <Container>
+          {booksArray.map(book => (
+            <Book key={Math.random()} book={book} />
+          ))}
+        </Container>
       </Col>
     </ContainerDiv>
   );

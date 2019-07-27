@@ -34,6 +34,7 @@ const CardBodyDiv = styled.div`
 `;
 
 const LibraryBook = props => {
+  console.log(props);
   const db = firebase.firestore();
 
   const bookContext = useContext(BookContext);
