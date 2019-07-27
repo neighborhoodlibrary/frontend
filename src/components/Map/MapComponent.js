@@ -30,8 +30,6 @@ const MapContainer = styled.div`
 const MapComponent = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
-  const db = firebase.firestore();
-  const userDocRef = db.collection("users").doc(user.uid);
   const alert = useAlert();
   //
   const firebaseRef = firebase.database().ref("coordinates");
@@ -67,28 +65,6 @@ const MapComponent = props => {
         console.log("Error: " + error);
       }
     );
-    // userDocRef
-    //   .get()
-    //   .then(doc => {
-    //     if (doc.exists) {
-    //       if (doc.data().coordinates) {
-    //         setDefaultCenter({
-    //           lat: Number(doc.data().coordinates.latitude),
-    //           lng: Number(doc.data().coordinates.longitude)
-    //         });
-    //         setDefaultZoom(14);
-    //         setMarkerPosition({
-    //           lat: Number(doc.data().coordinates.latitude),
-    //           lng: Number(doc.data().coordinates.longitude)
-    //         });
-    //       }
-    //     } else {
-    //       console.log("No such document!");
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log("Error getting the document:", error);
-    //   });
   }, []);
 
   const handleMapClick = (mapProps, map, e) => {
@@ -113,29 +89,6 @@ const MapComponent = props => {
           alert.error(error);
         }
       );
-      // return db.runTransaction(transaction => {
-      //   return transaction
-      //     .get(userDocRef)
-      //     .then(userDoc => {
-      //       console.log(userDoc);
-      //       if (!userDoc) {
-      //         throw "Doc does not exist.";
-      //       }
-      //       const newCoordinates = new firebase.firestore.GeoPoint(
-      //         markerPosition.lat,
-      //         markerPosition.lng
-      //       );
-      //       transaction.update(userDocRef, { coordinates: newCoordinates });
-      //     })
-      //     .then(() => {
-      //       console.log("Transaction successfully committed!");
-      //       alert.success("Transaction successfully committed!");
-      //     })
-      //     .catch(error => {
-      //       console.log("Transaction failed: ", error);
-      //       alert.error("Transaction failed");
-      //     });
-      // });
     } else {
       alert.error("Must select a marker before submission.");
     }

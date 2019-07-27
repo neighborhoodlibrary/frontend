@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
+import { GoogleApiWrapper, Map, Marker, InfoWindow } from "google-maps-react";
 import firebase from "../../firebase/firebase.utils";
 import styled from "styled-components";
 import Slider from "react-input-slider";
@@ -20,23 +20,34 @@ const ContainerDiv = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `;
-const LookupContainerDiv = styled.div`
-  flex-direction: row;
+// const LookupContainerDiv = styled.div`
+//   flex-direction: row;
+// `;
+const DistanceContainerDiv = styled.div`
+  display: flex;
+  margin: auto;
 `;
+
+const ButtonContainerDiv = styled.div`
+  margin-top: 0.5rem;
+  margin-left: 4rem;
+`;
+
 const SliderContainerDiv = styled.div`
   margin-bottom: 2rem;
 `;
 const MapContainerDiv = styled.div`
-  width: 20vw;
-  height: 40vh;
+  height: 45vh;
+  width: 10vw;
   align-self: flex-start;
 `;
+const mapStyle = {
+  width: "90%"
+};
 
 const Search = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
-  const db = firebase.firestore();
-  const userDocRef = db.collection("users").doc(user.uid);
   //
   const firebaseRef = firebase.database().ref("coordinates");
   const geoFire = new GeoFire(firebaseRef);
@@ -62,7 +73,7 @@ const Search = props => {
             lat: Number(location[0]),
             lng: Number(location[1])
           });
-          setDefaultZoom(13);
+          setDefaultZoom(15);
           setMarkerPosition({
             lat: Number(location[0]),
             lng: Number(location[1])
@@ -75,67 +86,68 @@ const Search = props => {
         console.log("Error: " + error);
       }
     );
-    // userDocRef
-    //   .get()
-    //   .then(doc => {
-    //     console.log(
-    //   if (doc.exists) {
-    //     if (doc.data().coordinates) {
-    //       setDefaultCenter({
-    //         lat: Number(doc.data().coordinates.latitude),
-    //         lng: Number(doc.data().coordinates.longitude)
-    //       });
-    //       setDefaultZoom(13);
-    //       setMarkerPosition({
-    //         lat: Number(doc.data().coordinates.latitude),
-    //         lng: Number(doc.data().coordinates.longitude)
-    //       });
-    //     }
-    //   } else {
-    //     console.log("No such document!");
-    //   }
-    // })
-    // .catch(error => {
-    //   console.log("Error getting the document:", error);
-    // });
   }, {});
 
   useEffect(() => {
     switch (sliderValue.x) {
       case 0.1:
         setDistanceValue(".5");
+        setDefaultZoom(15);
         break;
       case 0.2:
         setDistanceValue("1");
+        setDefaultZoom(14);
         break;
       case 0.3:
         setDistanceValue("2");
+        setDefaultZoom(13);
         break;
       case 0.4:
         setDistanceValue("4");
+        setDefaultZoom(12);
         break;
       case 0.5:
         setDistanceValue("8");
+        setDefaultZoom(11);
         break;
       case 0.6:
         setDistanceValue("16");
+        setDefaultZoom(10);
         break;
       case 0.7:
         setDistanceValue("32");
+        setDefaultZoom(9);
         break;
       case 0.8:
         setDistanceValue("64");
+        setDefaultZoom(8);
         break;
       case 0.9:
         setDistanceValue("128");
+        setDefaultZoom(7);
         break;
       case 1.0:
         setDistanceValue("Global");
+        setDefaultZoom(2);
         break;
       default:
         break;
     }
   });
+
+  const populateLibraryFunc = e => {
+    e.preventDefault();
+    const radiusInKm = distanceValue * 1.60934;
+    const geoQuery = geoFire.query({
+      center: [defaultCenter.lat, defaultCenter.lng],
+      radius: radiusInKm
+    });
+    // console.log(geoQuery.radius());
+    // console.log(geoQuery.center());
+    geoQuery.on("key_entered", (key, location, distance) => {
+      console.log(`key: ${key}, location: ${location}, ${distance}`);
+    });
+  };
 
   // const distanceFunc = () => {
   //   let service = new props.google.maps.DistanceMatrixService();
@@ -156,13 +168,12 @@ const Search = props => {
   //     }
   //   );
   // };
-
   // distanceFunc();
 
   return (
     <ContainerDiv>
       <Col xs="12" md="6">
-        <LookupContainerDiv>
+        {/* <LookupContainerDiv>
           <Form>
             <Label tag="h5">Search For Books</Label>
             <InputGroup>
@@ -172,27 +183,41 @@ const Search = props => {
               </InputGroupAddon>
             </InputGroup>
           </Form>
-        </LookupContainerDiv>
-        <SliderContainerDiv>
-          <h5>
+        </LookupContainerDiv> */}
+        <Form>
+          <Label tag="h5">
             Choose desired distance to search for other personal libraries.
-          </h5>
-          <div>{`Distance: ${distanceValue} ${
-            distanceValue === "Global" ? "search" : "miles"
-          }`}</div>
-          <Slider
-            axis="x"
-            xstep={0.1}
-            xmin={0.1}
-            xmax={1}
-            x={sliderValue.x}
-            onChange={({ x }) =>
-              setSliderValue({ x: parseFloat(x.toFixed(2)) })
-            }
-          />
-        </SliderContainerDiv>
+          </Label>
+          <DistanceContainerDiv>
+            <SliderContainerDiv>
+              <Label tag="h6">{`Distance: ${distanceValue} ${
+                distanceValue === "Global" ? "search" : "miles"
+              }`}</Label>
+              <Slider
+                axis="x"
+                xstep={0.1}
+                xmin={0.1}
+                xmax={1}
+                x={sliderValue.x}
+                onChange={({ x }) =>
+                  setSliderValue({ x: parseFloat(x.toFixed(2)) })
+                }
+              />
+            </SliderContainerDiv>
+            <ButtonContainerDiv>
+              <Button color="primary" onClick={populateLibraryFunc}>
+                Populate Libraries
+              </Button>
+            </ButtonContainerDiv>
+          </DistanceContainerDiv>
+        </Form>
         <MapContainerDiv>
-          <Map google={props.google} center={defaultCenter} zoom={defaultZoom}>
+          <Map
+            google={props.google}
+            center={defaultCenter}
+            zoom={defaultZoom}
+            style={mapStyle}
+          >
             <Marker position={markerPosition} />
           </Map>
         </MapContainerDiv>
