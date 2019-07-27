@@ -55,6 +55,7 @@ const Search = props => {
   const [defaultCenter, setDefaultCenter] = useState({});
   const [defaultZoom, setDefaultZoom] = useState(0);
   const [markerPosition, setMarkerPosition] = useState({});
+  const [resultsArray, setResultsArray] = useState([]);
 
   //
   const [sliderValue, setSliderValue] = useState({ x: 0.1 });
@@ -144,8 +145,19 @@ const Search = props => {
     });
     // console.log(geoQuery.radius());
     // console.log(geoQuery.center());
+    const results = [];
     geoQuery.on("key_entered", (key, location, distance) => {
       console.log(`key: ${key}, location: ${location}, ${distance}`);
+      if (key !== user.uid)
+        results.push({
+          userId: key,
+          lat: location[0],
+          lng: location[1],
+          distance: distance * 0.621371
+        });
+    });
+    geoQuery.on("ready", () => {
+      setResultsArray(results);
     });
   };
 
@@ -169,6 +181,7 @@ const Search = props => {
   //   );
   // };
   // distanceFunc();
+  console.log(markerPosition);
 
   return (
     <ContainerDiv>
@@ -219,6 +232,12 @@ const Search = props => {
             style={mapStyle}
           >
             <Marker position={markerPosition} />
+
+            {resultsArray.length > 0
+              ? resultsArray.map(result => (
+                  <Marker position={{ lat: result.lat, lng: result.lng }} />
+                ))
+              : ""}
           </Map>
         </MapContainerDiv>
       </Col>
