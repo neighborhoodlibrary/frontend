@@ -12,6 +12,7 @@ import {
   Button,
   Label
 } from "reactstrap";
+import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
 
 const ContainerDiv = styled.div`
@@ -48,6 +49,7 @@ const mapStyle = {
 const Search = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
+  const alert = useAlert();
   //
   const firebaseRef = firebase.database().ref("coordinates");
   const geoFire = new GeoFire(firebaseRef);
@@ -60,6 +62,9 @@ const Search = props => {
   //
   const [sliderValue, setSliderValue] = useState({ x: 0.1 });
   const [distanceValue, setDistanceValue] = useState("");
+  //
+  const [activeMarker, setActiveMarker] = useState({});
+  const [showingInfoWindow, setShowingInfoWindow] = useState(false);
 
   useEffect(() => {
     setDefaultCenter({
@@ -143,11 +148,9 @@ const Search = props => {
       center: [defaultCenter.lat, defaultCenter.lng],
       radius: radiusInKm
     });
-    // console.log(geoQuery.radius());
-    // console.log(geoQuery.center());
     const results = [];
     geoQuery.on("key_entered", (key, location, distance) => {
-      console.log(`key: ${key}, location: ${location}, ${distance}`);
+      // console.log(`key: ${key}, location: ${location}, ${distance}`);
       if (key !== user.uid)
         results.push({
           userId: key,
@@ -157,31 +160,26 @@ const Search = props => {
         });
     });
     geoQuery.on("ready", () => {
-      setResultsArray(results);
+      if (results.length === 0) {
+        setResultsArray([]);
+        alert.error("No personal libraries in your search distance.");
+      } else {
+        setResultsArray(results);
+      }
     });
   };
 
-  // const distanceFunc = () => {
-  //   let service = new props.google.maps.DistanceMatrixService();
-  //   service.getDistanceMatrix(
-  //     {
-  //       origins: ["33.86856646331403,-117.92422112861647"],
-  //       destinations: ["33.83112823257978,-117.91237843968082"],
-  //       travelMode: "DRIVING",
-  //       unitSystem: props.google.maps.UnitSystem.IMPERIAL
-  //     },
-  //     (res, status) => {
-  //       console.log(res);
-  //       if (status === "OK") {
-  //         console.log("ok");
-  //       } else {
-  //         console.log("Error getting the distances");
-  //       }
-  //     }
-  //   );
-  // };
-  // distanceFunc();
-  console.log(markerPosition);
+  const onMapClick = () => {
+    if (showingInfoWindow === true) {
+      setShowingInfoWindow(false);
+      setActiveMarker({});
+    }
+  };
+
+  const onMarkerClick = (props, marker, e) => {
+    setActiveMarker(marker);
+    setShowingInfoWindow(true);
+  };
 
   return (
     <ContainerDiv>
@@ -230,14 +228,26 @@ const Search = props => {
             center={defaultCenter}
             zoom={defaultZoom}
             style={mapStyle}
+            onClick={onMapClick}
           >
             <Marker position={markerPosition} />
-
             {resultsArray.length > 0
               ? resultsArray.map(result => (
-                  <Marker position={{ lat: result.lat, lng: result.lng }} />
+                  <Marker
+                    key={Math.random()}
+                    position={{ lat: result.lat, lng: result.lng }}
+                    name={result.distance}
+                    // label={`${result.userId}`}
+                    onClick={onMarkerClick}
+                  />
                 ))
               : ""}
+            <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
+              <p>
+                Distance from your location:{" "}
+                {Math.round(activeMarker.name * 100) / 100} miles
+              </p>
+            </InfoWindow>
           </Map>
         </MapContainerDiv>
       </Col>
@@ -247,7 +257,6 @@ const Search = props => {
     </ContainerDiv>
   );
 };
-
 export default GoogleApiWrapper({
   apiKey: "AIzaSyCi5wZjD4l6a21sBpeJM_jLEmWwUtqvucQ"
 })(Search);
