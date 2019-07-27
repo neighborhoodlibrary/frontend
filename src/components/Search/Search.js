@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
+import { GoogleApiWrapper, Map, Marker, InfoWindow } from "google-maps-react";
 import firebase from "../../firebase/firebase.utils";
 import styled from "styled-components";
 import Slider from "react-input-slider";
@@ -23,6 +23,16 @@ const ContainerDiv = styled.div`
 // const LookupContainerDiv = styled.div`
 //   flex-direction: row;
 // `;
+const DistanceContainerDiv = styled.div`
+  display: flex;
+  margin: auto;
+`;
+
+const ButtonContainerDiv = styled.div`
+  margin-top: 0.5rem;
+  margin-left: 4rem;
+`;
+
 const SliderContainerDiv = styled.div`
   margin-bottom: 2rem;
 `;
@@ -118,12 +128,26 @@ const Search = props => {
         break;
       case 1.0:
         setDistanceValue("Global");
-        setDefaultZoom(4);
+        setDefaultZoom(2);
         break;
       default:
         break;
     }
   });
+
+  const populateLibraryFunc = e => {
+    e.preventDefault();
+    const radiusInKm = distanceValue * 1.60934;
+    const geoQuery = geoFire.query({
+      center: [defaultCenter.lat, defaultCenter.lng],
+      radius: radiusInKm
+    });
+    // console.log(geoQuery.radius());
+    // console.log(geoQuery.center());
+    geoQuery.on("key_entered", (key, location, distance) => {
+      console.log(`key: ${key}, location: ${location}, ${distance}`);
+    });
+  };
 
   // const distanceFunc = () => {
   //   let service = new props.google.maps.DistanceMatrixService();
@@ -144,7 +168,6 @@ const Search = props => {
   //     }
   //   );
   // };
-
   // distanceFunc();
 
   return (
@@ -161,24 +184,33 @@ const Search = props => {
             </InputGroup>
           </Form>
         </LookupContainerDiv> */}
-        <SliderContainerDiv>
-          <h5>
+        <Form>
+          <Label tag="h5">
             Choose desired distance to search for other personal libraries.
-          </h5>
-          <div>{`Distance: ${distanceValue} ${
-            distanceValue === "Global" ? "search" : "miles"
-          }`}</div>
-          <Slider
-            axis="x"
-            xstep={0.1}
-            xmin={0.1}
-            xmax={1}
-            x={sliderValue.x}
-            onChange={({ x }) =>
-              setSliderValue({ x: parseFloat(x.toFixed(2)) })
-            }
-          />
-        </SliderContainerDiv>
+          </Label>
+          <DistanceContainerDiv>
+            <SliderContainerDiv>
+              <Label tag="h6">{`Distance: ${distanceValue} ${
+                distanceValue === "Global" ? "search" : "miles"
+              }`}</Label>
+              <Slider
+                axis="x"
+                xstep={0.1}
+                xmin={0.1}
+                xmax={1}
+                x={sliderValue.x}
+                onChange={({ x }) =>
+                  setSliderValue({ x: parseFloat(x.toFixed(2)) })
+                }
+              />
+            </SliderContainerDiv>
+            <ButtonContainerDiv>
+              <Button color="primary" onClick={populateLibraryFunc}>
+                Populate Libraries
+              </Button>
+            </ButtonContainerDiv>
+          </DistanceContainerDiv>
+        </Form>
         <MapContainerDiv>
           <Map
             google={props.google}
