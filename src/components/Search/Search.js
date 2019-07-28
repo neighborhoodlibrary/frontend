@@ -14,7 +14,6 @@ import {
 } from "reactstrap";
 import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
-//
 import Book from "../Shelf/Book";
 
 const ContainerDiv = styled.div`
@@ -23,28 +22,21 @@ const ContainerDiv = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `;
-// const LookupContainerDiv = styled.div`
-//   flex-direction: row;
-// `;
 const DistanceContainerDiv = styled.div`
   display: flex;
   margin: auto;
 `;
-
 const ButtonContainerDiv = styled.div`
   margin-top: 0.5rem;
   margin-left: 4rem;
 `;
-
 const SliderContainerDiv = styled.div`
   margin-bottom: 2rem;
 `;
-
 const mapStyle = {
   height: "55vh",
   width: "40vw"
 };
-
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -173,7 +165,6 @@ const Search = props => {
     });
     const results = [];
     geoQuery.on("key_entered", (key, location, distance) => {
-      // console.log(`key: ${key}, location: ${location}, ${distance}`);
       if (key !== user.uid)
         results.push({
           userId: key,
@@ -205,44 +196,33 @@ const Search = props => {
   };
 
   const searchBooksFunc = () => {
-    console.log(resultsArray);
     let tempBooksArr = [];
-    for (let i = 0; i < resultsArray.length; i++) {
-      let userId = resultsArray[i].userId;
-      docRef
-        .where("ownerId", "==", userId)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            let book = doc.data();
-            tempBooksArr.push(book);
-          });
-        })
-        .then(() => {
-          setBooksArray(tempBooksArr);
-        })
-        .catch(error => {
-          console.log("Error getting the documents:", error);
-        });
+    async function asyncForEach(arr, cb) {
+      for (let i = 0; i < arr.length; i++) {
+        await cb(arr[i], i, arr);
+      }
     }
+    const aFunc = async () => {
+      await asyncForEach(resultsArray, async user => {
+        let userId = user.userId;
+        await docRef
+          .where("ownerId", "==", userId)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              let book = doc.data();
+              tempBooksArr.push(book);
+            });
+          });
+      });
+      setBooksArray(tempBooksArr);
+    };
+    aFunc();
   };
-
-  console.log(booksArray);
 
   return (
     <ContainerDiv>
       <Col xs="12" md="6">
-        {/* <LookupContainerDiv>
-          <Form>
-            <Label tag="h5">Search For Books</Label>
-            <InputGroup>
-              <Input type="text" />
-              <InputGroupAddon addonType="append">
-                <Button>Submit</Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </Form>
-        </LookupContainerDiv> */}
         <Form>
           <Label tag="h5">
             Choose desired distance to search for other personal libraries.
@@ -284,7 +264,6 @@ const Search = props => {
                   key={Math.random()}
                   position={{ lat: result.lat, lng: result.lng }}
                   name={result.distance}
-                  // label={`${result.userId}`}
                   onClick={onMarkerClick}
                 />
               ))
