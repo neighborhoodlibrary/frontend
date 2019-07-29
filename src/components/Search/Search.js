@@ -12,7 +12,9 @@ import {
   Button,
   Label
 } from "reactstrap";
+import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
+import Book from "../Shelf/Book";
 
 const ContainerDiv = styled.div`
   max-width: 98vw;
@@ -20,34 +22,43 @@ const ContainerDiv = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `;
-// const LookupContainerDiv = styled.div`
-//   flex-direction: row;
-// `;
 const DistanceContainerDiv = styled.div`
   display: flex;
   margin: auto;
 `;
-
 const ButtonContainerDiv = styled.div`
   margin-top: 0.5rem;
   margin-left: 4rem;
 `;
-
 const SliderContainerDiv = styled.div`
   margin-bottom: 2rem;
 `;
-const MapContainerDiv = styled.div`
-  height: 45vh;
-  width: 10vw;
-  align-self: flex-start;
-`;
 const mapStyle = {
-  width: "90%"
+  height: "55vh",
+  width: "40vw"
 };
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 870px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr;
+  }
+`;
 
 const Search = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
+  const alert = useAlert();
+  const docRef = firebase.firestore().collection("books");
   //
   const firebaseRef = firebase.database().ref("coordinates");
   const geoFire = new GeoFire(firebaseRef);
@@ -55,10 +66,16 @@ const Search = props => {
   const [defaultCenter, setDefaultCenter] = useState({});
   const [defaultZoom, setDefaultZoom] = useState(0);
   const [markerPosition, setMarkerPosition] = useState({});
+  const [resultsArray, setResultsArray] = useState([]);
 
   //
   const [sliderValue, setSliderValue] = useState({ x: 0.1 });
   const [distanceValue, setDistanceValue] = useState("");
+  //
+  const [activeMarker, setActiveMarker] = useState({});
+  const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  //
+  const [booksArray, setBooksArray] = useState([]);
 
   useEffect(() => {
     setDefaultCenter({
@@ -137,53 +154,75 @@ const Search = props => {
 
   const populateLibraryFunc = e => {
     e.preventDefault();
-    const radiusInKm = distanceValue * 1.60934;
+    let searchDistance = distanceValue;
+    if (searchDistance === "Global") {
+      searchDistance = 3958.8;
+    }
+    const radiusInKm = searchDistance * 1.60934;
     const geoQuery = geoFire.query({
       center: [defaultCenter.lat, defaultCenter.lng],
       radius: radiusInKm
     });
-    // console.log(geoQuery.radius());
-    // console.log(geoQuery.center());
+    const results = [];
     geoQuery.on("key_entered", (key, location, distance) => {
-      console.log(`key: ${key}, location: ${location}, ${distance}`);
+      if (key !== user.uid)
+        results.push({
+          userId: key,
+          lat: location[0],
+          lng: location[1],
+          distance: distance * 0.621371
+        });
+    });
+    geoQuery.on("ready", () => {
+      if (results.length === 0) {
+        setResultsArray([]);
+        alert.error("No personal libraries in your search distance.");
+      } else {
+        setResultsArray(results);
+      }
     });
   };
 
-  // const distanceFunc = () => {
-  //   let service = new props.google.maps.DistanceMatrixService();
-  //   service.getDistanceMatrix(
-  //     {
-  //       origins: ["33.86856646331403,-117.92422112861647"],
-  //       destinations: ["33.83112823257978,-117.91237843968082"],
-  //       travelMode: "DRIVING",
-  //       unitSystem: props.google.maps.UnitSystem.IMPERIAL
-  //     },
-  //     (res, status) => {
-  //       console.log(res);
-  //       if (status === "OK") {
-  //         console.log("ok");
-  //       } else {
-  //         console.log("Error getting the distances");
-  //       }
-  //     }
-  //   );
-  // };
-  // distanceFunc();
+  const onMapClick = () => {
+    if (showingInfoWindow === true) {
+      setShowingInfoWindow(false);
+      setActiveMarker({});
+    }
+  };
+
+  const onMarkerClick = (props, marker, e) => {
+    setActiveMarker(marker);
+    setShowingInfoWindow(true);
+  };
+
+  const searchBooksFunc = () => {
+    let tempBooksArr = [];
+    async function asyncForEach(arr, cb) {
+      for (let i = 0; i < arr.length; i++) {
+        await cb(arr[i], i, arr);
+      }
+    }
+    const aFunc = async () => {
+      await asyncForEach(resultsArray, async user => {
+        let userId = user.userId;
+        await docRef
+          .where("ownerId", "==", userId)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              let book = doc.data();
+              tempBooksArr.push(book);
+            });
+          });
+      });
+      setBooksArray(tempBooksArr);
+    };
+    aFunc();
+  };
 
   return (
     <ContainerDiv>
       <Col xs="12" md="6">
-        {/* <LookupContainerDiv>
-          <Form>
-            <Label tag="h5">Search For Books</Label>
-            <InputGroup>
-              <Input type="text" />
-              <InputGroupAddon addonType="append">
-                <Button>Submit</Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </Form>
-        </LookupContainerDiv> */}
         <Form>
           <Label tag="h5">
             Choose desired distance to search for other personal libraries.
@@ -211,24 +250,44 @@ const Search = props => {
             </ButtonContainerDiv>
           </DistanceContainerDiv>
         </Form>
-        <MapContainerDiv>
-          <Map
-            google={props.google}
-            center={defaultCenter}
-            zoom={defaultZoom}
-            style={mapStyle}
-          >
-            <Marker position={markerPosition} />
-          </Map>
-        </MapContainerDiv>
+        <Map
+          google={props.google}
+          center={defaultCenter}
+          zoom={defaultZoom}
+          style={mapStyle}
+          onClick={onMapClick}
+        >
+          <Marker position={markerPosition} />
+          {resultsArray.length > 0
+            ? resultsArray.map(result => (
+                <Marker
+                  key={Math.random()}
+                  position={{ lat: result.lat, lng: result.lng }}
+                  name={result.distance}
+                  onClick={onMarkerClick}
+                />
+              ))
+            : ""}
+          <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
+            <p>
+              Distance from your location:{" "}
+              {Math.round(activeMarker.name * 100) / 100} miles
+            </p>
+          </InfoWindow>
+        </Map>
       </Col>
       <Col xs="12" md="6">
         <div>Book results</div>
+        <Button onClick={searchBooksFunc}>Search for Books</Button>
+        <Container>
+          {booksArray.map(book => (
+            <Book key={Math.random()} book={book} />
+          ))}
+        </Container>
       </Col>
     </ContainerDiv>
   );
 };
-
 export default GoogleApiWrapper({
   apiKey: "AIzaSyCi5wZjD4l6a21sBpeJM_jLEmWwUtqvucQ"
 })(Search);

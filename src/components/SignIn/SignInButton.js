@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import UserContext from "../../context/user/userContext";
 import firebase from "../../firebase/firebase.utils";
-import { Button } from 'reactstrap';
+import { Button } from "reactstrap";
 import "firebase/auth";
 import { NavLink } from "react-router-dom";
 import { useAlert } from "react-alert";
@@ -31,7 +31,6 @@ export default function SignInButton(props) {
               displayName,
               email,
               photoURL,
-              coordinates: null,
               books: [],
               loaned: [],
               borrowed: []
