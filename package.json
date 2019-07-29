@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "dotenv": "^8.0.0",
     "firebase": "^6.3.0",
     "geofire": "^5.0.1",
     "google-books-search": "^0.3.1",
