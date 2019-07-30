@@ -22,6 +22,8 @@ import MapComponent from "./components/Map/MapComponent";
 import Search from "./components/Search/Search";
 //
 import BookDetails from "./components/Shelf/BookDetails";
+//
+import Email from "./components/Email/Email";
 
 const LowerSection = styled.div`
   padding: 0px 20px;
@@ -66,6 +68,7 @@ function App() {
                     path="/shelf/book/:id"
                     component={BookDetails}
                   />
+                  <PrivateRoute exact path="/shelf/email" component={Email} />
                   <Route exact path="/" component={Landing} />
                 </Switch>
               </LowerSection>
