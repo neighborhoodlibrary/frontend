@@ -62,6 +62,9 @@ export default class NavMenu extends Component {
             <NavLink to="/shelf/search">
               <DropdownItem>Search</DropdownItem>
             </NavLink>
+            <NavLink to="/shelf/email">
+              <DropdownItem>Email</DropdownItem>
+            </NavLink>
           </DropdownMenu>
         </Dropdown>
       </NavMenuDiv>
