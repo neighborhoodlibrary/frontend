@@ -86,14 +86,14 @@ export default function AddBookButton(props) {
             pageCount: bookobj.pageCount,
             publishedDate: bookobj.publishedDate,
             publisher: bookobj.publisher,
-            thumbnail: '',
-            googThumbnail: bookobj.thumbnail,
-            googIi: isbnhold,
+            thumbnail: bookobj.thumbnail,
             isbn: isbnhold,
             checkedOut: false,
             borrowerId: "",
             ownerId: curUser.uid,
-            id: idHold
+            id: idHold,
+            requestedId: [],
+            returnRequest: false
           })
 
         alert.success('Success!')

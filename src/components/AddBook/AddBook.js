@@ -44,22 +44,6 @@ export default class AddBook extends Component {
     this.formSubmit = this.formSubmit.bind(this);
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.results === null) {
-  //     this.setState({
-  //       results: []
-  //     })
-  //   } else if (prevState.results === undefined){
-  //     this.setState({
-  //       results: []
-  //     });
-  //   } else if (prevState.results !== this.state.results) {
-  //     this.setState({
-  //       type: "title"
-  //     });
-  //   }
-  // }
-
   handleChanges = e => {
     this.setState({
       [e.target.name]: e.target.value
