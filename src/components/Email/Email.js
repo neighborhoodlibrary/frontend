@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-const sgMail = require("@sendgrid/mail");
-
-const apiKey = process.env.REACT_APP_SENDGRID_API_KEY;
-sgMail.setApiKey(apiKey);
+import Axios from "axios";
+const URL = "https://neighborhoodlibraryback.herokuapp.com/email";
 
 class Email extends Component {
   constructor(props) {
@@ -17,16 +15,16 @@ class Email extends Component {
   }
 
   inputHandler = e => {
-    console.log(`${e.target.name}: ${e.target.value} `);
     this.setState({
       [e.target.name]: e.target.value
     });
   };
   submitEmail = e => {
     const msg = this.state;
-    console.log(msg);
     e.preventDefault();
-    sgMail.send(msg);
+    Axios.post(URL, msg).then(res => {
+      console.log(res.data);
+    });
   };
 
   render() {
@@ -77,16 +75,3 @@ class Email extends Component {
 }
 
 export default Email;
-
-// using Twilio SendGrid's v3 Node.js Library
-// https://github.com/sendgrid/sendgrid-nodejs
-// const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-// const msg = {
-//   to: 'test@example.com',
-//   from: 'test@example.com',
-//   subject: 'Sending with Twilio SendGrid is Fun',
-//   text: 'and easy to do anywhere, even with Node.js',
-//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-// };
-// sgMail.send(msg);
