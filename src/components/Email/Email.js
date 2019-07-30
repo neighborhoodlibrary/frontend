@@ -2,6 +2,7 @@ import React, { Component } from "react";
 const sgMail = require("@sendgrid/mail");
 
 const apiKey = process.env.REACT_APP_SENDGRID_API_KEY;
+sgMail.setApiKey(apiKey);
 
 class Email extends Component {
   constructor(props) {
