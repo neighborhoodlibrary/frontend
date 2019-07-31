@@ -39,7 +39,7 @@ const CardInfoDiv = styled.div`
   // grid-template-columns: 1fr 1fr;
   // justify-content: center;
 
-  #centering{
+  #centering {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,7 +58,7 @@ const Book = props => {
     props.history.goBack();
   };
 
-  console.log(displayedBook)
+  console.log(displayedBook);
 
   return (
     <ContainerDiv>
@@ -74,20 +74,31 @@ const Book = props => {
           </CardHeader>
           <CardBody>
             <CardInfoDiv>
-            <div id="centering">
-              <img src={displayedBook.googThumbnail} alt="book_thumb" />
-            </div>
+              <div id="centering">
+                <img src={displayedBook.googThumbnail} alt="book_thumb" />
+              </div>
               <p>
                 {!displayedBook.authors
                   ? ""
                   : displayedBook.authors.length === 1
                   ? `Author: ${displayedBook.authors[0]}`
-                  : `Authors: ${displayedBook.authors.map(
-                      author => author
-                    )}`}
+                  : `Authors: ${displayedBook.authors.map(author => author)}`}
               </p>
               <p>Average Rating: {displayedBook.averageRating}</p>
               <p>Description: {displayedBook.description}</p>
+              <p>
+                {!displayedBook.googIi
+                  ? ""
+                  : displayedBook.googIi.map(ident => {
+                      return Object.entries(ident)
+                        .reverse()
+                        .map(([key, value]) => (
+                          <div>
+                            {key}: {value}
+                          </div>
+                        ));
+                    })}
+              </p>
               <p>Page Count: {displayedBook.pageCount}</p>
             </CardInfoDiv>
           </CardBody>

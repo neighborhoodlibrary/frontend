@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
-import Book from "../Shelf/Book";
+import SearchBookCard from "./SearchBookCard";
 
 const ContainerDiv = styled.div`
   max-width: 98vw;
@@ -281,7 +281,7 @@ const Search = props => {
         <Button onClick={searchBooksFunc}>Search for Books</Button>
         <Container>
           {booksArray.map(book => (
-            <Book key={Math.random()} book={book} />
+            <SearchBookCard key={Math.random()} book={book} />
           ))}
         </Container>
       </Col>
