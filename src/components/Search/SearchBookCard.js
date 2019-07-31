@@ -56,17 +56,7 @@ const SearchBookCard = props => {
   const [infoModal, setInfoModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
-  const [emailValue, setEmailValue] = useState({
-    to: props.book.ownerEmail,
-    from: userEmail,
-    subject: "Requested Book from Neighborhood Library",
-    text: `User with email: ${userEmail} has requested to borrow one of your books: ${
-      props.book.title
-    }, Please email them back to setup location and time of pickup.`,
-    html: `User with email: ${userEmail} has requested to borrow one of your books: ${
-      props.book.title
-    }, Please email them back to setup location and time of pickup.`
-  });
+  const [emailValue, setEmailValue] = useState({});
 
   useEffect(() => {
     userDocRef
@@ -88,7 +78,26 @@ const SearchBookCard = props => {
     infoModal ? setInfoModal(false) : setInfoModal(true);
   };
   const toggleRequestModal = () => {
-    requestModal ? setRequestModal(false) : setRequestModal(true);
+    if (requestModal) {
+      setRequestModal(false);
+      setEmailValue({});
+    } else {
+      setRequestModal(true);
+      setEmailFunc();
+    }
+  };
+  const setEmailFunc = () => {
+    setEmailValue({
+      to: props.book.ownerEmail,
+      from: userEmail,
+      subject: "Requested Book from Neighborhood Library",
+      text: `User with email: ${userEmail}, has requested to borrow one of your books: ${
+        props.book.title
+      }, Please email them back to setup location and time of pickup.`,
+      html: `User with email: ${userEmail}, has requested to borrow one of your books: ${
+        props.book.title
+      }, Please email them back to setup location and time of pickup.`
+    });
   };
   const submitRequest = () => {
     // const msg = emailValue
@@ -98,6 +107,7 @@ const SearchBookCard = props => {
     //
     // bookDocRef.update({requestedId: firebase.firestore.FieldValue.arrayUnion(user.uid)})
   };
+  console.log(emailValue);
 
   return (
     <SearchBookCardDiv>
