@@ -6,13 +6,11 @@ import {
   CardBody,
   CardHeader,
   Button,
-  Collapse,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
 
 const SearchBookCardDiv = styled.div`
   margin: 15px;
@@ -31,16 +29,6 @@ const SearchBookCardDiv = styled.div`
     }
   }
 
-  .descHold {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-top: 1px solid rgb(240, 240, 240);
-    border-bottom: 1px solid rgb(240, 240, 240);
-    background-color: rgb(245, 245, 245);
-    padding: 10px;
-  }
-
   .buttonz {
     display: flex;
     flex-direction: column;
@@ -48,21 +36,17 @@ const SearchBookCardDiv = styled.div`
     justify-content: center;
     padding-top: 10px;
   }
-
-  h6 {
-    display: flex;
-  }
 `;
 
 const SearchBookCard = props => {
-  const [collapse, setCollapse] = useState(false);
-  const [modal, setModal] = useState(false);
+  const [infoModal, setInfoModal] = useState(false);
+  const [requestModal, setRequestModal] = useState(false);
 
-  const toggleCollapse = () => {
-    collapse ? setCollapse(false) : setCollapse(true);
+  const toggleInfoModal = () => {
+    infoModal ? setInfoModal(false) : setInfoModal(true);
   };
-  const toggleModal = () => {
-    modal ? setModal(false) : setModal(true);
+  const toggleRequestModal = () => {
+    requestModal ? setRequestModal(false) : setRequestModal(true);
   };
 
   return (
@@ -82,12 +66,15 @@ const SearchBookCard = props => {
           <img src={props.book.googThumbnail} alt="book_thumb" />
         </div>
         <CardBody>
-          <Collapse isOpen={collapse}>
-            <CardHeader>Page Count: {props.book.pageCount}</CardHeader>
-            <CardHeader>Publisher: {props.book.publisher}</CardHeader>
-            <CardHeader>Published:{props.book.publishedDate}</CardHeader>
-            <CardHeader>Description:{props.book.description}</CardHeader>
-            <CardHeader>
+          <Modal isOpen={infoModal} toggle={toggleInfoModal} centered>
+            <h3>
+              <u>Book Information</u>
+            </h3>
+            <ModalHeader>Page Count: {props.book.pageCount}</ModalHeader>
+            <ModalHeader>Publisher: {props.book.publisher}</ModalHeader>
+            <ModalHeader>Published:{props.book.publishedDate}</ModalHeader>
+            <ModalHeader>Description:{props.book.description}</ModalHeader>
+            <ModalHeader>
               {!props.book.googIi
                 ? ""
                 : props.book.googIi.map(ident => {
@@ -99,30 +86,26 @@ const SearchBookCard = props => {
                         </div>
                       ));
                   })}
-            </CardHeader>
-          </Collapse>
+            </ModalHeader>
+          </Modal>
           <div className="buttonz">
-            <Button
-              color="info"
-              onClick={toggleCollapse}
-              style={{ marginBottom: "1rem" }}
-            >
+            <Button color="info" onClick={toggleInfoModal}>
               More Details
             </Button>
-            <Button color="success" onClick={toggleModal}>
+            <Button color="primary" onClick={toggleRequestModal}>
               Request Book
             </Button>
-            <Modal isOpen={modal} toggle={toggleModal}>
-              <ModalHeader toggle={toggleModal}>
-                Request Book from user
-              </ModalHeader>
+            <Modal isOpen={requestModal} toggle={toggleRequestModal} centered>
+              <ModalHeader>Request Book from user</ModalHeader>
               <ModalBody>
                 Are you sure you want to request book: {props.book.title} from
                 user?
               </ModalBody>
               <ModalFooter>
-                <Button>Confirm</Button>
-                <Button>Cancel</Button>
+                <Button color="success">Confirm</Button>
+                <Button onClick={toggleRequestModal} color="secondary">
+                  Cancel
+                </Button>
               </ModalFooter>
             </Modal>
           </div>
