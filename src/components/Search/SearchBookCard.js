@@ -53,6 +53,7 @@ const SearchBookCard = props => {
     .firestore()
     .collection("books")
     .doc(props.book.id);
+  const alert = useAlert();
   const [infoModal, setInfoModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
@@ -98,14 +99,34 @@ const SearchBookCard = props => {
   };
 
   const submitRequest = () => {
-    // const msg = emailValue
-    // Axios.post(URL,msg).then(res=>{
-    //     console.log(res.data)
-    // })
+    bookDocRef
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          const requestedId = doc.data().requestedId;
+          if (requestedId.includes(user.uid)) {
+            return alert.error(
+              "You have already requested this book from owner, please wait for a response back."
+            );
+          } else {
+            const msg = emailValue;
+            Axios.post(URL, msg).then(res => {
+              bookDocRef.update({
+                requestedId: firebase.firestore.FieldValue.arrayUnion(user.uid)
+              });
+              alert.success("Successfully requested book from owner.");
+              console.log(res.data);
+            });
+          }
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch(error => {
+        console.log("Error getting document:", error);
+      });
     //
-    // bookDocRef.update({requestedId: firebase.firestore.FieldValue.arrayUnion(user.uid)})
   };
-  console.log(emailValue);
   return (
     <SearchBookCardDiv>
       <Card className="heightLimiter">
