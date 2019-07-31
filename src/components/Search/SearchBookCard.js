@@ -83,22 +83,20 @@ const SearchBookCard = props => {
       setEmailValue({});
     } else {
       setRequestModal(true);
-      setEmailFunc();
+      setEmailValue({
+        to: props.book.ownerEmail,
+        from: userEmail,
+        subject: "Requested Book from Neighborhood Library",
+        text: `User with email: ${userEmail}, has requested to borrow one of your books: ${
+          props.book.title
+        }, Please email them back to setup location and time of pickup.`,
+        html: `User with email: ${userEmail}, has requested to borrow one of your books: ${
+          props.book.title
+        }, Please email them back to setup location and time of pickup.`
+      });
     }
   };
-  const setEmailFunc = () => {
-    setEmailValue({
-      to: props.book.ownerEmail,
-      from: userEmail,
-      subject: "Requested Book from Neighborhood Library",
-      text: `User with email: ${userEmail}, has requested to borrow one of your books: ${
-        props.book.title
-      }, Please email them back to setup location and time of pickup.`,
-      html: `User with email: ${userEmail}, has requested to borrow one of your books: ${
-        props.book.title
-      }, Please email them back to setup location and time of pickup.`
-    });
-  };
+
   const submitRequest = () => {
     // const msg = emailValue
     // Axios.post(URL,msg).then(res=>{
@@ -108,7 +106,6 @@ const SearchBookCard = props => {
     // bookDocRef.update({requestedId: firebase.firestore.FieldValue.arrayUnion(user.uid)})
   };
   console.log(emailValue);
-
   return (
     <SearchBookCardDiv>
       <Card className="heightLimiter">
