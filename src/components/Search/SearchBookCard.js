@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
 import styled from "styled-components";
 import {
@@ -6,13 +7,14 @@ import {
   CardBody,
   CardHeader,
   Button,
-  Collapse,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
+//
+import Axios from "axios";
+const URL = "https://neighborhoodlibraryback.herokuapp.com/email";
 
 const SearchBookCardDiv = styled.div`
   margin: 15px;
@@ -31,16 +33,6 @@ const SearchBookCardDiv = styled.div`
     }
   }
 
-  .descHold {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-top: 1px solid rgb(240, 240, 240);
-    border-bottom: 1px solid rgb(240, 240, 240);
-    background-color: rgb(245, 245, 245);
-    padding: 10px;
-  }
-
   .buttonz {
     display: flex;
     flex-direction: column;
@@ -48,23 +40,72 @@ const SearchBookCardDiv = styled.div`
     justify-content: center;
     padding-top: 10px;
   }
-
-  h6 {
-    display: flex;
-  }
 `;
 
 const SearchBookCard = props => {
-  const [collapse, setCollapse] = useState(false);
-  const [modal, setModal] = useState(false);
+  const auth = firebase.auth();
+  const user = auth.currentUser;
+  const userDocRef = firebase
+    .firestore()
+    .collection("users")
+    .doc(user.uid);
+  const bookDocRef = firebase
+    .firestore()
+    .collection("books")
+    .doc(props.book.id);
+  const [infoModal, setInfoModal] = useState(false);
+  const [requestModal, setRequestModal] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [emailValue, setEmailValue] = useState({});
 
-  const toggleCollapse = () => {
-    collapse ? setCollapse(false) : setCollapse(true);
+  useEffect(() => {
+    userDocRef
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          let email = doc.data().email;
+          setUserEmail(email);
+        } else {
+          console.log("No such document!");
+        }
+      })
+      .catch(error => {
+        console.log("Error getting the document:", error);
+      });
+  }, "");
+
+  const toggleInfoModal = () => {
+    infoModal ? setInfoModal(false) : setInfoModal(true);
   };
-  const toggleModal = () => {
-    modal ? setModal(false) : setModal(true);
+  const toggleRequestModal = () => {
+    if (requestModal) {
+      setRequestModal(false);
+      setEmailValue({});
+    } else {
+      setRequestModal(true);
+      setEmailValue({
+        to: props.book.ownerEmail,
+        from: userEmail,
+        subject: "Requested Book from Neighborhood Library",
+        text: `User with email: ${userEmail}, has requested to borrow one of your books: ${
+          props.book.title
+        }, Please email them back to setup location and time of pickup.`,
+        html: `User with email: ${userEmail}, has requested to borrow one of your books: ${
+          props.book.title
+        }, Please email them back to setup location and time of pickup.`
+      });
+    }
   };
 
+  const submitRequest = () => {
+    // const msg = emailValue
+    // Axios.post(URL,msg).then(res=>{
+    //     console.log(res.data)
+    // })
+    //
+    // bookDocRef.update({requestedId: firebase.firestore.FieldValue.arrayUnion(user.uid)})
+  };
+  console.log(emailValue);
   return (
     <SearchBookCardDiv>
       <Card className="heightLimiter">
@@ -82,12 +123,15 @@ const SearchBookCard = props => {
           <img src={props.book.googThumbnail} alt="book_thumb" />
         </div>
         <CardBody>
-          <Collapse isOpen={collapse}>
-            <CardHeader>Page Count: {props.book.pageCount}</CardHeader>
-            <CardHeader>Publisher: {props.book.publisher}</CardHeader>
-            <CardHeader>Published:{props.book.publishedDate}</CardHeader>
-            <CardHeader>Description:{props.book.description}</CardHeader>
-            <CardHeader>
+          <Modal isOpen={infoModal} toggle={toggleInfoModal} centered>
+            <h3>
+              <u>Book Information</u>
+            </h3>
+            <ModalHeader>Page Count: {props.book.pageCount}</ModalHeader>
+            <ModalHeader>Publisher: {props.book.publisher}</ModalHeader>
+            <ModalHeader>Published:{props.book.publishedDate}</ModalHeader>
+            <ModalHeader>Description:{props.book.description}</ModalHeader>
+            <ModalHeader>
               {!props.book.googIi
                 ? ""
                 : props.book.googIi.map(ident => {
@@ -99,30 +143,28 @@ const SearchBookCard = props => {
                         </div>
                       ));
                   })}
-            </CardHeader>
-          </Collapse>
+            </ModalHeader>
+          </Modal>
           <div className="buttonz">
-            <Button
-              color="info"
-              onClick={toggleCollapse}
-              style={{ marginBottom: "1rem" }}
-            >
+            <Button color="info" onClick={toggleInfoModal}>
               More Details
             </Button>
-            <Button color="success" onClick={toggleModal}>
+            <Button color="primary" onClick={toggleRequestModal}>
               Request Book
             </Button>
-            <Modal isOpen={modal} toggle={toggleModal}>
-              <ModalHeader toggle={toggleModal}>
-                Request Book from user
-              </ModalHeader>
+            <Modal isOpen={requestModal} toggle={toggleRequestModal} centered>
+              <ModalHeader>Request Book from user</ModalHeader>
               <ModalBody>
                 Are you sure you want to request book: {props.book.title} from
                 user?
               </ModalBody>
               <ModalFooter>
-                <Button>Confirm</Button>
-                <Button>Cancel</Button>
+                <Button onClick={submitRequest} color="success">
+                  Confirm
+                </Button>
+                <Button onClick={toggleRequestModal} color="secondary">
+                  Cancel
+                </Button>
               </ModalFooter>
             </Modal>
           </div>
