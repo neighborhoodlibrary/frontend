@@ -84,7 +84,6 @@ const LibraryBook = props => {
             <CardBodyDiv>
               <p>by: {props.book.authors}</p>
               <img src={props.book.googThumbnail} alt="book_thumb" />
-              <p>avgRating: {props.book.averageRating}</p>
             </CardBodyDiv>
           </CardBody>
         </NavLink>
