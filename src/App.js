@@ -24,6 +24,8 @@ import Search from "./components/Search/Search";
 import BookDetails from "./components/Shelf/BookDetails";
 //
 import Email from "./components/Email/Email";
+import Requested from "./components/Tranactions/Requested";
+import Receiving from "./components/Tranactions/Receiving";
 
 const LowerSection = styled.div`
   padding: 0px 20px;
@@ -67,6 +69,16 @@ function App() {
                     exact
                     path="/shelf/book/:id"
                     component={BookDetails}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/shelf/requested"
+                    component={Requested}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/shelf/receiving"
+                    component={Receiving}
                   />
                   <PrivateRoute exact path="/shelf/email" component={Email} />
                   <Route exact path="/" component={Landing} />
