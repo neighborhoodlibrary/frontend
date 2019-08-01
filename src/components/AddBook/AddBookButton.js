@@ -119,7 +119,7 @@ export default function AddBookButton(props) {
               id: idHold,
               ownerEmail: userEmail,
               requestedId: [],
-              returnRequest: false
+              transitionUser: ""
             });
           alert.success("Success!");
         } else {
