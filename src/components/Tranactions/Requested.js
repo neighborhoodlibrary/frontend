@@ -4,6 +4,7 @@ import "firebase/auth";
 import styled from "styled-components";
 //
 import RequestedBook from "./RequestedBook";
+import ToBeGivenBook from "./ToBeGivenBook";
 
 const ContainerWrapper = styled.div`
   display: flex;
@@ -36,22 +37,27 @@ const Requested = () => {
   const docRef = firebase.firestore().collection("books");
 
   const [requestedBooks, setRequestedBooks] = useState([]);
+  const [toBeGivenBooks, setToBeGivenBooks] = useState([]);
 
   const getRequested = () => {
-    let tempBooksArr = [];
+    let tempRequestedBooksArr = [];
+    let tempToBeGivenBooksArr = [];
     docRef
       .where("ownerId", "==", user.uid)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           let book = doc.data();
-          if (book.requestedId.length > 0) {
-            tempBooksArr.push(book);
+          if (book.requestedId.length > 0 && !book.transitionUser) {
+            tempRequestedBooksArr.push(book);
+          } else if (book.requestedId.length > 0 && book.transitionUser) {
+            tempToBeGivenBooksArr.push(book);
           }
         });
       })
       .then(() => {
-        setRequestedBooks(tempBooksArr);
+        setRequestedBooks(tempRequestedBooksArr);
+        setToBeGivenBooks(tempToBeGivenBooksArr);
       })
       .catch(error => {
         console.log("Error getting the documents:", error);
@@ -61,7 +67,7 @@ const Requested = () => {
   useEffect(() => {
     getRequested();
   }, []);
-  console.log();
+  console.log(toBeGivenBooks);
   return (
     <ContainerWrapper>
       <Container>
@@ -74,7 +80,16 @@ const Requested = () => {
           />
         ))}
       </Container>
-      <Container>Books To be given:</Container>
+      <Container>
+        Books To be given:
+        {toBeGivenBooks.map(book => (
+          <ToBeGivenBook
+            key={Math.random()}
+            book={book}
+            getRequested={getRequested}
+          />
+        ))}
+      </Container>
     </ContainerWrapper>
   );
 };
