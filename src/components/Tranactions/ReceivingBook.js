@@ -35,10 +35,31 @@ const CardBodyDiv = styled.div`
 `;
 
 const ReceivingBook = props => {
+  const bookDocRef = firebase
+    .firestore()
+    .collection("books")
+    .doc(props.book.id);
+  const alert = useAlert();
   const [receiveBookModal, setReceiveBookModal] = useState(false);
 
   const toggleReceiveBookModal = () => {
     receiveBookModal ? setReceiveBookModal(false) : setReceiveBookModal(true);
+  };
+
+  const confirmLoanBookFunc = () => {
+    const currentTransitionUser = props.book.transitionUser;
+    bookDocRef
+      .update({
+        borrowerId: currentTransitionUser,
+        transitionUser: firebase.firestore.FieldValue.delete(),
+        requestedId: firebase.firestore.FieldValue.arrayRemove(
+          currentTransitionUser
+        )
+      })
+      .then(() => {
+        alert.success("Confirmed, book received, Now in you Borrowed section");
+        props.getReceiving();
+      });
   };
 
   return (
@@ -60,10 +81,10 @@ const ReceivingBook = props => {
       <Modal isOpen={receiveBookModal} toggle={toggleReceiveBookModal}>
         <ModalHeader>Confirm book is now in your possession</ModalHeader>
         <ModalBody>
-          Confirm you have recieved book, set book in the loaned section?
+          Confirm you have recieved book, set book in the Borrowed section?
         </ModalBody>
         <ModalFooter>
-          <Button>Confirm</Button>
+          <Button onClick={confirmLoanBookFunc}>Confirm</Button>
           <Button onClick={toggleReceiveBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>

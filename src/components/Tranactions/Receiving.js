@@ -55,7 +55,11 @@ const Receiving = () => {
       Receiving Page:
       <Container>
         {receivingBooks.map(book => (
-          <ReceivingBook key={Math.random()} book={book} />
+          <ReceivingBook
+            key={Math.random()}
+            book={book}
+            getReceiving={getReceiving}
+          />
         ))}
       </Container>
     </div>
