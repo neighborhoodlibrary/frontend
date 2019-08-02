@@ -82,7 +82,7 @@ const ReceivingBook = props => {
       <Modal isOpen={receiveBookModal} toggle={toggleReceiveBookModal}>
         <ModalHeader>Confirm book is now in your possession</ModalHeader>
         <ModalBody>
-          Confirm you have recieved book, set book in the Borrowed section?
+          Confirm you have received book, set book in the Borrowed section?
         </ModalBody>
         <ModalFooter>
           <Button onClick={confirmLoanBookFunc}>Confirm</Button>

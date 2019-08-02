@@ -32,6 +32,7 @@ const Container = styled.div`
 
 const Loaned = () => {
   const [booksInfo, setBooksInfo] = useState([]);
+  const [recoverBooks, setRecoverBooks] = useState([]);
 
   const auth = firebase.auth();
 
@@ -40,7 +41,8 @@ const Loaned = () => {
   const docRef = firebase.firestore().collection("books");
 
   const getBooks = () => {
-    let tempBooksArr = [];
+    let tempLoanedBooksArr = [];
+    let tempRecoverBooksArr = [];
     docRef
       .where("ownerId", "==", user.uid)
       .where("checkedOut", "==", true)
@@ -48,11 +50,16 @@ const Loaned = () => {
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           let book = doc.data();
-          tempBooksArr.push(book);
+          if (book.transitionUser) {
+            tempRecoverBooksArr.push(book);
+          } else {
+            tempLoanedBooksArr.push(book);
+          }
         });
       })
       .then(() => {
-        setBooksInfo(tempBooksArr);
+        setBooksInfo(tempLoanedBooksArr);
+        setRecoverBooks(tempRecoverBooksArr);
       })
       .catch(error => {
         console.log("Error getting the docs:", error);
@@ -71,7 +78,10 @@ const Loaned = () => {
         ))}
       </Container>
       <Container>
-        <RecoverBook />
+        Recover Books:
+        {recoverBooks.map(book => (
+          <RecoverBook key={Math.random()} book={book} getBooks={getBooks} />
+        ))}
       </Container>
     </ContainerWrapper>
   );
