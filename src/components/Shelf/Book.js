@@ -45,6 +45,8 @@ const CardBodyDiv = styled.div`
 
 const LibraryBook = props => {
   const db = firebase.firestore();
+  const auth = firebase.auth();
+  const user = auth.currentUser;
   const alert = useAlert();
   const bookContext = useContext(BookContext);
   const userContext = useContext(UserContext);
@@ -117,7 +119,7 @@ const LibraryBook = props => {
           </CardBody>
         </NavLink>
         <CardFooter>
-          {props.book.borrowerId ? (
+          {props.book.borrowerId === user.uid ? (
             <Button onClick={toggleReturnBookModal}>Return Book</Button>
           ) : (
             ""
@@ -133,7 +135,7 @@ const LibraryBook = props => {
           <Button color="danger" onClick={deleteBook}>
             Confirm
           </Button>
-          <Button onClick={toggleReturnBookModal}>Cancel</Button>
+          <Button onClick={toggleDeleteBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
       <Modal isOpen={returnBookModal} toggle={toggleReturnBookModal} centered>
