@@ -46,7 +46,16 @@ const RecoverBook = props => {
   };
 
   const confirmRecoverBookFunc = () => {
-    console.log("fired");
+    bookDocRef
+      .update({
+        borrowerId: "",
+        checkedOut: false,
+        transitionUser: ""
+      })
+      .then(() => {
+        alert.success("Confirmed, book received, back in your library");
+        props.getBooks();
+      });
   };
 
   return (
