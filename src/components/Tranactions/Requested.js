@@ -67,7 +67,7 @@ const Requested = () => {
   useEffect(() => {
     getRequested();
   }, []);
-  console.log(toBeGivenBooks);
+  // console.log(toBeGivenBooks);
   return (
     <ContainerWrapper>
       <Container>

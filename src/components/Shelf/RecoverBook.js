@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import firebase from "../../firebase/firebase.utils";
+import "firebase/auth";
+import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -9,9 +12,6 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
-
-import firebase from "../../firebase/firebase.utils";
-import { useAlert } from "react-alert";
 import styled from "styled-components";
 
 const CardDiv = styled.div`
@@ -34,28 +34,27 @@ const CardBodyDiv = styled.div`
   align-items: center;
 `;
 
-const ToBeGivenBook = props => {
+const RecoverBook = props => {
   const bookDocRef = firebase
     .firestore()
     .collection("books")
     .doc(props.book.id);
   const alert = useAlert();
-  const [removeToGiveModal, setRemoveToGiveModal] = useState(false);
-
-  const toggleRemoveToGiveModal = () => {
-    removeToGiveModal
-      ? setRemoveToGiveModal(false)
-      : setRemoveToGiveModal(true);
+  const [recoverBookModal, setRecoverBookModal] = useState(false);
+  const toggleRecoverBookModal = () => {
+    recoverBookModal ? setRecoverBookModal(false) : setRecoverBookModal(true);
   };
 
-  const submitRemoveTransition = () => {
+  const confirmRecoverBookFunc = () => {
     bookDocRef
       .update({
+        borrowerId: "",
+        checkedOut: false,
         transitionUser: ""
       })
       .then(() => {
-        alert.success("Removal from give section successful");
-        props.getRequested();
+        alert.success("Confirmed, book received, back in your library");
+        props.getBooks();
       });
   };
 
@@ -70,25 +69,23 @@ const ToBeGivenBook = props => {
             <p>by: {props.book.authors}</p>
             <img src={props.book.googThumbnail} alt="book_thumb" />
           </CardBodyDiv>
-          <Button onClick={toggleRemoveToGiveModal}>Remove from To Give</Button>
+          <Button onClick={toggleRecoverBookModal}>
+            Confirm recovery of book
+          </Button>
         </CardBody>
       </Card>
-      <Modal
-        isOpen={removeToGiveModal}
-        toggle={toggleRemoveToGiveModal}
-        centered
-      >
-        <ModalHeader>Remove from To Give Section</ModalHeader>
+      <Modal isOpen={recoverBookModal} toggle={toggleRecoverBookModal}>
+        <ModalHeader>Confirm book is now in your possesion</ModalHeader>
         <ModalBody>
-          Are you sure you want to remove user from the to give section?
+          Confirm you have received book, and set it back to your Library?
         </ModalBody>
         <ModalFooter>
-          <Button onClick={submitRemoveTransition}>Confirm</Button>
-          <Button onClick={toggleRemoveToGiveModal}>Cancel</Button>
+          <Button onClick={confirmRecoverBookFunc}>Confirm</Button>
+          <Button onClick={toggleRecoverBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </CardDiv>
   );
 };
 
-export default ToBeGivenBook;
+export default RecoverBook;

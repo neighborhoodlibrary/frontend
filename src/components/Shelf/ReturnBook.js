@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import firebase from "../../firebase/firebase.utils";
+import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -9,9 +11,6 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
-
-import firebase from "../../firebase/firebase.utils";
-import { useAlert } from "react-alert";
 import styled from "styled-components";
 
 const CardDiv = styled.div`
@@ -34,18 +33,18 @@ const CardBodyDiv = styled.div`
   align-items: center;
 `;
 
-const ToBeGivenBook = props => {
+const ReturnBook = props => {
   const bookDocRef = firebase
     .firestore()
     .collection("books")
     .doc(props.book.id);
   const alert = useAlert();
-  const [removeToGiveModal, setRemoveToGiveModal] = useState(false);
+  const [removeReturnModal, setRemoveReturnModal] = useState(false);
 
-  const toggleRemoveToGiveModal = () => {
-    removeToGiveModal
-      ? setRemoveToGiveModal(false)
-      : setRemoveToGiveModal(true);
+  const toggleRemoveReturnModal = () => {
+    removeReturnModal
+      ? setRemoveReturnModal(false)
+      : setRemoveReturnModal(true);
   };
 
   const submitRemoveTransition = () => {
@@ -54,8 +53,8 @@ const ToBeGivenBook = props => {
         transitionUser: ""
       })
       .then(() => {
-        alert.success("Removal from give section successful");
-        props.getRequested();
+        alert.success("Removal from the return section successful");
+        props.getBooks();
       });
   };
 
@@ -70,25 +69,25 @@ const ToBeGivenBook = props => {
             <p>by: {props.book.authors}</p>
             <img src={props.book.googThumbnail} alt="book_thumb" />
           </CardBodyDiv>
-          <Button onClick={toggleRemoveToGiveModal}>Remove from To Give</Button>
+          <Button onClick={toggleRemoveReturnModal}>Remove from return</Button>
         </CardBody>
       </Card>
       <Modal
-        isOpen={removeToGiveModal}
-        toggle={toggleRemoveToGiveModal}
+        isOpen={removeReturnModal}
+        toggle={toggleRemoveReturnModal}
         centered
       >
-        <ModalHeader>Remove from To Give Section</ModalHeader>
+        <ModalHeader>Remove from the return section</ModalHeader>
         <ModalBody>
-          Are you sure you want to remove user from the to give section?
+          Are you sure you want to remove the book from the return section?
         </ModalBody>
         <ModalFooter>
           <Button onClick={submitRemoveTransition}>Confirm</Button>
-          <Button onClick={toggleRemoveToGiveModal}>Cancel</Button>
+          <Button onClick={toggleRemoveReturnModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </CardDiv>
   );
 };
 
-export default ToBeGivenBook;
+export default ReturnBook;

@@ -116,6 +116,12 @@ const RequestedBook = props => {
   };
 
   const submitLoan = uOption => {
+    if (props.book.borrowerId) {
+      return alert.error(
+        "Book is already checked out, can not loan it out currently"
+      );
+    }
+
     if (!uOption) {
       alert.error("Must choose user to loan book to");
     } else {
