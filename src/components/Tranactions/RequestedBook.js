@@ -119,7 +119,21 @@ const RequestedBook = props => {
     if (!uOption) {
       alert.error("Must choose user to loan book to");
     } else {
-      console.log(uOption);
+      // bookDocRef.runTransaction(transaction=>{
+      //   transaction.get(bookDocRef)
+      // })
+      bookDocRef
+        .update({
+          transitionUser: uOption
+        })
+        .then(() => {
+          console.log("Document successfully updated");
+          alert.success("Book sent to given section");
+          props.getRequested();
+        })
+        .catch(error => {
+          console.error("Error updating document", error);
+        });
     }
   };
 
