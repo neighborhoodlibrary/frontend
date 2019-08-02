@@ -13,11 +13,12 @@ const HeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  margin: 20px 0px;
+  margin: 0px 0px 20px 0px;
 
   h1 {
     font-size: 3.25em;
     font-family: "Merriweather", serif;
+    color: white;
   }
 
   a {
