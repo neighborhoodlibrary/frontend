@@ -51,7 +51,7 @@ const ReceivingBook = props => {
     bookDocRef
       .update({
         borrowerId: currentTransitionUser,
-        transitionUser: firebase.firestore.FieldValue.delete(),
+        transitionUser: "",
         requestedId: firebase.firestore.FieldValue.arrayRemove(
           currentTransitionUser
         )
