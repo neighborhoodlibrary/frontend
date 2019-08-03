@@ -1,4 +1,4 @@
-// app=> header(navMenu) && landing && privateRoute if(loggedIn)=> shelf
+// app=> header(navMenu/signInComponent) && landing && privateRoute if(loggedIn)=> shelf
 import React from "react";
 import Header from "./header/Header";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
