@@ -10,7 +10,8 @@ import BookState from "./context/book/BookState";
 // when user is not logged in...
 import Landing from "./views/Landing";
 // shelf components
-import MyShelf from "./views/MyShelf/MyShelf";
+// import MyShelf from "./views/MyShelf/MyShelf";
+import MainShelf from "./components/Shelf/MainShelf";
 import Library from "./components/Shelf/Library";
 import Loaned from "./components/Shelf/Loaned";
 import Borrowed from "./components/Shelf/Borrowed";
@@ -48,7 +49,7 @@ function App() {
               <LowerSection>
                 <Switch>
                   {/* shelf components */}
-                  <PrivateRoute exact path="/shelf" component={MyShelf} />
+                  <PrivateRoute exact path="/shelf" component={MainShelf} />
                   <PrivateRoute
                     exact
                     path="/shelf/library"
