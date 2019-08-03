@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import NavMenu from "./NavMenu/NavMenu";
+import NavMenu from "./NavMenu";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
-import SignInButton from "../SignIn/SignInButton";
+import SignInComponent from "./SignInComponent";
 
 import UserContext from "../../context/user/userContext";
 
@@ -81,7 +81,7 @@ export default function Header() {
       </NavLink>
       <SideBar>
         {loggedIn === true ? <NavMenu /> : ""}
-        <SignInButton signOut={signOut} />
+        <SignInComponent signOut={signOut} />
       </SideBar>
     </HeaderDiv>
   );

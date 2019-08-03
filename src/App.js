@@ -1,3 +1,4 @@
+// app=> header(navMenu) && landing && privateRoute if(loggedIn)=> shelf
 import React from "react";
 import Header from "./components/Header/Header";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
@@ -8,7 +9,7 @@ import AlertTemplate from "react-alert-template-basic";
 import UserState from "./context/user/UserState";
 import BookState from "./context/book/BookState";
 // when user is not logged in...
-import Landing from "./views/Landing";
+import Landing from "./landing/Landing";
 // shelf components
 // import MyShelf from "./views/MyShelf/MyShelf";
 import MainShelf from "./components/Shelf/MainShelf";
