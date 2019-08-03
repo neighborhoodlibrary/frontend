@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import UserContext from "../../context/user/userContext";
-import firebase from "../../firebase/firebase.utils";
+import UserContext from "../context/user/userContext";
+import firebase from "../firebase/firebase.utils";
 import { Button } from "reactstrap";
 import "firebase/auth";
 import { NavLink } from "react-router-dom";

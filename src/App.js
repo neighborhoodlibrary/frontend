@@ -1,6 +1,6 @@
 // app=> header(navMenu) && landing && privateRoute if(loggedIn)=> shelf
 import React from "react";
-import Header from "./components/Header/Header";
+import Header from "./header/Header";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import PrivateRoute from "./authentication/PrivateRoute";
 import { Provider as AlertProvider } from "react-alert";

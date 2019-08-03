@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import SignInComponent from "./SignInComponent";
 
-import UserContext from "../../context/user/userContext";
+import UserContext from "../context/user/userContext";
 
-import firebase from "../../firebase/firebase.utils";
+import firebase from "../firebase/firebase.utils";
 import "firebase/auth";
 
 const HeaderDiv = styled.div`
