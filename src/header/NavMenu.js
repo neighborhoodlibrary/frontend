@@ -82,7 +82,8 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  UncontrolledTooltip
 } from "reactstrap";
 
 const NavMenuDiv = styled.div`
@@ -126,17 +127,29 @@ const NavMenu = () => {
           <DropdownToggle caret>Shelf</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf">
-              <DropdownItem>Shelf</DropdownItem>
+              <DropdownItem id="shelfTooltip">Shelf</DropdownItem>
+              <UncontrolledTooltip placement="auto" target="shelfTooltip">
+                All books
+              </UncontrolledTooltip>
             </NavLink>
             <DropdownItem divider />
             <NavLink to="/shelf/library">
-              <DropdownItem>Library</DropdownItem>
+              <DropdownItem id="libraryTooltip">Library</DropdownItem>
+              <UncontrolledTooltip placement="auto" target="libraryTooltip">
+                Books you personally own
+              </UncontrolledTooltip>
             </NavLink>
             <NavLink to="/shelf/loaned">
-              <DropdownItem>Loaned</DropdownItem>
+              <DropdownItem id="loanedTooltip">Loaned</DropdownItem>
+              <UncontrolledTooltip placement="auto" target="loanedTooltip">
+                Books you have loaned
+              </UncontrolledTooltip>
             </NavLink>
             <NavLink to="/shelf/borrowed">
-              <DropdownItem>Borrowed</DropdownItem>
+              <DropdownItem id="borrowedTooltip">Borrowed</DropdownItem>
+              <UncontrolledTooltip placement="auto" target="borrowedTooltip">
+                Books you have borrowed
+              </UncontrolledTooltip>
             </NavLink>
           </DropdownMenu>
         </Dropdown>
@@ -146,10 +159,18 @@ const NavMenu = () => {
           <DropdownToggle caret>Lookup</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf/add">
-              <DropdownItem>Add A Book</DropdownItem>
+              <DropdownItem id="addTooltip">Add A Book</DropdownItem>
+              <UncontrolledTooltip placement="auto" target="addTooltip">
+                Add a book to your personal library
+              </UncontrolledTooltip>
             </NavLink>
             <NavLink to="/shelf/search">
-              <DropdownItem>Search other Libraries</DropdownItem>
+              <DropdownItem id="searchTooltip">
+                Search other Libraries
+              </DropdownItem>
+              <UncontrolledTooltip placement="auto" target="searchTooltip">
+                Search other personal libraries to request to borrow
+              </UncontrolledTooltip>
             </NavLink>
           </DropdownMenu>
         </Dropdown>
@@ -162,10 +183,16 @@ const NavMenu = () => {
           <DropdownToggle caret>Transactions</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf/requested">
-              <DropdownItem>Requested</DropdownItem>
+              <DropdownItem id="requestedTooltip">Requested</DropdownItem>
+              <UncontrolledTooltip placement="auto" target="requestedTooltip">
+                Books you have requested to borrow
+              </UncontrolledTooltip>
             </NavLink>
             <NavLink to="/shelf/receiving">
-              <DropdownItem>Receiving</DropdownItem>
+              <DropdownItem id="receivingTooltip">Receiving</DropdownItem>
+              <UncontrolledTooltip placement="auto" target="receivingTooltip">
+                Books you are about to receive, confirm to borrow
+              </UncontrolledTooltip>
             </NavLink>
           </DropdownMenu>
         </Dropdown>
@@ -175,7 +202,10 @@ const NavMenu = () => {
           <DropdownToggle caret>Settings</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf/map">
-              <DropdownItem>Map</DropdownItem>
+              <DropdownItem id="mapTooltip">Map</DropdownItem>
+              <UncontrolledTooltip placement="auto" target="mapTooltip">
+                Assign the location of your personal library
+              </UncontrolledTooltip>
             </NavLink>
           </DropdownMenu>
         </Dropdown>
