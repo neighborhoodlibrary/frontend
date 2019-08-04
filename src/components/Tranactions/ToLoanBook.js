@@ -3,6 +3,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   Button,
   Modal,
   ModalHeader,
@@ -25,7 +26,6 @@ const CardDiv = styled.div`
 `;
 const CardHeaderDiv = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 const CardBodyDiv = styled.div`
@@ -63,15 +63,20 @@ const ToBeGivenBook = props => {
     <CardDiv>
       <Card>
         <CardHeader>
-          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
+          <CardHeaderDiv>
+            <Button color="danger" onClick={toggleRemoveToGiveModal}>
+              X
+            </Button>
+            {props.book.title}
+          </CardHeaderDiv>
         </CardHeader>
         <CardBody>
           <CardBodyDiv>
             <p>by: {props.book.authors}</p>
             <img src={props.book.googThumbnail} alt="book_thumb" />
           </CardBodyDiv>
-          <Button onClick={toggleRemoveToGiveModal}>Remove from To Give</Button>
         </CardBody>
+        <CardFooter />
       </Card>
       <Modal
         isOpen={removeToGiveModal}
@@ -80,10 +85,12 @@ const ToBeGivenBook = props => {
       >
         <ModalHeader>Remove from To Give Section</ModalHeader>
         <ModalBody>
-          Are you sure you want to remove user from the to give section?
+          Are you sure you want to remove user from the to loan section?
         </ModalBody>
         <ModalFooter>
-          <Button onClick={submitRemoveTransition}>Confirm</Button>
+          <Button color="danger" onClick={submitRemoveTransition}>
+            Confirm
+          </Button>
           <Button onClick={toggleRemoveToGiveModal}>Cancel</Button>
         </ModalFooter>
       </Modal>

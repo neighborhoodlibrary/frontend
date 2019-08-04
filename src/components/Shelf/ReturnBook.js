@@ -5,6 +5,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   Button,
   Modal,
   ModalHeader,
@@ -69,8 +70,10 @@ const ReturnBook = props => {
             <p>by: {props.book.authors}</p>
             <img src={props.book.googThumbnail} alt="book_thumb" />
           </CardBodyDiv>
-          <Button onClick={toggleRemoveReturnModal}>Remove from return</Button>
         </CardBody>
+        <CardFooter>
+          <Button onClick={toggleRemoveReturnModal}>Remove from return</Button>
+        </CardFooter>
       </Card>
       <Modal
         isOpen={removeReturnModal}

@@ -33,7 +33,6 @@ const CardDiv = styled.div`
 
 const CardHeaderDiv = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
@@ -100,14 +99,14 @@ const LibraryBook = props => {
       <Card>
         <CardHeader>
           <CardHeaderDiv>
-            {props.book.title}
             {props.book.ownerId !== userInfo.uid ? (
               ""
             ) : (
               <Button color="danger" onClick={toggleDeleteBookModal}>
-                Delete Book
+                X
               </Button>
             )}
+            {props.book.title}
           </CardHeaderDiv>
         </CardHeader>
         <NavLink to={`/shelf/book/${props.book.id}`} onClick={setBookFunc}>
@@ -120,7 +119,9 @@ const LibraryBook = props => {
         </NavLink>
         <CardFooter>
           {props.book.borrowerId === user.uid ? (
-            <Button onClick={toggleReturnBookModal}>Return Book</Button>
+            <Button color="primary" onClick={toggleReturnBookModal}>
+              Return Book
+            </Button>
           ) : (
             ""
           )}

@@ -4,29 +4,55 @@ import "firebase/auth";
 import styled from "styled-components";
 //
 import RequestedBook from "./RequestedBook";
-import ToBeGivenBook from "./ToBeGivenBook";
+import ToBeGivenBook from "./ToLoanBook";
 
 const ContainerWrapper = styled.div`
   display: flex;
   justify-content: space-around;
 `;
 
-const Container = styled.div`
-  width: 50vw;
+const Container1 = styled.div`
   display: grid;
-  border-left: 1px solid gray;
+  width:50vw
+  border-left: 1px solid gray
   border-right: 1px solid gray;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  
+  @media (max-width: 1100px) {
+    width: 50vw
+    grid-template-columns: 1fr 1fr;
+    
+  }
+  
+  @media (max-width: 870px) {
+    width: 50vw
+    grid-template-columns: 1fr;
+  }
+  
+  @media (max-width: 550px) {
+    width:50vw
+    grid-template-columns: 1fr;
+  }
+  `;
+const Container2 = styled.div`
+  display: grid;
+  width: 50vw
+  border-left: 1px solid gray
+  border-right: 1px solid gray;
+  grid-template-columns: 1fr 1fr;
 
   @media (max-width: 1100px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  @media (max-width: 870px) {
+    width: 50vw
     grid-template-columns: 1fr 1fr;
   }
 
+  @media (max-width: 870px) {
+    width:50vw
+    grid-template-columns: 1fr; 
+  }
+
   @media (max-width: 550px) {
+    width:50vw
     grid-template-columns: 1fr;
   }
 `;
@@ -67,29 +93,36 @@ const Requested = () => {
   useEffect(() => {
     getRequested();
   }, []);
-  // console.log(toBeGivenBooks);
   return (
     <ContainerWrapper>
-      <Container>
-        Requested Books:
-        {requestedBooks.map(book => (
-          <RequestedBook
-            key={Math.random()}
-            book={book}
-            getRequested={getRequested}
-          />
-        ))}
-      </Container>
-      <Container>
-        Books To be given:
-        {toBeGivenBooks.map(book => (
-          <ToBeGivenBook
-            key={Math.random()}
-            book={book}
-            getRequested={getRequested}
-          />
-        ))}
-      </Container>
+      <div>
+        <h5>
+          <u>Requested Books:</u>
+        </h5>
+        <Container1>
+          {requestedBooks.map(book => (
+            <RequestedBook
+              key={Math.random()}
+              book={book}
+              getRequested={getRequested}
+            />
+          ))}
+        </Container1>
+      </div>
+      <div>
+        <h5>
+          <u>Books To Loan:</u>
+        </h5>
+        <Container2>
+          {toBeGivenBooks.map(book => (
+            <ToBeGivenBook
+              key={Math.random()}
+              book={book}
+              getRequested={getRequested}
+            />
+          ))}
+        </Container2>
+      </div>
     </ContainerWrapper>
   );
 };

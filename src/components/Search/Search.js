@@ -278,7 +278,9 @@ const Search = props => {
       </Col>
       <Col xs="12" md="6">
         <div>Book results</div>
-        <Button onClick={searchBooksFunc}>Search for Books</Button>
+        <Button color="primary" onClick={searchBooksFunc}>
+          Search for Books
+        </Button>
         <Container>
           {booksArray.map(book => (
             <SearchBookCard key={Math.random()} book={book} />
