@@ -77,7 +77,7 @@ const ReceivingBook = props => {
           </CardBodyDiv>
         </CardBody>
         <CardFooter>
-          <Button onClick={toggleReceiveBookModal}>
+          <Button color="primary" onClick={toggleReceiveBookModal}>
             Confirm recieved Book
           </Button>
         </CardFooter>
@@ -88,7 +88,9 @@ const ReceivingBook = props => {
           Confirm you have received book, set book in the Borrowed section?
         </ModalBody>
         <ModalFooter>
-          <Button onClick={confirmLoanBookFunc}>Confirm</Button>
+          <Button color="success" onClick={confirmLoanBookFunc}>
+            Confirm
+          </Button>
           <Button onClick={toggleReceiveBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>

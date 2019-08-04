@@ -277,10 +277,15 @@ const Search = props => {
         </Map>
       </Col>
       <Col xs="12" md="6">
-        <div>Book results</div>
+        <div>
+          <h5>Search for books within the set search distances</h5>
+        </div>
         <Button color="primary" onClick={searchBooksFunc}>
           Search for Books
         </Button>
+        <div>
+          <h6>Book results:</h6>
+        </div>
         <Container>
           {booksArray.map(book => (
             <SearchBookCard key={Math.random()} book={book} />

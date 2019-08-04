@@ -53,7 +53,9 @@ const Receiving = () => {
 
   return (
     <div>
-      Receiving Page:
+      <h5>
+        <u>Receiving Books:</u>
+      </h5>
       <Container>
         {receivingBooks.map(book => (
           <ReceivingBook

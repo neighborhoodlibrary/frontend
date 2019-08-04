@@ -99,6 +99,7 @@ const SearchBookCard = props => {
   };
 
   const submitRequest = () => {
+    alert.info("Please wait, sending request via email...");
     bookDocRef
       .get()
       .then(doc => {
