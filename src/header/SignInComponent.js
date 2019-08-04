@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import UserContext from "../../context/user/userContext";
-import firebase from "../../firebase/firebase.utils";
+import UserContext from "../context/user/userContext";
+import firebase from "../firebase/firebase.utils";
 import { Button } from "reactstrap";
 import "firebase/auth";
 import { NavLink } from "react-router-dom";
 import { useAlert } from "react-alert";
 
-export default function SignInButton(props) {
+export default function SignInComponent(props) {
   const alert = useAlert();
   const userContext = useContext(UserContext);
 
