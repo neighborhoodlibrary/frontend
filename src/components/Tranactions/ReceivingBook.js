@@ -7,6 +7,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   Button,
   Modal,
   ModalHeader,
@@ -74,10 +75,12 @@ const ReceivingBook = props => {
             <p>by: {props.book.authors}</p>
             <img src={props.book.googThumbnail} alt="book_thumb" />
           </CardBodyDiv>
-          <Button onClick={toggleReceiveBookModal}>
+        </CardBody>
+        <CardFooter>
+          <Button color="primary" onClick={toggleReceiveBookModal}>
             Confirm recieved Book
           </Button>
-        </CardBody>
+        </CardFooter>
       </Card>
       <Modal isOpen={receiveBookModal} toggle={toggleReceiveBookModal}>
         <ModalHeader>Confirm book is now in your possession</ModalHeader>
@@ -85,7 +88,9 @@ const ReceivingBook = props => {
           Confirm you have received book, set book in the Borrowed section?
         </ModalBody>
         <ModalFooter>
-          <Button onClick={confirmLoanBookFunc}>Confirm</Button>
+          <Button color="success" onClick={confirmLoanBookFunc}>
+            Confirm
+          </Button>
           <Button onClick={toggleReceiveBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>

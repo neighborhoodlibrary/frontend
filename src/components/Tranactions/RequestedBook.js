@@ -3,6 +3,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   Button,
   ButtonDropdown,
   DropdownToggle,
@@ -149,16 +150,24 @@ const RequestedBook = props => {
     <CardDiv>
       <Card>
         <CardHeader>
-          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
+          <CardHeaderDiv>
+            <Button color="danger" onClick={toggleRemoveRequestModal}>
+              X
+            </Button>
+            {props.book.title}
+          </CardHeaderDiv>
         </CardHeader>
         <CardBody>
           <CardBodyDiv>
             <p>by: {props.book.authors}</p>
             <img src={props.book.googThumbnail} alt="book_thumb" />
           </CardBodyDiv>
-          <Button onClick={toggleRemoveRequestModal}>Remove requested</Button>
-          <Button onClick={toggleLoanBookModal}>Set to Lend User</Button>
         </CardBody>
+        <CardFooter>
+          <Button color="primary" onClick={toggleLoanBookModal}>
+            Set to Lend User
+          </Button>
+        </CardFooter>
       </Card>
       <Modal
         isOpen={removeRequestModal}
@@ -187,6 +196,7 @@ const RequestedBook = props => {
         </ModalBody>
         <ModalFooter>
           <Button
+            color="danger"
             onClick={() => {
               submitRemove(userOption);
             }}
@@ -219,6 +229,7 @@ const RequestedBook = props => {
         </ModalBody>
         <ModalFooter>
           <Button
+            color="success"
             onClick={() => {
               submitLoan(userOption);
             }}
