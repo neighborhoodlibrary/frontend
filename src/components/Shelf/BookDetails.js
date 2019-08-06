@@ -59,8 +59,6 @@ const Book = props => {
     props.history.goBack();
   };
 
-  console.log(displayedBook);
-
   return (
     <ContainerDiv>
       <BookHold>
