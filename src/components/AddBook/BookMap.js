@@ -29,15 +29,9 @@ const BookMapDiv = styled.div`
 export default function BookMap(props) {
   return (
     <BookMapDiv>
-      {props.bookResults !== undefined ? (
-        <React.Fragment>
-          {props.bookResults.map(book => (
-            <AddBookCard book={book} key={Date.now() + Math.random()} />
-          ))}
-        </React.Fragment>
-      ) : (
-        <div className="noresults">Search above</div>
-      )}
+      {props.bookResults.map(book => (
+        <AddBookCard book={book} key={Date.now() + Math.random()} />
+      ))}
     </BookMapDiv>
   );
 }
