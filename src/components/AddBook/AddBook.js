@@ -3,12 +3,15 @@ import BookMap from "./BookMap";
 import styled from "styled-components";
 import { useAlert } from "react-alert";
 import { Form, Input, Button, Label } from "reactstrap";
+import Axios from "axios";
 //
 const booksApi = require("google-books-search");
 //
 const rp = require("request-promise");
 //
-const goodreadsKey = process.env.REACT_APP_GOODREADS_API_KEY;
+// const goodreadsKey = process.env.REACT_APP_GOODREADS_API_KEY;
+// const URL = "https://neighborhoodlibraryback.herokuapp.com/goodreads";
+const URL = "http://localhost:9500/goodreads";
 
 const AddBookDiv = styled.div`
   display: flex;
@@ -79,18 +82,14 @@ const AddBook = () => {
         console.log(results);
         setBooksFunc(results);
       });
-    } else if ((values.apiChoice = "goodreads")) {
-      let url = "https://www.goodreads.com/search/index.xml?";
-      let key = `key=${goodreadsKey}`;
-      let query = `q=${values.entry}`;
-      let search = `search%5Bfield%5D${values.searchType}`;
-      rp(`${url}${key}&${search}&${query}`)
-        .then(res => {
-          console.log(res);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    } else if (values.apiChoice === "goodreads") {
+      let body = {
+        query: values.entry,
+        search: values.searchType
+      };
+      Axios.post(URL, body).then(res => {
+        console.log(res.data);
+      });
     } else if (values.apiChoice === "ol") {
       let searchType = {
         title: "q=",
@@ -108,7 +107,11 @@ const AddBook = () => {
         json: true
       })
         .then(function(body) {
-          let results = body.docs.slice(0, 20);
+          let results = body.docs;
+          if (results.length > 20) {
+            results = results.slice(0, 20);
+          }
+          console.log(results);
           setBooksFunc(results);
         })
         .catch(function(err) {
@@ -131,11 +134,7 @@ const AddBook = () => {
               <option name="google" value="google">
                 Google
               </option>
-              <option
-                name="goodreads"
-                onChange={handleChanges}
-                name="apiChoice"
-              >
+              <option name="goodreads" value="goodreads">
                 GoodReads
               </option>
               <option name="ol" value="ol">
