@@ -94,8 +94,8 @@ const AddBook = () => {
         json: true
       })
         .then(function(body) {
-          console.log(body);
-          setBooksFunc(body.docs);
+          let results = body.docs.slice(0, 20);
+          setBooksFunc(results);
         })
         .catch(function(err) {
           console.log(err);
