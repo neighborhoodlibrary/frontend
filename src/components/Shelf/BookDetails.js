@@ -2,15 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import BookContext from "../../context/book/bookContext";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Button } from "reactstrap";
 
 const ContainerDiv = styled.div`
   display: flex;
@@ -51,14 +43,21 @@ const Book = props => {
   const [displayedBook, getDisplayedBook] = useState([]);
 
   useEffect(() => {
-    getDisplayedBook(bookContext.getBook());
+    getBook();
   }, []);
+
+  const getBook = () => {
+    const aBook = bookContext.getBook();
+    if (aBook.title) {
+      getDisplayedBook(aBook);
+    } else {
+      goBack();
+    }
+  };
 
   const goBack = e => {
     props.history.goBack();
   };
-
-  console.log(displayedBook);
 
   return (
     <ContainerDiv>
@@ -84,27 +83,27 @@ const Book = props => {
                   ? `Author: ${displayedBook.authors[0]}`
                   : `Authors: ${displayedBook.authors.map(author => author)}`}
               </p>
-              <p>Average Rating: {displayedBook.averageRating}</p>
               <p>Description: {displayedBook.description}</p>
-              <p>
+              <p>Page Count: {displayedBook.pageCount}</p>
+              <div>
                 {!displayedBook.googIi
                   ? ""
                   : displayedBook.googIi.map(ident => {
                       return Object.entries(ident)
                         .reverse()
                         .map(([key, value]) => (
-                          <div>
+                          <div key={Math.random()}>
                             {key}: {value}
                           </div>
                         ));
                     })}
-              </p>
-              <p>Page Count: {displayedBook.pageCount}</p>
+              </div>
             </CardInfoDiv>
           </CardBody>
           <CardHeader>
             <CardHeaderDiv>
               <p>Owner of Book: {displayedBook.ownerId}</p>
+
               <p>
                 Currently Checked out by:
                 {displayedBook.checkedOut
