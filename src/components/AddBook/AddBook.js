@@ -7,6 +7,8 @@ import { Form, Input, Button, Label } from "reactstrap";
 const booksApi = require("google-books-search");
 //
 const rp = require("request-promise");
+//
+const goodreadsKey = process.env.REACT_APP_GOODREADS_API_KEY;
 
 const AddBookDiv = styled.div`
   display: flex;
@@ -77,6 +79,18 @@ const AddBook = () => {
         console.log(results);
         setBooksFunc(results);
       });
+    } else if ((values.apiChoice = "goodreads")) {
+      let url = "https://www.goodreads.com/search/index.xml?";
+      let key = `key=${goodreadsKey}`;
+      let query = `q=${values.entry}`;
+      let search = `search%5Bfield%5D${values.searchType}`;
+      rp(`${url}${key}&${search}&${query}`)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     } else if (values.apiChoice === "ol") {
       let searchType = {
         title: "q=",
@@ -116,6 +130,13 @@ const AddBook = () => {
             <Input type="select" onChange={handleChanges} name="apiChoice">
               <option name="google" value="google">
                 Google
+              </option>
+              <option
+                name="goodreads"
+                onChange={handleChanges}
+                name="apiChoice"
+              >
+                GoodReads
               </option>
               <option name="ol" value="ol">
                 Open Library
