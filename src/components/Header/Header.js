@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import NavMenu from "./NavMenu/NavMenu";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import SignInButton from "../SignIn/SignInButton";
 
 import UserContext from "../../context/user/userContext";
@@ -15,23 +15,21 @@ const HeaderDiv = styled.div`
   padding: 20px;
   margin: 0px 0px 20px 0px;
 
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+
+  @media (max-width: 500px) {
+    text-align: center;
+  }
+`;
+
+const AppName = styled.div`
   h1 {
     font-size: 3.25em;
     font-family: "Merriweather", serif;
     color: white;
-  }
-
-  a {
-    text-decoration: none;
-    color: black;
-  }
-
-  a:hover {
-    color: black;
-  }
-
-  @media (max-width: 800px) {
-    flex-direction: column;
   }
 `;
 
@@ -39,6 +37,10 @@ const SideBar = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
+  @media (max-width: 500px) {
+    margin: auto;
+  }
+  
 `;
 
 export default function Header() {
@@ -77,9 +79,9 @@ export default function Header() {
   }
   return (
     <HeaderDiv>
-      <NavLink to="/">
+      <AppName>
         <h1>Neighborhood Library</h1>
-      </NavLink>
+      </AppName>
       <SideBar>
         {loggedIn === true ? <NavMenu /> : ""}
         <SignInButton signOut={signOut} />

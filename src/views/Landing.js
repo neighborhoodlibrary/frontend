@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom';
 
 
 
-
 const Landing = () => {
     const userContext = useContext(UserContext)
 
@@ -17,7 +16,6 @@ const Landing = () => {
     return (
         
             <div>
-                
                 {redirect()}
             </div>
        
