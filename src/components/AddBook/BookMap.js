@@ -30,7 +30,7 @@ export default function BookMap(props) {
   return (
     <BookMapDiv>
       {props.bookResults.map(book => (
-        <AddBookCard book={book} key={Date.now() + Math.random()} />
+        <AddBookCard book={book} key={Math.random()} />
       ))}
     </BookMapDiv>
   );
