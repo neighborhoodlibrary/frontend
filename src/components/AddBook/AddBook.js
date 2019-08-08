@@ -10,8 +10,8 @@ const booksApi = require("google-books-search");
 const rp = require("request-promise");
 //
 // const goodreadsKey = process.env.REACT_APP_GOODREADS_API_KEY;
-// const URL = "https://neighborhoodlibraryback.herokuapp.com/goodreads";
-const URL = "http://localhost:9500/goodreads";
+// const URL = "https://neighborhoodlibraryback.herokuapp.com";
+const URL = "http://localhost:9500";
 
 const AddBookDiv = styled.div`
   display: flex;
@@ -87,9 +87,30 @@ const AddBook = () => {
         query: values.entry,
         search: values.searchType
       };
-      Axios.post(URL, body).then(res => {
-        console.log(res.data);
-      });
+      let booksHolderArr = [];
+      let finalgrBooksArr = [];
+      async function asyncForEach(arr, cb) {
+        for (let i = 0; i < arr.length; i++) {
+          await cb(arr[i], i, arr);
+        }
+      }
+      Axios.post(`${URL}/goodreads`, body)
+        .then(res => {
+          booksHolderArr = res.data;
+        })
+        .then(() => {
+          console.log(booksHolderArr);
+          const aFunc = async () => {
+            await asyncForEach(booksHolderArr, async book => {
+              let secondBody = { bookId: book.best_book[0].id[0]._ };
+              await Axios.post(`${URL}/grdetails`, secondBody).then(res => {
+                finalgrBooksArr.push(res);
+              });
+            });
+            console.log(finalgrBooksArr);
+          };
+          aFunc();
+        });
     } else if (values.apiChoice === "ol") {
       let searchType = {
         title: "q=",
