@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import UserContext from '../context/user/userContext'
 import { Redirect } from 'react-router-dom';
 
+
+
 const Landing = () => {
     const userContext = useContext(UserContext)
 
@@ -12,10 +14,11 @@ const Landing = () => {
     }
   
     return (
-        <div>
-            Please sign in
-            {redirect()}
-        </div>
+        
+            <div>
+                {redirect()}
+            </div>
+       
     )
 }
 
