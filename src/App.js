@@ -1,31 +1,35 @@
+// app=> header(navMenu/signInComponent) && landing && privateRoute if(loggedIn)=> shelf
 import React from "react";
-import "./App.css";
-import Landing from "./views/Landing";
-import UserState from "./context/user/UserState";
-import BookState from "./context/book/BookState";
-import Header from "./components/Header/Header";
-
+import Header from "./header/Header";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import PrivateRoute from "./authentication/PrivateRoute";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
-
-import PrivateRoute from "./authentication/PrivateRoute";
-
-import Borrowed from "./components/Shelf/Borrowed";
-import Loaned from "./components/Shelf/Loaned";
+// gloabal state components
+import UserState from "./context/user/UserState";
+import BookState from "./context/book/BookState";
+// when user is not logged in...
+import Landing from "./landing/Landing";
+// shelf components
+// import MyShelf from "./views/MyShelf/MyShelf";
+import MainShelf from "./components/Shelf/MainShelf";
 import Library from "./components/Shelf/Library";
-import MyShelf from "./views/MyShelf/MyShelf";
-
-import styled from "styled-components";
-import AddBook from "./components/AddBook/AddBook";
-import MapComponent from "./components/Map/MapComponent";
-import Search from "./components/Search/Search";
-//
+import Loaned from "./components/Shelf/Loaned";
+import Borrowed from "./components/Shelf/Borrowed";
 import BookDetails from "./components/Shelf/BookDetails";
-//
-import Email from "./components/Email/Email";
+// search components
+// add a book to personal library
+import AddBook from "./components/AddBook/AddBook";
+// look to borrow a book from another personal library
+import Search from "./components/Search/Search";
+// transactional components
 import Requested from "./components/Tranactions/Requested";
 import Receiving from "./components/Tranactions/Receiving";
+// setting components
+import MapComponent from "./components/Map/MapComponent";
+// styling components
+import styled from "styled-components";
+// background image
 import neighborImg from "./assets/neighborpic2.jpg";
 
 const LandingImg = styled.div`
@@ -61,30 +65,28 @@ function App() {
               <Route path="/" component={Header} />
               <LowerSection>
                 <Switch>
-                  <PrivateRoute exact path="/shelf" component={MyShelf} />
-                  <PrivateRoute
-                    exact
-                    path="/shelf/borrowed"
-                    component={Borrowed}
-                  />
-                  <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
+                  {/* shelf components */}
+                  <PrivateRoute exact path="/shelf" component={MainShelf} />
                   <PrivateRoute
                     exact
                     path="/shelf/library"
                     component={Library}
                   />
-                  <PrivateRoute exact path="/shelf/add" component={AddBook} />
+                  <PrivateRoute exact path="/shelf/loaned" component={Loaned} />
                   <PrivateRoute
                     exact
-                    path="/shelf/map"
-                    component={MapComponent}
+                    path="/shelf/borrowed"
+                    component={Borrowed}
                   />
-                  <PrivateRoute exact path="/shelf/search" component={Search} />
                   <PrivateRoute
                     exact
                     path="/shelf/book/:id"
                     component={BookDetails}
                   />
+                  {/* Lookup componets */}
+                  <PrivateRoute exact path="/shelf/add" component={AddBook} />
+                  <PrivateRoute exact path="/shelf/search" component={Search} />
+                  {/* transcational compoents */}
                   <PrivateRoute
                     exact
                     path="/shelf/requested"
@@ -95,7 +97,13 @@ function App() {
                     path="/shelf/receiving"
                     component={Receiving}
                   />
-                  <PrivateRoute exact path="/shelf/email" component={Email} />
+                  {/* settings components */}
+                  <PrivateRoute
+                    exact
+                    path="/shelf/map"
+                    component={MapComponent}
+                  />
+                  {/* Landing or user not logged in */}
                   <Route exact path="/" component={Landing} />
                 </Switch>
               </LowerSection>

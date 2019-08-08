@@ -10,22 +10,46 @@ const ContainerWrapper = styled.div`
   justify-content: space-around;
 `;
 
-const Container = styled.div`
-  width: 50vw
+const Container1 = styled.div`
   display: grid;
-  border-left: 1px solid gray;
+  width:80vw
   border-right: 1px solid gray;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 
   @media (max-width: 1100px) {
+    width: 75vw
     grid-template-columns: 1fr 1fr 1fr;
+    
   }
 
   @media (max-width: 870px) {
+    width: 66vw
     grid-template-columns: 1fr 1fr;
   }
 
   @media (max-width: 550px) {
+    width:50vw
+    grid-template-columns: 1fr;
+  }
+`;
+const Container2 = styled.div`
+  display: grid;
+  width: 20vw
+  border-left: 1px solid gray
+  grid-template-columns:1fr;
+
+  @media (max-width: 1100px) {
+    width: 25vw
+    grid-template-columns: 1fr; 
+  }
+
+  @media (max-width: 870px) {
+    width:33vw
+    grid-template-columns: 1fr; 
+  }
+
+  @media (max-width: 550px) {
+    width:50vw
     grid-template-columns: 1fr;
   }
 `;
@@ -72,17 +96,26 @@ const Loaned = () => {
 
   return (
     <ContainerWrapper>
-      <Container>
-        {booksInfo.map(book => (
-          <Book key={Math.random()} book={book} getBooks={getBooks} />
-        ))}
-      </Container>
-      <Container>
-        Recover Books:
-        {recoverBooks.map(book => (
-          <RecoverBook key={Math.random()} book={book} getBooks={getBooks} />
-        ))}
-      </Container>
+      <div>
+        <h5>
+          <u>Loaned Books:</u>
+        </h5>
+        <Container1>
+          {booksInfo.map(book => (
+            <Book key={Math.random()} book={book} getBooks={getBooks} />
+          ))}
+        </Container1>
+      </div>
+      <div>
+        <h5>
+          <u>Recovering Books:</u>
+        </h5>
+        <Container2>
+          {recoverBooks.map(book => (
+            <RecoverBook key={Math.random()} book={book} getBooks={getBooks} />
+          ))}
+        </Container2>
+      </div>
     </ContainerWrapper>
   );
 };

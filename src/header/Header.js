@@ -1,12 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import NavMenu from "./NavMenu/NavMenu";
+import NavMenu from "./NavMenu";
 import styled from "styled-components";
-// import { NavLink } from "react-router-dom";
-import SignInButton from "../SignIn/SignInButton";
-
-import UserContext from "../../context/user/userContext";
-
-import firebase from "../../firebase/firebase.utils";
+import SignInComponent from "./SignInComponent";
+import UserContext from "../context/user/userContext";
+import firebase from "../firebase/firebase.utils";
 import "firebase/auth";
 
 const HeaderDiv = styled.div`
@@ -84,7 +81,7 @@ export default function Header() {
       </AppName>
       <SideBar>
         {loggedIn === true ? <NavMenu /> : ""}
-        <SignInButton signOut={signOut} />
+        <SignInComponent signOut={signOut} />
       </SideBar>
     </HeaderDiv>
   );

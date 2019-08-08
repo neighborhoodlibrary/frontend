@@ -9,7 +9,11 @@ import {
   CardTitle,
   CardText,
   CardFooter,
-  Button
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
@@ -38,6 +42,7 @@ const MapComponent = props => {
   const [markerPosition, setMarkerPosition] = useState({});
   const [defaultCenter, setDefaultCenter] = useState({});
   const [defaultZoom, setDefaultZoom] = useState(0);
+  const [locationModal, setLocationModal] = useState(false);
 
   useEffect(() => {
     setDefaultCenter({
@@ -76,6 +81,10 @@ const MapComponent = props => {
     });
     setDefaultCenter({ lat, lng });
     setDefaultZoom(14);
+  };
+
+  const toggleLocationModal = () => {
+    locationModal ? setLocationModal(false) : setLocationModal(true);
   };
 
   const submitCoordinates = () => {
@@ -133,11 +142,23 @@ const MapComponent = props => {
             </CardText>
           </CardBody>
           <CardFooter>
-            <Button color="primary" onClick={submitCoordinates}>
+            <Button color="primary" onClick={toggleLocationModal}>
               Submit Location
             </Button>
           </CardFooter>
         </Card>
+        <Modal isOpen={locationModal} toggle={toggleLocationModal} centered>
+          <ModalHeader>Set Location</ModalHeader>
+          <ModalBody>
+            Are you sure you want to set your personal library to this location?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="success" onClick={submitCoordinates}>
+              Confirm
+            </Button>
+            <Button onClick={toggleLocationModal}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
       </Col>
     </ContainerDiv>
   );

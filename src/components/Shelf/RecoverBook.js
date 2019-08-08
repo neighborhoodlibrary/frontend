@@ -6,6 +6,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   Button,
   Modal,
   ModalHeader,
@@ -69,10 +70,12 @@ const RecoverBook = props => {
             <p>by: {props.book.authors}</p>
             <img src={props.book.googThumbnail} alt="book_thumb" />
           </CardBodyDiv>
+        </CardBody>
+        <CardFooter>
           <Button onClick={toggleRecoverBookModal}>
             Confirm recovery of book
           </Button>
-        </CardBody>
+        </CardFooter>
       </Card>
       <Modal isOpen={recoverBookModal} toggle={toggleRecoverBookModal}>
         <ModalHeader>Confirm book is now in your possesion</ModalHeader>
