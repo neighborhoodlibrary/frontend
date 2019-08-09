@@ -112,7 +112,7 @@ const OpenLibraryBookCard = props => {
         ...bookInfoValues,
         // no description value
         isbn: isbn.length > 0 ? isbn.slice(0, 1) : [],
-        isbn13: isbn13.length > 0 ? isbn.slice(0, 1) : [],
+        isbn13: isbn13.length > 0 ? isbn13.slice(0, 1) : [],
         language: props.book.language ? props.book.language[0] : "",
         // no page count
         publishDate: props.book.publish_date ? props.book.publish_date[0] : "",
