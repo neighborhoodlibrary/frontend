@@ -64,8 +64,8 @@ const AddBook = () => {
 
   const formSubmit = e => {
     e.preventDefault();
-    alert.info(`Please wait searching the ${values.apiChoice} books api...`);
     if (values.apiChoice === "google") {
+      alert.info("Please wait searching the google books api...");
       setPassApiVal("google");
       let booksOptions = {
         field: `${values.searchType}`,
@@ -89,35 +89,39 @@ const AddBook = () => {
         }
       });
     } else if (values.apiChoice === "goodreads") {
+      alert.info(
+        "Please wait a few seconds, searching the goodreads api takes some time"
+      );
       setPassApiVal("goodreads");
       let body = {
         query: values.entry,
         search: values.searchType
       };
-      let booksHolderArr = [];
-      let finalgrBooksArr = [];
-      async function asyncForEach(arr, cb) {
-        for (let i = 0; i < arr.length; i++) {
-          await cb(arr[i], i, arr);
-        }
-      }
-      Axios.post(`${URL}/goodreads`, body)
-        .then(res => {
-          booksHolderArr = res.data;
-        })
-        .then(() => {
-          console.log(booksHolderArr);
-          const aFunc = async () => {
-            await asyncForEach(booksHolderArr, async book => {
-              let secondBody = { bookId: book.best_book[0].id[0]._ };
-              await Axios.post(`${URL}/grdetails`, secondBody).then(res => {
-                finalgrBooksArr.push(res);
-              });
-            });
-            console.log(finalgrBooksArr);
-          };
-          aFunc();
-        });
+      // let booksHolderArr = [];
+      // let finalgrBooksArr = [];
+      // async function asyncForEach(arr, cb) {
+      //   for (let i = 0; i < arr.length; i++) {
+      //     await cb(arr[i], i, arr);
+      //   }
+      // }
+      Axios.post(`${URL}/goodreads`, body).then(res => {
+        console.log(res);
+        // booksHolderArr = res.data;
+        setBooksFunc(res.data);
+      });
+      // .then(() => {
+      //   console.log(booksHolderArr);
+      //   const aFunc = async () => {
+      //     await asyncForEach(booksHolderArr, async book => {
+      //       let secondBody = { bookId: book.best_book[0].id[0]._ };
+      //       await Axios.post(`${URL}/grdetails`, secondBody).then(res => {
+      //         finalgrBooksArr.push(res);
+      //       });
+      //     });
+      //     console.log(finalgrBooksArr);
+      //   };
+      //   aFunc();
+      // });
     } else if (values.apiChoice === "ol") {
       setPassApiVal("ol");
       let searchType = {
