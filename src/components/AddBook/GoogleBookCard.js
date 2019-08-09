@@ -85,16 +85,13 @@ const GoogleBookCard = props => {
       }
       setBookInfoValues({
         ...bookInfoValues,
-        authors: props.book.authors,
         description: props.book.description,
         isbn: isbn,
         isbn13: isbn13,
         language: props.book.language,
         pageCount: props.book.pageCount,
         publishDate: props.book.publishDate,
-        publisher: props.book.publisher,
-        image: props.book.thumbnail,
-        title: props.book.title
+        publisher: props.book.publisher
       });
       setBookInfoModal(true);
     }
