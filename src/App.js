@@ -27,6 +27,7 @@ import Requested from "./components/Tranactions/Requested";
 import Receiving from "./components/Tranactions/Receiving";
 // setting components
 import MapComponent from "./components/Map/MapComponent";
+import Profile from "./components/Profile/Profile";
 // styling components
 import styled from "styled-components";
 // background image
@@ -88,6 +89,11 @@ function App() {
                     exact
                     path="/shelf/map"
                     component={MapComponent}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/shelf/profile"
+                    component={Profile}
                   />
                   {/* Landing or user not logged in */}
                   <Route exact path="/" component={Landing} />

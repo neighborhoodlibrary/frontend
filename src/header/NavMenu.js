@@ -129,6 +129,12 @@ const NavMenu = () => {
                   Assign the location of your personal library
                 </UncontrolledTooltip>
               </NavLink>
+              <NavLink to="/shelf/profile">
+                <DropdownItem id="profileTooltip">Profile</DropdownItem>
+                <UncontrolledTooltip placement="auto" target="profileTooltip">
+                  View or (eventually) edit your Neighborhood Library profile.
+                </UncontrolledTooltip>
+              </NavLink>
             </DropdownMenu>
           </Dropdown>
         </DropdownDiv>
