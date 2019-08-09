@@ -17,9 +17,9 @@ const HeaderDiv = styled.div`
   padding: 25px 17px;
   margin: 0px 0px 20px 0px;
   border-bottom: 1px solid rgb(10,10,10,.5);
-  -webkit-box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.73);
-  -moz-box-shadow:    1px 1px 3px 0px rgba(30, 30, 30, 0.73);
-  box-shadow:         1px 1px 3px 0px rgba(30, 30, 30, 0.73);
+  -webkit-box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
+  -moz-box-shadow:    1px 1px 3px 0px rgba(30, 30, 30, 0.4);
+  box-shadow:         1px 1px 3px 0px rgba(30, 30, 30, 0.4);
 
   h1 {
     font-size: 3.5em;
@@ -77,11 +77,12 @@ const ClarityDiv = styled.div`
   h1 {
     font-size: 4em;
     font-family: "Merriweather", serif;
-    color: white;
+    color: rgba(250,250,250,.95);
   }
 
   h2 {
-    color: white;
+    color: rgba(250,250,250,.9);
+    font-family: "Merriweather", serif;
     font-size: 1.75em;
   }
 
@@ -120,8 +121,9 @@ const LOButtonHold = styled.div`
 
 const SideBar = styled.div`
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
+
   @media (max-width: 500px) {
     flex-direction: column;
   }
@@ -168,7 +170,7 @@ export default function Header() {
       <LOHeadDiv>
         <ClarityDiv>
           <h1>Neighborhood Library</h1>
-          <h2>Find local books</h2>
+          <h2>Read great books in your area</h2>
         </ClarityDiv>
         <LOButtonHold>
           <SignInComponent signOut={signOut} />
