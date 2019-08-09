@@ -13,13 +13,24 @@ const NavMenuDiv = styled.div`
   display: flex
   align-items: end;
   margin: 0px 8px;
-
-  @media (max-width: 800px) {
-    justify-content: end;
-  }
 `;
 const DropdownDiv = styled.div`
-  margin: 0px 8px;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+
+  button {
+    margin: 0px 7px;
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: center;
+    
+    button {
+      margin: 7px 0px;
+    }
+  }
 `;
 
 const NavMenu = () => {
@@ -69,8 +80,6 @@ const NavMenu = () => {
             </NavLink>
           </DropdownMenu>
         </Dropdown>
-      </DropdownDiv>
-      <DropdownDiv>
         <Dropdown isOpen={dropdownLookup} toggle={toggleDropdownLookup}>
           <DropdownToggle caret>Lookup</DropdownToggle>
           <DropdownMenu>
@@ -90,8 +99,6 @@ const NavMenu = () => {
             </NavLink>
           </DropdownMenu>
         </Dropdown>
-      </DropdownDiv>
-      <DropdownDiv>
         <Dropdown
           isOpen={dropdownTransaction}
           toggle={toggleDropdownTransaction}
@@ -112,8 +119,6 @@ const NavMenu = () => {
             </NavLink>
           </DropdownMenu>
         </Dropdown>
-      </DropdownDiv>
-      <DropdownDiv>
         <Dropdown isOpen={dropdownSettings} toggle={toggleDropdownSettings}>
           <DropdownToggle caret>Settings</DropdownToggle>
           <DropdownMenu>

@@ -12,6 +12,7 @@ import neiImg from "../assets/neighborpic2.jpg";
 
 const HeaderDiv = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   padding: 25px 17px;
   margin: 0px 0px 20px 0px;
@@ -21,12 +22,15 @@ const HeaderDiv = styled.div`
   box-shadow:         1px 1px 3px 0px rgba(30, 30, 30, 0.73);
 
   h1 {
-    font-size: 3.25em;
+    font-size: 3.5em;
     font-family: "Merriweather", serif;
+    padding: 10px 0px;
   }
 
   @media (max-width: 800px) {
-    flex-direction: column;
+    h1 {
+      font-size: 2.5em;
+    }
   }
 
   @media (max-width: 500px) {
@@ -119,7 +123,7 @@ const SideBar = styled.div`
   justify-content: end;
   align-items: center;
   @media (max-width: 500px) {
-    margin: auto;
+    flex-direction: column;
   }
   
 `;
