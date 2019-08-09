@@ -11,22 +11,19 @@ import {
 
 const NavMenuDiv = styled.div`
   display: flex
-  align-items: end;
+  justify-content: end;
   margin: 0px 8px;
+  width: 40%;
 `;
 const DropdownDiv = styled.div`
   display: flex;
-  justify-content: end;
-  align-items: end;
-
-  button {
-    margin: 0px 7px;
-  }
+  justify-content: space-between;
+  width: 100%;
 
   @media (max-width: 500px) {
     flex-direction: column;
     align-items: center;
-    
+
     button {
       margin: 7px 0px;
     }
@@ -58,7 +55,7 @@ const NavMenu = () => {
     <NavMenuDiv>
       <DropdownDiv>
         <Dropdown isOpen={dropdownShelf} toggle={toggleDropdownShelf}>
-          <DropdownToggle caret>Shelf</DropdownToggle>
+          <DropdownToggle caret color="success">Shelf</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf/library">
               <DropdownItem id="libraryTooltip">Library</DropdownItem>
@@ -81,7 +78,7 @@ const NavMenu = () => {
           </DropdownMenu>
         </Dropdown>
         <Dropdown isOpen={dropdownLookup} toggle={toggleDropdownLookup}>
-          <DropdownToggle caret>Lookup</DropdownToggle>
+          <DropdownToggle caret color="success">Lookup</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf/add">
               <DropdownItem id="addTooltip">Add A Book</DropdownItem>
@@ -103,7 +100,7 @@ const NavMenu = () => {
           isOpen={dropdownTransaction}
           toggle={toggleDropdownTransaction}
         >
-          <DropdownToggle caret>Transactions</DropdownToggle>
+          <DropdownToggle caret color="success">Transactions</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf/requested">
               <DropdownItem id="requestedTooltip">Requested</DropdownItem>
@@ -120,7 +117,7 @@ const NavMenu = () => {
           </DropdownMenu>
         </Dropdown>
         <Dropdown isOpen={dropdownSettings} toggle={toggleDropdownSettings}>
-          <DropdownToggle caret>Settings</DropdownToggle>
+          <DropdownToggle caret color="success">Settings</DropdownToggle>
           <DropdownMenu>
             <NavLink to="/shelf/map">
               <DropdownItem id="mapTooltip">Map</DropdownItem>
