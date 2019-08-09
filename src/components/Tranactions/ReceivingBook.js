@@ -73,7 +73,7 @@ const ReceivingBook = props => {
         <CardBody>
           <CardBodyDiv>
             <p>by: {props.book.authors}</p>
-            <img src={props.book.googThumbnail} alt="book_thumb" />
+            <img src={props.book.image} alt="book_thumb" />
           </CardBodyDiv>
         </CardBody>
         <CardFooter>

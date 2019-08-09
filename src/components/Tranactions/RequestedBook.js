@@ -126,9 +126,6 @@ const RequestedBook = props => {
     if (!uOption) {
       alert.error("Must choose user to loan book to");
     } else {
-      // bookDocRef.runTransaction(transaction=>{
-      //   transaction.get(bookDocRef)
-      // })
       bookDocRef
         .update({
           transitionUser: uOption
@@ -144,8 +141,6 @@ const RequestedBook = props => {
     }
   };
 
-  // console.log(props);
-  // console.log(userOption);
   return (
     <CardDiv>
       <Card>
@@ -160,7 +155,7 @@ const RequestedBook = props => {
         <CardBody>
           <CardBodyDiv>
             <p>by: {props.book.authors}</p>
-            <img src={props.book.googThumbnail} alt="book_thumb" />
+            <img src={props.book.image} alt="book_thumb" />
           </CardBodyDiv>
         </CardBody>
         <CardFooter>
