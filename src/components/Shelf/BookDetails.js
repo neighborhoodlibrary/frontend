@@ -14,9 +14,10 @@ const BookHold = styled.div`
   padding: 17px;
   border-radius: 3px;
   border: 1px solid rgb(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 `;
 
 const CardHeaderDiv = styled.div`
@@ -26,11 +27,6 @@ const CardHeaderDiv = styled.div`
 `;
 
 const CardInfoDiv = styled.div`
-  // display: grid;
-  // grid-gap: 10px;
-  // grid-template-columns: 1fr 1fr;
-  // justify-content: center;
-
   #centering {
     display: flex;
     align-items: center;

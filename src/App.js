@@ -27,23 +27,11 @@ import Requested from "./components/Tranactions/Requested";
 import Receiving from "./components/Tranactions/Receiving";
 // setting components
 import MapComponent from "./components/Map/MapComponent";
+import Profile from "./components/Profile/Profile";
 // styling components
 import styled from "styled-components";
 // background image
 import neighborImg from "./assets/neighborpic2.jpg";
-
-const LandingImg = styled.div`
-    background: url(${neighborImg});
-    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url(${neighborImg}) no-repeat;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(59%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.65))), url(${neighborImg}) no-repeat;
-    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url(${neighborImg}) no-repeat;
-    background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url(${neighborImg}) no-repeat;
-    background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url(${neighborImg}) no-repeat;
-    background: linear-gradient(to top,  rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0) 48%, rgba(0, 0, 0, 0.65) 85%), url(${neighborImg}) no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    height: 100VH;
-`
 
 const LowerSection = styled.div`
   padding: 0px 20px;
@@ -61,7 +49,6 @@ function App() {
         <BookState>
           <AlertProvider template={AlertTemplate} {...alertOptions}>
             <Router>
-              <LandingImg>
               <Route path="/" component={Header} />
               <LowerSection>
                 <Switch>
@@ -103,11 +90,15 @@ function App() {
                     path="/shelf/map"
                     component={MapComponent}
                   />
+                  <PrivateRoute
+                    exact
+                    path="/shelf/profile"
+                    component={Profile}
+                  />
                   {/* Landing or user not logged in */}
                   <Route exact path="/" component={Landing} />
                 </Switch>
               </LowerSection>
-              </LandingImg>
             </Router>
           </AlertProvider>
         </BookState>

@@ -12,7 +12,7 @@ export default function MainShelf() {
         </h1>
         <p className="lead">Welcome to your personal shelf</p>
         <hr className="my-2" />
-        <p>More to come...</p>
+        <p>Thanks for visiting. Use the upper navigation to add books to your library to share, or lookup local neighbors to borrow books from! </p>
       </Jumbotron>
     </div>
   );

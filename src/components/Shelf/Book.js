@@ -33,7 +33,9 @@ const CardDiv = styled.div`
 
 const CardHeaderDiv = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  font-weight: bold;
 `;
 
 const CardBodyDiv = styled.div`
