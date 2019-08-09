@@ -65,8 +65,8 @@ const GoodreadsBookCard = props => {
     setBookInfoValues({
       ...bookInfoValues,
       authors: props.book.author[0].name,
-      image: props.book.image_url,
-      title: props.book.title
+      image: props.book.image_url ? props.book.image_url[0] : "",
+      title: props.book.title ? props.book.title[0] : ""
     });
   }, {});
 
@@ -81,13 +81,13 @@ const GoodreadsBookCard = props => {
         }/${res.data.publication_day}`;
         setBookInfoValues({
           ...bookInfoValues,
-          description: res.data.description,
+          description: res.data.description ? res.data.description[0] : "",
           isbn: res.data.isbn,
           isbn13: res.data.isbn13,
-          language: res.data.language_code,
-          pageCount: res.data.num_pages,
+          language: res.data.language_code ? res.data.language_code[0] : "",
+          pageCount: res.data.num_pages ? res.data.num_pages[0] : "",
           publishDate: publicationDate,
-          publisher: res.data.publisher
+          publisher: res.data.publisher ? res.data.publisher[0] : ""
         });
         setBookInfoModal(true);
       });
