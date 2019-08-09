@@ -10,8 +10,8 @@ const booksApi = require("google-books-search");
 const rp = require("request-promise");
 //
 // const goodreadsKey = process.env.REACT_APP_GOODREADS_API_KEY;
-// const URL = "https://neighborhoodlibraryback.herokuapp.com";
-const URL = "http://localhost:9500";
+const URL = "https://neighborhoodlibraryback.herokuapp.com";
+// const URL = "http://localhost:9500";
 
 const AddBookDiv = styled.div`
   display: flex;
@@ -55,6 +55,7 @@ const AddBook = () => {
     entry: ""
   });
   const [bookResults, setBookResults] = useState([]);
+  const [passApiVal, setPassApiVal] = useState("google");
 
   const handleChanges = e => {
     const { name, value } = e.target;
@@ -65,6 +66,7 @@ const AddBook = () => {
     e.preventDefault();
     alert.info(`Please wait searching the ${values.apiChoice} books api...`);
     if (values.apiChoice === "google") {
+      setPassApiVal("google");
       let booksOptions = {
         field: `${values.searchType}`,
         offset: 0,
@@ -79,10 +81,15 @@ const AddBook = () => {
         results,
         apiResponse
       ) {
-        console.log(results);
-        setBooksFunc(results);
+        if (results === undefined) {
+          setBooksFunc([]);
+        } else {
+          console.log(results);
+          setBooksFunc(results);
+        }
       });
     } else if (values.apiChoice === "goodreads") {
+      setPassApiVal("goodreads");
       let body = {
         query: values.entry,
         search: values.searchType
@@ -112,6 +119,7 @@ const AddBook = () => {
           aFunc();
         });
     } else if (values.apiChoice === "ol") {
+      setPassApiVal("ol");
       let searchType = {
         title: "q=",
         author: "author=",
@@ -197,8 +205,8 @@ const AddBook = () => {
           </div>
         </AddBookForm>
       </Form>
-      {bookResults ? (
-        <BookMap bookResults={bookResults} />
+      {bookResults.length > 0 ? (
+        <BookMap bookResults={bookResults} passApiVal={passApiVal} />
       ) : (
         <div id="sorryToInform">No results found</div>
       )}
