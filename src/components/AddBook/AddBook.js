@@ -10,8 +10,8 @@ const booksApi = require("google-books-search");
 const rp = require("request-promise");
 //
 // const goodreadsKey = process.env.REACT_APP_GOODREADS_API_KEY;
-// const URL = "https://neighborhoodlibraryback.herokuapp.com";
-const URL = "http://localhost:9500";
+const URL = "https://neighborhoodlibraryback.herokuapp.com";
+// const URL = "http://localhost:9500";
 
 const AddBookDiv = styled.div`
   display: flex;
@@ -55,6 +55,7 @@ const AddBook = () => {
     entry: ""
   });
   const [bookResults, setBookResults] = useState([]);
+  const [passApiVal, setPassApiVal] = useState("google");
 
   const handleChanges = e => {
     const { name, value } = e.target;
@@ -63,8 +64,9 @@ const AddBook = () => {
 
   const formSubmit = e => {
     e.preventDefault();
-    alert.info(`Please wait searching the ${values.apiChoice} books api...`);
     if (values.apiChoice === "google") {
+      alert.info("Please wait searching the google books api...");
+      setPassApiVal("google");
       let booksOptions = {
         field: `${values.searchType}`,
         offset: 0,
@@ -79,39 +81,49 @@ const AddBook = () => {
         results,
         apiResponse
       ) {
-        console.log(results);
-        setBooksFunc(results);
+        if (results === undefined) {
+          setBooksFunc([]);
+        } else {
+          console.log(results);
+          setBooksFunc(results);
+        }
       });
     } else if (values.apiChoice === "goodreads") {
+      alert.info(
+        "Please wait a few seconds, searching the goodreads api takes some time"
+      );
+      setPassApiVal("goodreads");
       let body = {
         query: values.entry,
         search: values.searchType
       };
-      let booksHolderArr = [];
-      let finalgrBooksArr = [];
-      async function asyncForEach(arr, cb) {
-        for (let i = 0; i < arr.length; i++) {
-          await cb(arr[i], i, arr);
-        }
-      }
-      Axios.post(`${URL}/goodreads`, body)
-        .then(res => {
-          booksHolderArr = res.data;
-        })
-        .then(() => {
-          console.log(booksHolderArr);
-          const aFunc = async () => {
-            await asyncForEach(booksHolderArr, async book => {
-              let secondBody = { bookId: book.best_book[0].id[0]._ };
-              await Axios.post(`${URL}/grdetails`, secondBody).then(res => {
-                finalgrBooksArr.push(res);
-              });
-            });
-            console.log(finalgrBooksArr);
-          };
-          aFunc();
-        });
+      // let booksHolderArr = [];
+      // let finalgrBooksArr = [];
+      // async function asyncForEach(arr, cb) {
+      //   for (let i = 0; i < arr.length; i++) {
+      //     await cb(arr[i], i, arr);
+      //   }
+      // }
+      Axios.post(`${URL}/goodreads`, body).then(res => {
+        console.log(res);
+        // booksHolderArr = res.data;
+        setBooksFunc(res.data);
+      });
+      // .then(() => {
+      //   console.log(booksHolderArr);
+      //   const aFunc = async () => {
+      //     await asyncForEach(booksHolderArr, async book => {
+      //       let secondBody = { bookId: book.best_book[0].id[0]._ };
+      //       await Axios.post(`${URL}/grdetails`, secondBody).then(res => {
+      //         finalgrBooksArr.push(res);
+      //       });
+      //     });
+      //     console.log(finalgrBooksArr);
+      //   };
+      //   aFunc();
+      // });
     } else if (values.apiChoice === "ol") {
+      setPassApiVal("ol");
       let searchType = {
         title: "q=",
         author: "author=",
@@ -197,8 +209,8 @@ const AddBook = () => {
           </div>
         </AddBookForm>
       </Form>
-      {bookResults ? (
-        <BookMap bookResults={bookResults} />
+      {bookResults.length > 0 ? (
+        <BookMap bookResults={bookResults} passApiVal={passApiVal} />
       ) : (
         <div id="sorryToInform">No results found</div>
       )}
