@@ -2,7 +2,12 @@ import React, { useContext } from 'react';
 import UserContext from '../context/user/userContext'
 import { Redirect } from 'react-router-dom';
 
+import styled from 'styled-components';
 
+//For future
+
+const LandHold = styled.div`
+`;
 
 const Landing = () => {
     const userContext = useContext(UserContext)
@@ -15,9 +20,9 @@ const Landing = () => {
   
     return (
         
-            <div>
+            <LandHold>
                 {redirect()}
-            </div>
+            </LandHold>
        
     )
 }

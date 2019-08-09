@@ -57,7 +57,7 @@ export default function SignInComponent(props) {
     } else {
       return (
         <NavLink to="/shelf">
-          <Button onClick={firstTimeLogin}>Sign In</Button>
+          <Button onClick={firstTimeLogin}>Sign In with Google</Button>
         </NavLink>
       );
     }
