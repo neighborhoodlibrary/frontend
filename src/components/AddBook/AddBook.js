@@ -60,6 +60,7 @@ const AddBook = () => {
   const handleChanges = e => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
+    setBookResults([]);
   };
 
   const formSubmit = e => {

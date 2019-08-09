@@ -130,28 +130,6 @@ export default function AddBookButton(props) {
         console.log("Error getting document:", error);
       });
 
-    // db.collection("books")
-    //   .doc(idHold)
-    //   .set({
-    //     title: bookobj.title,
-    //     subtitle: bookobj.subtitle,
-    //     authors: bookobj.authors,
-    //     description: bookobj.description,
-    //     pageCount: bookobj.pageCount,
-    //     publishedDate: bookobj.publishedDate,
-    //     publisher: bookobj.publisher,
-    //     thumbnail: bookobj.thumbnail,
-    //     isbn: isbnhold,
-    //     checkedOut: false,
-    //     borrowerId: "",
-    //     ownerId: curUser.uid,
-    //     id: idHold,
-    //     requestedId: [],
-    //     returnRequest: false
-    //   })
-
-    // alert.success("Success!");
-
     console.log(bookobj);
   };
 

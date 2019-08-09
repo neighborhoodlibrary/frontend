@@ -90,7 +90,7 @@ const GoogleBookCard = props => {
         isbn13: isbn13,
         language: props.book.language,
         pageCount: props.book.pageCount,
-        publishDate: props.book.publishDate,
+        publishDate: props.book.publishedDate,
         publisher: props.book.publisher
       });
       setBookInfoModal(true);
