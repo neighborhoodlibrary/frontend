@@ -142,7 +142,7 @@ const SearchBookCard = props => {
           )}
         </CardHeader>
         <div className="imghold">
-          <img src={props.book.googThumbnail} alt="book_thumb" />
+          <img src={props.book.image} alt="book_thumb" />
         </div>
         <CardBody>
           <Modal isOpen={infoModal} toggle={toggleInfoModal} centered>
@@ -151,9 +151,9 @@ const SearchBookCard = props => {
             </h3>
             <ModalHeader>Page Count: {props.book.pageCount}</ModalHeader>
             <ModalHeader>Publisher: {props.book.publisher}</ModalHeader>
-            <ModalHeader>Published:{props.book.publishedDate}</ModalHeader>
-            <ModalHeader>Description:{props.book.description}</ModalHeader>
-            <ModalHeader>
+            <ModalHeader>Published: {props.book.publishDate}</ModalHeader>
+            <ModalHeader>Description: {props.book.description}</ModalHeader>
+            {/* <ModalHeader>
               {!props.book.googIi
                 ? ""
                 : props.book.googIi.map(ident => {
@@ -165,7 +165,9 @@ const SearchBookCard = props => {
                         </div>
                       ));
                   })}
-            </ModalHeader>
+            </ModalHeader> */}
+            <ModalHeader>ISBN13: {props.book.isbn13}</ModalHeader>
+            <ModalHeader>ISBN: {props.book.isbn}</ModalHeader>
           </Modal>
           <div className="buttonz">
             <Button color="info" onClick={toggleInfoModal}>

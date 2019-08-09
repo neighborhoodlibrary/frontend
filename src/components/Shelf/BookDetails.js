@@ -70,7 +70,7 @@ const Book = props => {
           <CardBody>
             <CardInfoDiv>
               <div id="centering">
-                <img src={displayedBook.googThumbnail} alt="book_thumb" />
+                <img src={displayedBook.image} alt="book_thumb" />
               </div>
               <p>
                 {!displayedBook.authors
@@ -81,7 +81,7 @@ const Book = props => {
               </p>
               <p>Description: {displayedBook.description}</p>
               <p>Page Count: {displayedBook.pageCount}</p>
-              <div>
+              {/* <div>
                 {!displayedBook.googIi
                   ? ""
                   : displayedBook.googIi.map(ident => {
@@ -93,7 +93,12 @@ const Book = props => {
                           </div>
                         ));
                     })}
-              </div>
+              </div> */}
+              <p>Isbn13: {displayedBook.isbn13}</p>
+              <p>Isbn: {displayedBook.isbn}</p>
+              <p>Language: {displayedBook.language}</p>
+              <p>Publish Date: {displayedBook.publishDate}</p>
+              <p>Publisher: {displayedBook.publisher}</p>
             </CardInfoDiv>
           </CardBody>
           <CardHeader>
