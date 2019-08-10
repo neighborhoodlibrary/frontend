@@ -17,10 +17,15 @@ import { useAlert } from "react-alert";
 const uniqueID = require("uniqid");
 
 const ManualAddBookModal = props => {
+  const alert = useAlert();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+  const auth = firebase.auth();
+  const curUser = auth.currentUser;
   const [bookValues, setBookValues] = useState({
     authorsInput: "",
     titleInput: "",
-    imageInput: "",
+    imageInput: {},
     descriptionInput: "",
     isbnInput: "",
     isbn13Input: "",
@@ -29,6 +34,12 @@ const ManualAddBookModal = props => {
     publishDateInput: "",
     publisherInput: ""
   });
+  //   const [imageVal,setImageVal]= useState(null)
+
+  const handleImage = e => {
+    let imageFile = e.target.files[0];
+    setBookValues({ ...bookValues, imageInput: imageFile });
+  };
 
   const handleChanges = e => {
     const { name, value } = e.target;
@@ -37,7 +48,60 @@ const ManualAddBookModal = props => {
 
   const manualAddBook = () => {
     console.log(bookValues);
+    if (bookValues.imageInput) {
+      storage
+        .ref(`images/${bookValues.imageInput.name}`)
+        .put(bookValues.imageInput)
+        .then(() => {
+          storage
+            .ref(`images/${bookValues.imageInput.name}`)
+            .getDownloadURL()
+            .then(url => {
+              //   console.log(url)
+              db.collection("users")
+                .doc(curUser.uid)
+                .get()
+                .then(doc => {
+                  if (doc.exists) {
+                    const userEmail = doc.data().email;
+                    const idHold = uniqueID("n1-");
+                    const bookObj = { ...bookValues };
+                    db.collection("books")
+                      .doc(idHold)
+                      .set({
+                        // book info
+                        id: idHold,
+                        authors: bookObj.authorsInput,
+                        title: bookObj.titleInput,
+                        image: url,
+                        description: bookObj.descriptionInput,
+                        isbn: bookObj.isbnInput,
+                        isbn13: bookObj.isbn13Input,
+                        language: bookObj.languageInput,
+                        pageCount: bookObj.pageCountInput,
+                        publishDate: bookObj.publishDateInput,
+                        publisher: bookObj.publisherInput,
+                        // user info
+                        ownerId: curUser.uid,
+                        ownerEmail: userEmail,
+                        requestedId: [],
+                        transitionUser: "",
+                        checkedOut: false,
+                        borrowerId: ""
+                      });
+                    alert.success("Success!");
+                  } else {
+                    console.log("No such document!");
+                  }
+                })
+                .catch(error => {
+                  console.log("Error getting document:", error);
+                });
+            });
+        });
+    }
   };
+
   return (
     <Modal
       isOpen={props.manualAddModal}
@@ -154,8 +218,7 @@ const ManualAddBookModal = props => {
               type="file"
               name="imageInput"
               id="imageI"
-              onChange={handleChanges}
-              value={bookValues.imageInput}
+              onChange={handleImage}
             />
             <FormText color="muted">
               Please place book cover image file here
