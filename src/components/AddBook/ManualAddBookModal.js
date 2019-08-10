@@ -38,6 +38,7 @@ const ManualAddBookModal = props => {
 
   const handleImage = e => {
     let imageFile = e.target.files[0];
+    console.log(imageFile);
     setBookValues({ ...bookValues, imageInput: imageFile });
   };
 
@@ -66,12 +67,13 @@ const ManualAddBookModal = props => {
                     const userEmail = doc.data().email;
                     const idHold = uniqueID("n1-");
                     const bookObj = { ...bookValues };
+                    const authArr = bookObj.authorsInput.split(",");
                     db.collection("books")
                       .doc(idHold)
                       .set({
                         // book info
                         id: idHold,
-                        authors: bookObj.authorsInput,
+                        authors: authArr,
                         title: bookObj.titleInput,
                         image: url,
                         description: bookObj.descriptionInput,
@@ -163,7 +165,7 @@ const ManualAddBookModal = props => {
               type="text"
               name="isbnInput"
               id="isbnI"
-              placeholder="Isbns other than isbn13, separate with comma"
+              placeholder="Isbn other than isbn13"
               onChange={handleChanges}
               value={bookValues.isbnInput}
             />
