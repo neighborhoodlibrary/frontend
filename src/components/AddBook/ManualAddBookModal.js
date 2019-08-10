@@ -14,6 +14,7 @@ import {
   Button
 } from "reactstrap";
 import { useAlert } from "react-alert";
+
 const uniqueID = require("uniqid");
 
 const ManualAddBookModal = props => {
@@ -25,7 +26,7 @@ const ManualAddBookModal = props => {
   const [bookValues, setBookValues] = useState({
     authorsInput: "",
     titleInput: "",
-    imageInput: {},
+    imageInput: null,
     descriptionInput: "",
     isbnInput: "",
     isbn13Input: "",
@@ -38,8 +39,12 @@ const ManualAddBookModal = props => {
 
   const handleImage = e => {
     let imageFile = e.target.files[0];
-    console.log(imageFile);
-    setBookValues({ ...bookValues, imageInput: imageFile });
+    if (imageFile.type.match(/image.*/)) {
+      setBookValues({ ...bookValues, imageInput: imageFile });
+    } else {
+      props.toggleManualAddModal();
+      alert.error("Cant upload anything other than an image");
+    }
   };
 
   const handleChanges = e => {
@@ -49,6 +54,7 @@ const ManualAddBookModal = props => {
 
   const manualAddBook = () => {
     console.log(bookValues);
+    const idHold = uniqueID("n1-");
     if (bookValues.imageInput) {
       storage
         .ref(`images/${bookValues.imageInput.name}`)
@@ -90,8 +96,11 @@ const ManualAddBookModal = props => {
                         transitionUser: "",
                         checkedOut: false,
                         borrowerId: ""
+                      })
+                      .then(() => {
+                        props.toggleManualAddModal();
+                        alert.success("Success!");
                       });
-                    alert.success("Success!");
                   } else {
                     console.log("No such document!");
                   }
@@ -101,15 +110,54 @@ const ManualAddBookModal = props => {
                 });
             });
         });
+    } else {
+      db.collection("users")
+        .doc(curUser.uid)
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            const userEmail = doc.data().email;
+            const bookObj = { ...bookValues };
+            const authArr = bookObj.authorsInput.split(",");
+            db.collection("books")
+              .doc(idHold)
+              .set({
+                // book info
+                id: idHold,
+                authors: authArr,
+                title: bookObj.titleInput,
+                image: null,
+                description: bookObj.descriptionInput,
+                isbn: bookObj.isbnInput,
+                isbn13: bookObj.isbn13Input,
+                language: bookObj.languageInput,
+                pageCount: bookObj.pageCountInput,
+                publishDate: bookObj.publishDateInput,
+                publisher: bookObj.publisherInput,
+                // user info
+                ownerId: curUser.uid,
+                ownerEmail: userEmail,
+                requestedId: [],
+                transitionUser: "",
+                checkedOut: false,
+                borrowerId: ""
+              })
+              .then(() => {
+                props.toggleManualAddModal();
+                alert.success("Success!");
+              });
+          } else {
+            console.log("No such document!");
+          }
+        })
+        .catch(error => {
+          console.log("Error getting document:", error);
+        });
     }
   };
 
   return (
-    <Modal
-      isOpen={props.manualAddModal}
-      toggle={props.toggleManualAddModal}
-      centered
-    >
+    <Modal isOpen={props.manualAddModal} toggle={props.toggleManualAddModal}>
       <ModalHeader>Add Book Manually</ModalHeader>
       <ModalBody>
         <Form>

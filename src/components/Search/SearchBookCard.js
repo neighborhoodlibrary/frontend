@@ -42,6 +42,11 @@ const SearchBookCardDiv = styled.div`
   }
 `;
 
+const BookCover = styled.img`
+  max-height: 200px;
+  max-width: 200px;
+`;
+
 const SearchBookCard = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
@@ -142,7 +147,7 @@ const SearchBookCard = props => {
           )}
         </CardHeader>
         <div className="imghold">
-          <img src={props.book.image} alt="book_thumb" />
+          <BookCover src={props.book.image} alt="book_thumb" />
         </div>
         <CardBody>
           <Modal isOpen={infoModal} toggle={toggleInfoModal} centered>

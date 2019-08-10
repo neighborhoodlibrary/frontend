@@ -34,6 +34,11 @@ const CardInfoDiv = styled.div`
   }
 `;
 
+const BookCover = styled.img`
+  max-height: 200px;
+  max-width: 200px;
+`;
+
 const Book = props => {
   const bookContext = useContext(BookContext);
   const [displayedBook, getDisplayedBook] = useState([]);
@@ -70,7 +75,7 @@ const Book = props => {
           <CardBody>
             <CardInfoDiv>
               <div id="centering">
-                <img src={displayedBook.image} alt="book_thumb" />
+                <BookCover src={displayedBook.image} alt="book_thumb" />
               </div>
               <p>
                 {!displayedBook.authors
