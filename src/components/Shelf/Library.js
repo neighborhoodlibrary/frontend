@@ -56,7 +56,12 @@ const Library = () => {
   return (
     <Container>
       {booksInfo.map(book => (
-        <Book key={Math.random()} book={book} getBooks={getBooks} />
+        <Book
+          key={Math.random()}
+          book={book}
+          getBooks={getBooks}
+          userUid={user.uid}
+        />
       ))}
     </Container>
   );
