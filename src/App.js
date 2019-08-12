@@ -70,10 +70,10 @@ function App() {
                     path="/shelf/book/:id"
                     component={BookDetails}
                   />
-                  {/* Lookup componets */}
+                  {/* Lookup components */}
                   <PrivateRoute exact path="/shelf/add" component={AddBook} />
                   <PrivateRoute exact path="/shelf/search" component={Search} />
-                  {/* transcational compoents */}
+                  {/* transactional components */}
                   <PrivateRoute
                     exact
                     path="/shelf/requested"

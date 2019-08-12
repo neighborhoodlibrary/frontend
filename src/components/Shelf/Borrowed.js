@@ -87,7 +87,7 @@ const Borrowed = () => {
         setReturnBooks(tempReturnBooksArr);
       })
       .catch(error => {
-        console.log("Error gettting the docs:", error);
+        console.log("Error getting the docs:", error);
       });
   };
 
