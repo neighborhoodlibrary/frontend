@@ -34,6 +34,10 @@ const CardBodyDiv = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+const BookCover = styled.img`
+  max-height: 200px;
+  max-width: 200px;
+`;
 
 const ReceivingBook = props => {
   const bookDocRef = firebase
@@ -73,7 +77,7 @@ const ReceivingBook = props => {
         <CardBody>
           <CardBodyDiv>
             <p>by: {props.book.authors}</p>
-            <img src={props.book.image} alt="book_thumb" />
+            <BookCover src={props.book.image} alt="book_thumb" />
           </CardBodyDiv>
         </CardBody>
         <CardFooter>

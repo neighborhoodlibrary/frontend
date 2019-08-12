@@ -35,6 +35,11 @@ const CardBodyDiv = styled.div`
   align-items: center;
 `;
 
+const BookCover = styled.img`
+  max-height: 200px;
+  max-width: 200px;
+`;
+
 const RecoverBook = props => {
   const bookDocRef = firebase
     .firestore()
@@ -68,7 +73,7 @@ const RecoverBook = props => {
         <CardBody>
           <CardBodyDiv>
             <p>by: {props.book.authors}</p>
-            <img src={props.book.image} alt="book_thumb" />
+            <BookCover src={props.book.image} alt="book_thumb" />
           </CardBodyDiv>
         </CardBody>
         <CardFooter>

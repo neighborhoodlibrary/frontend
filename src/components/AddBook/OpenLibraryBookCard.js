@@ -43,6 +43,11 @@ const AddBookCardDiv = styled.div`
   }
 `;
 
+const BookCover = styled.img`
+  max-height: 200px;
+  max-width: 200px;
+`;
+
 const OpenLibraryBookCard = props => {
   const [bookInfoValues, setBookInfoValues] = useState({
     authors: [],
@@ -134,7 +139,7 @@ const OpenLibraryBookCard = props => {
             : ""}
         </CardHeader>
         <div className="imghold">
-          <img src={bookInfoValues.image} alt="thumbnail" />
+          <BookCover src={bookInfoValues.image} alt="thumbnail" />
         </div>
         <CardBody>
           <Button color="info" onClick={toggleBookInfoModal}>

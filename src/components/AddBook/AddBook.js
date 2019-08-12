@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import BookMap from "./BookMap";
+import ManualAddBookModal from "./ManualAddBookModal";
 import styled from "styled-components";
 import { useAlert } from "react-alert";
 import { Form, Input, Button, Label } from "reactstrap";
@@ -46,6 +47,9 @@ const Space = styled.span`
   margin-left: 15px;
   margin-right: 15px;
 `;
+const ManualAddButtonDiv = styled.div`
+  margin-top: 15px;
+`;
 
 const AddBook = () => {
   const alert = useAlert();
@@ -56,11 +60,16 @@ const AddBook = () => {
   });
   const [bookResults, setBookResults] = useState([]);
   const [passApiVal, setPassApiVal] = useState("google");
+  const [manualAddModal, setManualAddModal] = useState(false);
 
   const handleChanges = e => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
     setBookResults([]);
+  };
+
+  const toggleManualAddModal = () => {
+    manualAddModal ? setManualAddModal(false) : setManualAddModal(true);
   };
 
   const formSubmit = e => {
@@ -210,11 +219,20 @@ const AddBook = () => {
           </div>
         </AddBookForm>
       </Form>
+      <ManualAddButtonDiv>
+        <Button onClick={toggleManualAddModal}>Add a Book Manually</Button>
+      </ManualAddButtonDiv>
       {bookResults.length > 0 ? (
         <BookMap bookResults={bookResults} passApiVal={passApiVal} />
       ) : (
-        <div id="sorryToInform">No results found</div>
+        <div id="sorryToInform">
+          Can't find what you are looking for? Try manually adding the book.
+        </div>
       )}
+      <ManualAddBookModal
+        manualAddModal={manualAddModal}
+        toggleManualAddModal={toggleManualAddModal}
+      />
     </AddBookDiv>
   );
 };
