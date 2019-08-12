@@ -83,7 +83,7 @@ const RecoverBook = props => {
         </CardFooter>
       </Card>
       <Modal isOpen={recoverBookModal} toggle={toggleRecoverBookModal}>
-        <ModalHeader>Confirm book is now in your possesion</ModalHeader>
+        <ModalHeader>Confirm book is now in your possession</ModalHeader>
         <ModalBody>
           Confirm you have received book, and set it back to your Library?
         </ModalBody>
