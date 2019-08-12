@@ -1,0 +1,18 @@
+.editOff {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileBox {
+    box-sizing: content-box;
+    padding: 15px;
+    margin: 5px 0px;
+    background-color: rgba(0,0,0,0.05);
+}
+
+.editOn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

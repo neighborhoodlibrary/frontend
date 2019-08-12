@@ -134,19 +134,28 @@ export default function Header() {
   const userContext = useContext(UserContext);
   const auth = firebase.auth();
 
+  const db = firebase.firestore();
+
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     if (loggedIn === false) {
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          var curUser = auth.currentUser;
+          
+          const userDB = db.collection("users").doc(`${auth.currentUser.uid}`);
 
-          var loginObj = {
-            user: curUser,
-            loggedIn: true
-          };
-          userContext.setLogin(loginObj);
+          userDB.get().then(function(user) {
+            userContext.addUser(user.data())
+          }).catch(function(error) {
+            console.log(error);
+          })
+
+          // var loginObj = {
+          //   user: curUser,
+          //   loggedIn: true
+          // };
+          // userContext.setLogin(loginObj);
           loggedInToTrue();
         }
       });
