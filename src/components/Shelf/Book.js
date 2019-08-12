@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import UserContext from "../../context/user/userContext";
+import React, { useContext, useState } from "react";
+// import UserContext from "../../context/user/userContext";
 import BookContext from "../../context/book/bookContext";
 
 import { useAlert } from "react-alert";
@@ -55,14 +55,14 @@ const LibraryBook = props => {
   const user = auth.currentUser;
   const alert = useAlert();
   const bookContext = useContext(BookContext);
-  const userContext = useContext(UserContext);
-  const [userInfo, getUserInfo] = useState({});
+  // const userContext = useContext(UserContext);
+  // const [userInfo, getUserInfo] = useState({});
   const [deleteBookModal, setDeleteBookModal] = useState(false);
   const [returnBookModal, setReturnBookModal] = useState(false);
 
-  useEffect(() => {
-    getUserInfo(userContext.getUser());
-  }, []);
+  // useEffect(() => {
+  //   getUserInfo(userContext.getUser());
+  // }, []);
 
   const setBookFunc = () => {
     bookContext.setBook(props.book);
@@ -106,7 +106,7 @@ const LibraryBook = props => {
       <Card>
         <CardHeader>
           <CardHeaderDiv>
-            {props.book.ownerId !== userInfo.uid ? (
+            {props.book.ownerId !== props.userUid ? (
               ""
             ) : (
               <Button color="danger" onClick={toggleDeleteBookModal}>
