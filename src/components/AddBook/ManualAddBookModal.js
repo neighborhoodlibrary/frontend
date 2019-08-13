@@ -14,6 +14,20 @@ import {
   Button
 } from "reactstrap";
 import { useAlert } from "react-alert";
+import styled from "styled-components";
+
+const ManualAddBookForm = styled.div`
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+  padding:10px 5px 15px 20px;
+  
+  authors {
+    padding: 5px;
+  }`
+  
+
+
 
 const uniqueID = require("uniqid");
 
@@ -160,7 +174,9 @@ const ManualAddBookModal = props => {
     <Modal isOpen={props.manualAddModal} toggle={props.toggleManualAddModal}>
       <ModalHeader>Add Book Manually</ModalHeader>
       <ModalBody>
+        <ManualAddBookForm>
         <Form>
+          <div className="authors">
           <FormGroup row>
             <Label for="authorI">Authors</Label>
             <Input
@@ -173,6 +189,7 @@ const ManualAddBookModal = props => {
               required
             />
           </FormGroup>
+          </div>
           <FormGroup row>
             <Label for="titleI">Title</Label>
             <Input
@@ -208,7 +225,7 @@ const ManualAddBookModal = props => {
             />
           </FormGroup>
           <FormGroup row>
-            <Label for="isbnI">Other isbn</Label>
+            <Label for="isbnI">Other Isbn</Label>
             <Input
               type="text"
               name="isbnInput"
@@ -275,6 +292,7 @@ const ManualAddBookModal = props => {
             </FormText>
           </FormGroup>
         </Form>
+        </ManualAddBookForm>
       </ModalBody>
       <ModalFooter>
         <Button color="success" onClick={manualAddBook}>
