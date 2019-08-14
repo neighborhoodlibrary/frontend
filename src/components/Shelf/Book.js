@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 // import UserContext from "../../context/user/userContext";
 import BookContext from "../../context/book/bookContext";
+import EditBookModal from "./EditBookModal";
 
 import { useAlert } from "react-alert";
 //
@@ -59,6 +60,7 @@ const LibraryBook = props => {
   // const [userInfo, getUserInfo] = useState({});
   const [deleteBookModal, setDeleteBookModal] = useState(false);
   const [returnBookModal, setReturnBookModal] = useState(false);
+  const [editBookModal, setEditBookModal] = useState(false);
 
   // useEffect(() => {
   //   getUserInfo(userContext.getUser());
@@ -101,6 +103,10 @@ const LibraryBook = props => {
       });
   };
 
+  const toggleEditBookModal = () => {
+    editBookModal ? setEditBookModal(false) : setEditBookModal(true);
+  };
+
   return (
     <CardDiv>
       <Card>
@@ -114,6 +120,13 @@ const LibraryBook = props => {
               </Button>
             )}
             {props.book.title}
+            {props.book.ownerId && !props.book.checkedOut ? (
+              <Button color="primary" onClick={toggleEditBookModal}>
+                =
+              </Button>
+            ) : (
+              ""
+            )}
           </CardHeaderDiv>
         </CardHeader>
         <NavLink to={`/shelf/book/${props.book.id}`} onClick={setBookFunc}>
@@ -158,6 +171,11 @@ const LibraryBook = props => {
           <Button onClick={toggleReturnBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
+      <EditBookModal
+        book={props.book}
+        toggleEditBookModal={toggleEditBookModal}
+        editBookModal={editBookModal}
+      />
     </CardDiv>
   );
 };
