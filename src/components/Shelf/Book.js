@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 // import UserContext from "../../context/user/userContext";
 import BookContext from "../../context/book/bookContext";
+import EditBookModal from "./EditBookModal";
 
 import { useAlert } from "react-alert";
 //
@@ -18,7 +19,8 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  UncontrolledTooltip
 } from "reactstrap";
 
 const CardDiv = styled.div`
@@ -59,6 +61,7 @@ const LibraryBook = props => {
   // const [userInfo, getUserInfo] = useState({});
   const [deleteBookModal, setDeleteBookModal] = useState(false);
   const [returnBookModal, setReturnBookModal] = useState(false);
+  const [editBookModal, setEditBookModal] = useState(false);
 
   // useEffect(() => {
   //   getUserInfo(userContext.getUser());
@@ -101,6 +104,10 @@ const LibraryBook = props => {
       });
   };
 
+  const toggleEditBookModal = () => {
+    editBookModal ? setEditBookModal(false) : setEditBookModal(true);
+  };
+
   return (
     <CardDiv>
       <Card>
@@ -109,11 +116,42 @@ const LibraryBook = props => {
             {props.book.ownerId !== props.userUid ? (
               ""
             ) : (
-              <Button color="danger" onClick={toggleDeleteBookModal}>
-                X
-              </Button>
+              <div>
+                <Button
+                  color="danger"
+                  onClick={toggleDeleteBookModal}
+                  id={`${props.book.id}-d`}
+                >
+                  X
+                </Button>
+                <UncontrolledTooltip
+                  placement="auto"
+                  target={`${props.book.id}-d`}
+                >
+                  Delete Book
+                </UncontrolledTooltip>
+              </div>
             )}
             {props.book.title}
+            {props.book.ownerId && !props.book.checkedOut ? (
+              <div>
+                <Button
+                  color="primary"
+                  onClick={toggleEditBookModal}
+                  id={`${props.book.id}-e`}
+                >
+                  =
+                </Button>
+                <UncontrolledTooltip
+                  placement="auto"
+                  target={`${props.book.id}-e`}
+                >
+                  Edit Book
+                </UncontrolledTooltip>
+              </div>
+            ) : (
+              ""
+            )}
           </CardHeaderDiv>
         </CardHeader>
         <NavLink to={`/shelf/book/${props.book.id}`} onClick={setBookFunc}>
@@ -158,6 +196,11 @@ const LibraryBook = props => {
           <Button onClick={toggleReturnBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
+      <EditBookModal
+        book={props.book}
+        toggleEditBookModal={toggleEditBookModal}
+        editBookModal={editBookModal}
+      />
     </CardDiv>
   );
 };
