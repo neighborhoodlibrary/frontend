@@ -19,7 +19,8 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  UncontrolledTooltip
 } from "reactstrap";
 
 const CardDiv = styled.div`
@@ -115,15 +116,39 @@ const LibraryBook = props => {
             {props.book.ownerId !== props.userUid ? (
               ""
             ) : (
-              <Button color="danger" onClick={toggleDeleteBookModal}>
-                X
-              </Button>
+              <div>
+                <Button
+                  color="danger"
+                  onClick={toggleDeleteBookModal}
+                  id={`${props.book.id}-d`}
+                >
+                  X
+                </Button>
+                <UncontrolledTooltip
+                  placement="auto"
+                  target={`${props.book.id}-d`}
+                >
+                  Delete Book
+                </UncontrolledTooltip>
+              </div>
             )}
             {props.book.title}
             {props.book.ownerId && !props.book.checkedOut ? (
-              <Button color="primary" onClick={toggleEditBookModal}>
-                =
-              </Button>
+              <div>
+                <Button
+                  color="primary"
+                  onClick={toggleEditBookModal}
+                  id={`${props.book.id}-e`}
+                >
+                  =
+                </Button>
+                <UncontrolledTooltip
+                  placement="auto"
+                  target={`${props.book.id}-e`}
+                >
+                  Edit Book
+                </UncontrolledTooltip>
+              </div>
             ) : (
               ""
             )}
