@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import {
@@ -47,7 +47,6 @@ const ManualAddBookModal = props => {
     publishDateInput: "",
     publisherInput: ""
   });
-  //   const [imageVal,setImageVal]= useState(null)
 
   const handleImage = e => {
     let imageFile = e.target.files[0];

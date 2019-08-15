@@ -121,7 +121,6 @@ const SearchBookCard = props => {
                 requestedId: firebase.firestore.FieldValue.arrayUnion(user.uid)
               });
               alert.success("Successfully requested book from owner.");
-              console.log(res.data);
             });
           }
         } else {
@@ -158,19 +157,6 @@ const SearchBookCard = props => {
             <ModalHeader>Publisher: {props.book.publisher}</ModalHeader>
             <ModalHeader>Published: {props.book.publishDate}</ModalHeader>
             <ModalHeader>Description: {props.book.description}</ModalHeader>
-            {/* <ModalHeader>
-              {!props.book.googIi
-                ? ""
-                : props.book.googIi.map(ident => {
-                    return Object.entries(ident)
-                      .reverse()
-                      .map(([key, value]) => (
-                        <div key={Math.random()}>
-                          {key}: {value}
-                        </div>
-                      ));
-                  })}
-            </ModalHeader> */}
             <ModalHeader>ISBN13: {props.book.isbn13}</ModalHeader>
             <ModalHeader>ISBN: {props.book.isbn}</ModalHeader>
           </Modal>

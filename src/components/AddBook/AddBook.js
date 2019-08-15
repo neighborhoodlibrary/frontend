@@ -10,7 +10,6 @@ const booksApi = require("google-books-search");
 //
 const rp = require("request-promise");
 //
-// const goodreadsKey = process.env.REACT_APP_GOODREADS_API_KEY;
 const URL = "https://neighborhoodlibraryback.herokuapp.com";
 // const URL = "http://localhost:9500";
 
@@ -107,31 +106,10 @@ const AddBook = () => {
         query: values.entry,
         search: values.searchType
       };
-      // let booksHolderArr = [];
-      // let finalgrBooksArr = [];
-      // async function asyncForEach(arr, cb) {
-      //   for (let i = 0; i < arr.length; i++) {
-      //     await cb(arr[i], i, arr);
-      //   }
-      // }
       Axios.post(`${URL}/goodreads`, body).then(res => {
         console.log(res);
-        // booksHolderArr = res.data;
         setBooksFunc(res.data);
       });
-      // .then(() => {
-      //   console.log(booksHolderArr);
-      //   const aFunc = async () => {
-      //     await asyncForEach(booksHolderArr, async book => {
-      //       let secondBody = { bookId: book.best_book[0].id[0]._ };
-      //       await Axios.post(`${URL}/grdetails`, secondBody).then(res => {
-      //         finalgrBooksArr.push(res);
-      //       });
-      //     });
-      //     console.log(finalgrBooksArr);
-      //   };
-      //   aFunc();
-      // });
     } else if (values.apiChoice === "ol") {
       setPassApiVal("ol");
       let searchType = {
@@ -238,126 +216,3 @@ const AddBook = () => {
 };
 
 export default AddBook;
-
-// export default class AddBook extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       type: "title",
-//       entry: "",
-//       results: [],
-//       bookData: null,
-//       apiChoice: "google"
-//     };
-//     this.formSubmit = this.formSubmit.bind(this);
-//   }
-
-//   handleChanges = e => {
-//     this.setState({
-//       [e.target.name]: e.target.value
-//     });
-//   };
-
-//   formSubmit = e => {
-//     e.preventDefault();
-
-//     this.setState({
-//       results: []
-//     });
-
-//     let something = results => {
-//       this.setState({
-//         results
-//       });
-//     };
-
-//     if(this.state.apiChoice === "google") {
-
-//       var booksOptions = {
-//         field: `${this.state.type}`,
-//         offset: 0,
-//         limit: 20,
-//         type: "books",
-//         order: "relevance",
-//         lang: "en"
-//       };
-
-//       booksApi.search(this.state.entry, booksOptions, function(
-//         error,
-//         results,
-//         apiResponse
-//       ) {
-//         console.log(results);
-//         something(results);
-//       });
-
-//       return console.log("Success");
-//     } else if (this.state.apiChoice === "ol"){
-//         var searchType = {
-//           title: 'q=',
-//           author: 'author=',
-//           isbn: 'isbn='
-//         }
-
-//         var query = this.state.entry;
-//         var rp = require("request-promise");
-//         var url = "https://openlibrary.org/search.json?" +
-//         searchType[this.state.type] + query;
-
-//         rp({
-//             url: url,
-//             json: true
-//         }).then(function (body) {
-//             console.log(body)
-//             something(body);
-//         }).catch(function(err){
-//           console.log(err)
-//         })
-
-//         return console.log("Success")
-//     }
-
-//     this.setState({
-//       entry: ""
-//     })
-
-//     return console.log("formSubmit complete")
-//   };
-
-//   render() {
-//     return (
-//       <AddBookDiv>
-//         <Form onSubmit={this.formSubmit}>
-//               <AddBookForm>
-//                 <div>
-//                   <Label>Api Choice</Label>
-//                   <Input type="select" onChange={this.handleChanges} name="apiChoice">
-//                     <option name="google" value="google">Google</option>
-//                     <option name= "ol" value="ol">Open Library</option>
-//                   </Input>
-//                 </div>
-//                 <div>
-//                   <Label>Search Type</Label>
-//                   <Input type="select" onChange={this.handleChanges} name="type">
-//                     <option name="title" value="title">Title</option>
-//                     <option name="author" value="author">Author</option>
-//                     <option name="isbn" value="isbn">ISBN</option>
-//                   </Input>
-//                 </div>
-//                 <div>
-//                   <Label>Entry</Label>
-//                   <Input
-//                     placeholder={this.state.type === null ? "title" : this.state.type}
-//                     onChange={this.handleChanges}
-//                     name="entry"
-//                     value={this.state.value}
-//                   />
-//                 </div>
-//                 <Button>Search</Button>
-//               </AddBookForm>
-//         </Form>
-//         {this.state.results ? (<BookMap resultsarr={this.state.results.docs ? this.state.results.docs : this.state.results} /> ) : <div id="sorryToInform">No results found</div>}
-//       </AddBookDiv>
-//     );
-//   }
-// }
