@@ -1,5 +1,4 @@
 import React from "react";
-import AddBookCard from "./AddBookCard";
 import styled from "styled-components";
 import GoogleBookCard from "./GoogleBookCard";
 import GoodreadsBookCard from "./GoodreadsBookCard";
@@ -45,9 +44,6 @@ export default function BookMap(props) {
             <OpenLibraryBookCard book={book} key={Math.random()} />
           ))
         : ""}
-      {/* {props.bookResults.map(book => (
-        <AddBookCard book={book} key={Math.random()} />
-      ))} */}
     </BookMapDiv>
   );
 }

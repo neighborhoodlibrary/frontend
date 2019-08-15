@@ -31,9 +31,6 @@ const EditBookModal = props => {
   const alert = useAlert();
   const db = firebase.firestore();
   const storage = firebase.storage();
-  const auth = firebase.auth();
-  const curUser = auth.currentUser;
-
   const [bookValues, setBookValues] = useState({
     authorsInput: "",
     titleInput: "",
@@ -48,9 +45,8 @@ const EditBookModal = props => {
   });
 
   useEffect(() => {
-    const authInput = props.book.authors.join(",");
     setBookValues({
-      authorsInput: authInput,
+      authorsInput: props.book.authors,
       titleInput: props.book.title,
       descriptionInput: props.book.description,
       isbnInput: props.book.isbn,
@@ -64,7 +60,7 @@ const EditBookModal = props => {
 
   const handleImage = e => {
     let imageFile = e.target.files[0];
-    if (imageFile.type.mathc(/image.*/)) {
+    if (imageFile.type.match(/image.*/)) {
       setBookValues({ ...bookValues, imageInput: imageFile });
     } else {
       props.toggleEditBookModal();
@@ -76,7 +72,62 @@ const EditBookModal = props => {
     setBookValues({ ...bookValues, [name]: value });
   };
   const submitEditBook = () => {
-    console.log("editbook!");
+    if (bookValues.imageInput) {
+      storage
+        .ref(`images/${bookValues.imageInput.name}`)
+        .put(bookValues.imageInput)
+        .then(() => {
+          storage
+            .ref(`images/${bookValues.imageInput.name}`)
+            .getDownloadURL()
+            .then(url => {
+              const bookId = props.book.id;
+              const bookObj = { ...bookValues };
+              const authArr = bookObj.authorsInput.split(",");
+              db.collection("books")
+                .doc(bookId)
+                .update({
+                  authors: authArr,
+                  title: bookObj.titleInput,
+                  image: url,
+                  description: bookObj.descriptionInput,
+                  isbn: bookObj.isbnInput,
+                  isbn13: bookObj.isbn13Input,
+                  language: bookObj.languageInput,
+                  pageCount: bookObj.pageCountInput,
+                  publishDate: bookObj.publishDateInput,
+                  publisher: bookObj.publisherInput
+                })
+                .then(() => {
+                  props.toggleEditBookModal();
+                  alert.success("Successfully edited book!");
+                  props.getBooks();
+                });
+            });
+        });
+    } else {
+      const bookId = props.book.id;
+      const bookObj = { ...bookValues };
+      const authArr = bookObj.authorsInput.split(",");
+      db.collection("books")
+        .doc(bookId)
+        .update({
+          authors: authArr,
+          title: bookObj.titleInput,
+          description: bookObj.descriptionInput,
+          isbn: bookObj.isbnInput,
+          isbn13: bookObj.isbn13Input,
+          language: bookObj.languageInput,
+          pageCount: bookObj.pageCountInput,
+          publishDate: bookObj.publishDateInput,
+          publisher: bookObj.publisherInput
+        })
+        .then(() => {
+          props.toggleEditBookModal();
+          alert.success("Successfully edited book!");
+          props.getBooks();
+        });
+    }
   };
 
   return (
