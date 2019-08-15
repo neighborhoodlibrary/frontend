@@ -20,14 +20,12 @@ const ManualAddBookForm = styled.div`
   margin: 20px;
   justify-content: center;
   align-items: center;
-  padding:10px 5px 15px 20px;
-  
+  padding: 10px 5px 15px 20px;
+
   authors {
     padding: 5px;
-  }`
-  
-
-
+  }
+`;
 
 const uniqueID = require("uniqid");
 
@@ -67,7 +65,6 @@ const ManualAddBookModal = props => {
   };
 
   const manualAddBook = () => {
-    console.log(bookValues);
     const idHold = uniqueID("n1-");
     if (bookValues.imageInput) {
       storage
@@ -78,7 +75,6 @@ const ManualAddBookModal = props => {
             .ref(`images/${bookValues.imageInput.name}`)
             .getDownloadURL()
             .then(url => {
-              //   console.log(url)
               db.collection("users")
                 .doc(curUser.uid)
                 .get()
@@ -175,123 +171,123 @@ const ManualAddBookModal = props => {
       <ModalHeader>Add Book Manually</ModalHeader>
       <ModalBody>
         <ManualAddBookForm>
-        <Form>
-          <div className="authors">
-          <FormGroup row>
-            <Label for="authorI">Authors</Label>
-            <Input
-              type="text"
-              name="authorsInput"
-              id="authorI"
-              placeholder="Separate authors with comma"
-              onChange={handleChanges}
-              value={bookValues.authorsInput}
-              required
-            />
-          </FormGroup>
-          </div>
-          <FormGroup row>
-            <Label for="titleI">Title</Label>
-            <Input
-              type="text"
-              name="titleInput"
-              id="titleI"
-              placeholder="Title of Book"
-              onChange={handleChanges}
-              value={bookValues.titleInput}
-              required
-            />
-          </FormGroup>
-          <FormGroup row>
-            <Label for="descriptionI">Description</Label>
-            <Input
-              type="textarea"
-              name="descriptionInput"
-              id="descriptionI"
-              placeholder="Book summary, or description"
-              onChange={handleChanges}
-              value={bookValues.descriptionInput}
-            />
-          </FormGroup>
-          <FormGroup row>
-            <Label for="isbn13I">Isbn13</Label>
-            <Input
-              type="text"
-              name="isbn13Input"
-              id="isbn13I"
-              placeholder="International Standard Book Number, 13"
-              onChange={handleChanges}
-              value={bookValues.isbn13Input}
-            />
-          </FormGroup>
-          <FormGroup row>
-            <Label for="isbnI">Other Isbn</Label>
-            <Input
-              type="text"
-              name="isbnInput"
-              id="isbnI"
-              placeholder="Isbn other than isbn13"
-              onChange={handleChanges}
-              value={bookValues.isbnInput}
-            />
-          </FormGroup>
-          <FormGroup row>
-            <Label for="languageI">Language</Label>
-            <Input
-              type="text"
-              name="languageInput"
-              id="languageI"
-              placeholder="Language of book"
-              onChange={handleChanges}
-              value={bookValues.languageInput}
-            />
-          </FormGroup>
-          <FormGroup row>
-            <Label for="pageCountI">Page Count</Label>
-            <Input
-              type="text"
-              name="pageCountInput"
-              id="pageCountI"
-              placeholder="Total pages in book"
-              onChange={handleChanges}
-              value={bookValues.pageCountInput}
-            />
-          </FormGroup>
-          <FormGroup row>
-            <Label for="publishDateI">Published Date</Label>
-            <Input
-              type="text"
-              name="publishDateInput"
-              id="publishDateI"
-              placeholder="Date the book was published"
-              onChange={handleChanges}
-              value={bookValues.publishDateInput}
-            />
-          </FormGroup>
-          <FormGroup row>
-            <Label for="publisherI">Publisher</Label>
-            <Input
-              type="text"
-              name="publisherInput"
-              id="publisherI"
-              placeholder="Publishing company"
-              onChange={handleChanges}
-              value={bookValues.publisherInput}
-            />
-          </FormGroup>
-          <FormGroup row>
-            <Label for="imageI">Book Cover</Label>
-            <Input
-              type="file"
-              name="imageInput"
-              id="imageI"
-              onChange={handleImage}
-            />
-            <FormText color="muted">
-              Please place book cover image file here
-            </FormText>
-          </FormGroup>
-        </Form>
+          <Form>
+            <div className="authors">
+              <FormGroup row>
+                <Label for="authorI">Authors</Label>
+                <Input
+                  type="text"
+                  name="authorsInput"
+                  id="authorI"
+                  placeholder="Separate authors with comma"
+                  onChange={handleChanges}
+                  value={bookValues.authorsInput}
+                  required
+                />
+              </FormGroup>
+            </div>
+            <FormGroup row>
+              <Label for="titleI">Title</Label>
+              <Input
+                type="text"
+                name="titleInput"
+                id="titleI"
+                placeholder="Title of Book"
+                onChange={handleChanges}
+                value={bookValues.titleInput}
+                required
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="descriptionI">Description</Label>
+              <Input
+                type="textarea"
+                name="descriptionInput"
+                id="descriptionI"
+                placeholder="Book summary, or description"
+                onChange={handleChanges}
+                value={bookValues.descriptionInput}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="isbn13I">Isbn13</Label>
+              <Input
+                type="text"
+                name="isbn13Input"
+                id="isbn13I"
+                placeholder="International Standard Book Number, 13"
+                onChange={handleChanges}
+                value={bookValues.isbn13Input}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="isbnI">Other Isbn</Label>
+              <Input
+                type="text"
+                name="isbnInput"
+                id="isbnI"
+                placeholder="Isbn other than isbn13"
+                onChange={handleChanges}
+                value={bookValues.isbnInput}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="languageI">Language</Label>
+              <Input
+                type="text"
+                name="languageInput"
+                id="languageI"
+                placeholder="Language of book"
+                onChange={handleChanges}
+                value={bookValues.languageInput}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="pageCountI">Page Count</Label>
+              <Input
+                type="text"
+                name="pageCountInput"
+                id="pageCountI"
+                placeholder="Total pages in book"
+                onChange={handleChanges}
+                value={bookValues.pageCountInput}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="publishDateI">Published Date</Label>
+              <Input
+                type="text"
+                name="publishDateInput"
+                id="publishDateI"
+                placeholder="Date the book was published"
+                onChange={handleChanges}
+                value={bookValues.publishDateInput}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="publisherI">Publisher</Label>
+              <Input
+                type="text"
+                name="publisherInput"
+                id="publisherI"
+                placeholder="Publishing company"
+                onChange={handleChanges}
+                value={bookValues.publisherInput}
+              />
+            </FormGroup>
+            <FormGroup row>
+              <Label for="imageI">Book Cover</Label>
+              <Input
+                type="file"
+                name="imageInput"
+                id="imageI"
+                onChange={handleImage}
+              />
+              <FormText color="muted">
+                Please place book cover image file here
+              </FormText>
+            </FormGroup>
+          </Form>
         </ManualAddBookForm>
       </ModalBody>
       <ModalFooter>

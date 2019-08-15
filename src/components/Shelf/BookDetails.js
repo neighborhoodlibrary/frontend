@@ -82,23 +82,10 @@ const Book = props => {
                   ? ""
                   : displayedBook.authors.length === 1
                   ? `Author: ${displayedBook.authors[0]}`
-                  : `Authors: ${displayedBook.authors.map(author => author)}`}
+                  : `Authors: ${displayedBook.authors}`}
               </p>
               <p>Description: {displayedBook.description}</p>
               <p>Page Count: {displayedBook.pageCount}</p>
-              {/* <div>
-                {!displayedBook.googIi
-                  ? ""
-                  : displayedBook.googIi.map(ident => {
-                      return Object.entries(ident)
-                        .reverse()
-                        .map(([key, value]) => (
-                          <div key={Math.random()}>
-                            {key}: {value}
-                          </div>
-                        ));
-                    })}
-              </div> */}
               <p>Isbn13: {displayedBook.isbn13}</p>
               <p>Isbn: {displayedBook.isbn}</p>
               <p>Language: {displayedBook.language}</p>
@@ -109,7 +96,6 @@ const Book = props => {
           <CardHeader>
             <CardHeaderDiv>
               <p>Owner of Book: {displayedBook.ownerId}</p>
-
               <p>
                 Currently Checked out by:
                 {displayedBook.checkedOut
