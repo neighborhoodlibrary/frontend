@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Route } from "react-router-dom";
 import UserContext from "../context/user/userContext";
 
-
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const userContext = useContext(UserContext);
 
@@ -10,7 +9,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        if (userContext.userState.loggedIn === true) {
+        if (userContext.userState.loggedIn) {
           return <Component {...props} />;
         }
       }}
