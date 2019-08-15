@@ -13,7 +13,7 @@ const HeaderDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 15px 17px;
+  padding: 10px 17px;
   margin: 0px 0px 20px 0px;
   border-bottom: 1px solid rgb(10, 10, 10, 0.5);
   -webkit-box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
@@ -23,7 +23,8 @@ const HeaderDiv = styled.div`
   h1 {
     font-size: 3em;
     font-family: "Merriweather", serif;
-    padding: 10px 0px;
+    padding: 10px 5px;
+    border-bottom: 2px solid #28a745;
   }
 
   @media (max-width: 800px) {
