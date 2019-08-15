@@ -11,9 +11,9 @@ import neiImg from "../assets/neighborpic2.jpg";
 
 const HeaderDiv = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  padding: 25px 17px;
+  padding: 15px 17px;
   margin: 0px 0px 20px 0px;
   border-bottom: 1px solid rgb(10, 10, 10, 0.5);
   -webkit-box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
@@ -21,7 +21,7 @@ const HeaderDiv = styled.div`
   box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
 
   h1 {
-    font-size: 3.5em;
+    font-size: 3em;
     font-family: "Merriweather", serif;
     padding: 10px 0px;
   }
@@ -181,12 +181,12 @@ export default function Header() {
   } else {
     return (
       <HeaderDiv>
-        <NavLink to="/shelf">
-          <h1>Neighborhood Library</h1>
-        </NavLink>
+        <h1>
+          <NavLink to="/shelf">Neighborhood Library</NavLink>
+        </h1>
         <SideBar>
-          {loggedIn === true ? <NavMenu /> : ""}
-          <SignInComponent signOut={signOut} />
+          {loggedIn === true ? <NavMenu signOut={signOut} /> : ""}
+          <SignInComponent />
         </SideBar>
       </HeaderDiv>
     );

@@ -47,21 +47,15 @@ export default function SignInComponent(props) {
         alert.error({ error });
       });
 
-  function display() {
-    if (userContext.userState.loggedIn === true) {
-      return (
-        <NavLink to="/">
-          <Button onClick={props.signOut}>Sign Out</Button>
-        </NavLink>
-      );
-    } else {
-      return (
-        <NavLink to="/shelf">
-          <Button color="primary" onClick={firstTimeLogin}>Sign In with Google</Button>
-        </NavLink>
-      );
-    }
-  }
-
-  return <div>{display()}</div>;
+  return (
+    <NavLink to="/shelf">
+      {!userContext.userState.loggedIn ? (
+        <Button color="primary" onClick={firstTimeLogin}>
+          Sign In with Google
+        </Button>
+      ) : (
+        ""
+      )}
+    </NavLink>
+  );
 }
