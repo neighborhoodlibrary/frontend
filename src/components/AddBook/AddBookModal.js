@@ -12,7 +12,6 @@ const AddBookModal = props => {
   const curUser = auth.currentUser;
 
   const addBook = () => {
-    console.log(props);
     const idHold = uniqueID("n1-");
     const bookObj = props.bookInfoValues;
     db.collection("users")

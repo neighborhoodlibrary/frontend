@@ -9,17 +9,16 @@ import "firebase/auth";
 
 import neiImg from "../assets/neighborpic2.jpg";
 
-
 const HeaderDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 25px 17px;
   margin: 0px 0px 20px 0px;
-  border-bottom: 1px solid rgb(10,10,10,.5);
+  border-bottom: 1px solid rgb(10, 10, 10, 0.5);
   -webkit-box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
-  -moz-box-shadow:    1px 1px 3px 0px rgba(30, 30, 30, 0.4);
-  box-shadow:         1px 1px 3px 0px rgba(30, 30, 30, 0.4);
+  -moz-box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
+  box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
 
   h1 {
     font-size: 3.5em;
@@ -118,7 +117,6 @@ const LOButtonHold = styled.div`
   align-items: center;
 `;
 
-
 const SideBar = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -127,7 +125,6 @@ const SideBar = styled.div`
   @media (max-width: 500px) {
     flex-direction: column;
   }
-  
 `;
 
 export default function Header() {
@@ -142,20 +139,15 @@ export default function Header() {
     if (loggedIn === false) {
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-          
           const userDB = db.collection("users").doc(`${auth.currentUser.uid}`);
-
-          userDB.get().then(function(user) {
-            userContext.addUser(user.data())
-          }).catch(function(error) {
-            console.log(error);
-          })
-
-          // var loginObj = {
-          //   user: curUser,
-          //   loggedIn: true
-          // };
-          // userContext.setLogin(loginObj);
+          userDB
+            .get()
+            .then(function(user) {
+              userContext.addUser(user.data());
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
           loggedInToTrue();
         }
       });
@@ -174,7 +166,7 @@ export default function Header() {
     userContext.setLogin(false);
   }
 
-  if(!userContext.userState.loggedIn){
+  if (!userContext.userState.loggedIn) {
     return (
       <LOHeadDiv>
         <ClarityDiv>
@@ -185,16 +177,18 @@ export default function Header() {
           <SignInComponent signOut={signOut} />
         </LOButtonHold>
       </LOHeadDiv>
-    )
+    );
   } else {
-  return (
-    <HeaderDiv>
-      <NavLink to="/shelf"><h1>Neighborhood Library</h1></NavLink>
-      <SideBar>
-        {loggedIn === true ? <NavMenu /> : ""}
-        <SignInComponent signOut={signOut} />
-      </SideBar>
-    </HeaderDiv>
-  );
+    return (
+      <HeaderDiv>
+        <NavLink to="/shelf">
+          <h1>Neighborhood Library</h1>
+        </NavLink>
+        <SideBar>
+          {loggedIn === true ? <NavMenu /> : ""}
+          <SignInComponent signOut={signOut} />
+        </SideBar>
+      </HeaderDiv>
+    );
   }
 }
