@@ -20,18 +20,18 @@ const Container1 = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
 
   @media (max-width: 1100px) {
-    width: 67vw
+    width: 70vw
     grid-template-columns: 1fr 1fr 1fr;
     
   }
 
   @media (max-width: 870px) {
-    width: 59vw
+    width: 63vw
     grid-template-columns: 1fr 1fr;
   }
 
   @media (max-width: 550px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr;
   }
 `;
@@ -53,7 +53,7 @@ const Container2 = styled.div`
   }
 
   @media (max-width: 550px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr;
   }
 `;

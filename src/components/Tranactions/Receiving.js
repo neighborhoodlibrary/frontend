@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import ReceivingBook from "./ReceivingBook";
+import { NavLink } from "react-router-dom";
+import { Button } from "reactstrap";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -19,6 +21,12 @@ const Container = styled.div`
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
   }
+`;
+
+const EmptyBooksContainer = styled.div`
+min-height: 50vh;
+width: 98vw
+border: 2px solid #28a745
 `;
 
 const Receiving = () => {
@@ -57,13 +65,26 @@ const Receiving = () => {
         <u>Receiving Books:</u>
       </h5>
       <Container>
-        {receivingBooks.map(book => (
-          <ReceivingBook
-            key={Math.random()}
-            book={book}
-            getReceiving={getReceiving}
-          />
-        ))}
+        {receivingBooks.length > 0 ? (
+          receivingBooks.map(book => (
+            <ReceivingBook
+              key={Math.random()}
+              book={book}
+              getReceiving={getReceiving}
+            />
+          ))
+        ) : (
+          <EmptyBooksContainer>
+            <h6>You need to request a book first</h6>
+            <h6>This will auto-generate an email from the other user to you</h6>
+            <h6>Then the other user can set a book to be loaned to you</h6>
+            <h6>What are you waiting for?</h6>
+            <h6>Start searching libraries in your area</h6>
+            <NavLink to="/shelf/search">
+              <Button>Search libraries</Button>
+            </NavLink>
+          </EmptyBooksContainer>
+        )}
       </Container>
     </div>
   );
