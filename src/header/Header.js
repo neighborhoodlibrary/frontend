@@ -5,6 +5,7 @@ import styled from "styled-components";
 import UserContext from "../context/user/userContext";
 import firebase from "../firebase/firebase.utils";
 import "firebase/auth";
+import tmplo from "./tmplo.png";
 
 const HeaderDiv = styled.div`
   display: flex;
@@ -12,29 +13,26 @@ const HeaderDiv = styled.div`
   justify-content: space-between;
   padding: 10px 17px;
   margin: 0px 0px 20px 0px;
-  border-bottom: 1px solid rgb(10, 10, 10, 0.5);
-  -webkit-box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
-  -moz-box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
-  box-shadow: 1px 1px 3px 0px rgba(30, 30, 30, 0.4);
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
 
   h1 {
-    font-size: 3em;
+    font-size: 1.5em;
     font-family: "Merriweather", serif;
-    padding: 10px 5px;
     border-bottom: 2px solid #28a745;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  @media (max-width: 800px) {
-    h1 {
-      font-size: 2.5em;
-    }
-  }
-
-  @media (max-width: 500px) {
-    text-align: center;
+  img {
+    height: 75px;
+    margin: 10px;
   }
 
   a {
+    font-family: 'Merriweather Sans';
     text-decoration: none;
     color: black;
   }
@@ -42,6 +40,17 @@ const HeaderDiv = styled.div`
   a:hover {
     text-decoration: wavy;
     color: black;
+  }
+
+  @media (max-width: 800px) {
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      width: 100%;
+    }
   }
 `;
 
@@ -99,6 +108,7 @@ const Header = props => {
       {loggedIn ? (
         <HeaderDiv>
           <h1>
+            <img src={tmplo} />
             <NavLink to="/shelf">Neighborhood Library</NavLink>
           </h1>
           <SideBar>
