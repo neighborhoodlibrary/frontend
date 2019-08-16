@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
+import { NavLink } from "react-router-dom";
+import { Button } from "reactstrap";
 import styled from "styled-components";
 //
 import RequestedBook from "./RequestedBook";
@@ -13,46 +15,46 @@ const ContainerWrapper = styled.div`
 
 const Container1 = styled.div`
   display: grid;
-  width:50vw
-  border-left: 1px solid gray
-  border-right: 1px solid gray;
+  min-height: 75vh
+  width:48vw
+  border: 2px solid #28a745
   grid-template-columns: 1fr 1fr;
   
   @media (max-width: 1100px) {
-    width: 50vw
+    width: 48vw
     grid-template-columns: 1fr 1fr;
     
   }
   
   @media (max-width: 870px) {
-    width: 50vw
+    width: 48vw
     grid-template-columns: 1fr;
   }
   
   @media (max-width: 550px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr;
   }
   `;
 const Container2 = styled.div`
   display: grid;
-  width: 50vw
-  border-left: 1px solid gray
-  border-right: 1px solid gray;
+  min-height: 75vh
+  width: 48vw
+  border: 2px solid #28a745
   grid-template-columns: 1fr 1fr;
 
   @media (max-width: 1100px) {
-    width: 50vw
+    width: 48vw
     grid-template-columns: 1fr 1fr;
   }
 
   @media (max-width: 870px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr; 
   }
 
   @media (max-width: 550px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr;
   }
 `;
@@ -100,13 +102,24 @@ const Requested = () => {
           <u>Requested Books:</u>
         </h5>
         <Container1>
-          {requestedBooks.map(book => (
-            <RequestedBook
-              key={Math.random()}
-              book={book}
-              getRequested={getRequested}
-            />
-          ))}
+          {requestedBooks.length > 0 ? (
+            requestedBooks.map(book => (
+              <RequestedBook
+                key={Math.random()}
+                book={book}
+                getRequested={getRequested}
+              />
+            ))
+          ) : (
+            <div>
+              <h6>No one has requested a book from you</h6>
+              <h6>You can initiate... start a dialogue</h6>
+              <h6>Search for other libraries</h6>
+              <NavLink to="/shelf/search">
+                <Button>Search for other libraries in your area</Button>
+              </NavLink>
+            </div>
+          )}
         </Container1>
       </div>
       <div>
@@ -114,13 +127,19 @@ const Requested = () => {
           <u>Books To Loan:</u>
         </h5>
         <Container2>
-          {toBeGivenBooks.map(book => (
-            <ToBeGivenBook
-              key={Math.random()}
-              book={book}
-              getRequested={getRequested}
-            />
-          ))}
+          {toBeGivenBooks.length > 0 ? (
+            toBeGivenBooks.map(book => (
+              <ToBeGivenBook
+                key={Math.random()}
+                book={book}
+                getRequested={getRequested}
+              />
+            ))
+          ) : (
+            <div>
+              <h6>Someone needs to request a book first...</h6>
+            </div>
+          )}
         </Container2>
       </div>
     </ContainerWrapper>

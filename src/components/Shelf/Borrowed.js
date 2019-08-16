@@ -3,6 +3,8 @@ import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import Book from "./Book";
 import ReturnBook from "./ReturnBook";
+import { NavLink } from "react-router-dom";
+import { Button } from "reactstrap";
 import styled from "styled-components";
 
 const ContainerWrapper = styled.div`
@@ -12,32 +14,32 @@ const ContainerWrapper = styled.div`
 
 const Container1 = styled.div`
   display: grid;
-  width:80vw
-  border-left: 1px solid gray
-  border-right: 1px solid gray;
+  min-height: 75vh
+  width:75vw
+  border: 2px solid #28a745
   grid-template-columns: 1fr 1fr 1fr 1fr;
   
   @media (max-width: 1100px) {
-    width: 75vw
+    width: 70vw
     grid-template-columns: 1fr 1fr 1fr;
     
   }
   
   @media (max-width: 870px) {
-    width: 66vw
+    width: 63vw
     grid-template-columns: 1fr 1fr;
   }
   
   @media (max-width: 550px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr;
   }
   `;
 const Container2 = styled.div`
   display: grid;
+  min-height: 75vh
   width: 20vw
-  border-left: 1px solid gray
-  border-right: 1px solid gray;
+  border: 2px solid #28a745
   grid-template-columns:1fr;
 
   @media (max-width: 1100px) {
@@ -51,7 +53,7 @@ const Container2 = styled.div`
   }
 
   @media (max-width: 550px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr;
   }
 `;
@@ -59,11 +61,8 @@ const Container2 = styled.div`
 const Borrowed = () => {
   const [booksInfo, setBooksInfo] = useState([]);
   const [returnBooks, setReturnBooks] = useState([]);
-
   const auth = firebase.auth();
-
   const user = auth.currentUser;
-
   const docRef = firebase.firestore().collection("books");
 
   const getBooks = () => {
@@ -102,9 +101,19 @@ const Borrowed = () => {
           <u>Borrowed Books:</u>
         </h5>
         <Container1>
-          {booksInfo.map(book => (
-            <Book key={Math.random()} book={book} getBooks={getBooks} />
-          ))}
+          {booksInfo.length > 0 ? (
+            booksInfo.map(book => (
+              <Book key={Math.random()} book={book} getBooks={getBooks} />
+            ))
+          ) : (
+            <div>
+              <h6>You have no books that you are currently borrowing</h6>
+              <p>Search for books to borrow?</p>
+              <NavLink to="/shelf/search">
+                <Button>Search for books</Button>
+              </NavLink>
+            </div>
+          )}
         </Container1>
       </div>
       <div>
@@ -112,9 +121,15 @@ const Borrowed = () => {
           <u>Returning Books:</u>
         </h5>
         <Container2>
-          {returnBooks.map(book => (
-            <ReturnBook key={Math.random()} book={book} getBooks={getBooks} />
-          ))}
+          {returnBooks.length > 0 ? (
+            returnBooks.map(book => (
+              <ReturnBook key={Math.random()} book={book} getBooks={getBooks} />
+            ))
+          ) : (
+            <div>
+              <h6>You need to borrow a book first...</h6>
+            </div>
+          )}
         </Container2>
       </div>
     </ContainerWrapper>

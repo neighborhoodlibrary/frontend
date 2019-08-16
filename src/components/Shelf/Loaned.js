@@ -3,6 +3,8 @@ import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import Book from "./Book";
 import RecoverBook from "./RecoverBook";
+import { NavLink } from "react-router-dom";
+import { Button } from "reactstrap";
 import styled from "styled-components";
 
 const ContainerWrapper = styled.div`
@@ -12,30 +14,32 @@ const ContainerWrapper = styled.div`
 
 const Container1 = styled.div`
   display: grid;
-  width:80vw
-  border-right: 1px solid gray;
+  min-height: 75vh
+  width: 75vw
+  border: 2px solid #28a745
   grid-template-columns: 1fr 1fr 1fr 1fr;
 
   @media (max-width: 1100px) {
-    width: 75vw
+    width: 70vw
     grid-template-columns: 1fr 1fr 1fr;
     
   }
 
   @media (max-width: 870px) {
-    width: 66vw
+    width: 63vw
     grid-template-columns: 1fr 1fr;
   }
 
   @media (max-width: 550px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr;
   }
 `;
 const Container2 = styled.div`
   display: grid;
+  min-height: 75vh
   width: 20vw
-  border-left: 1px solid gray
+  border: 2px solid #28a745
   grid-template-columns:1fr;
 
   @media (max-width: 1100px) {
@@ -49,7 +53,7 @@ const Container2 = styled.div`
   }
 
   @media (max-width: 550px) {
-    width:50vw
+    width:48vw
     grid-template-columns: 1fr;
   }
 `;
@@ -57,11 +61,8 @@ const Container2 = styled.div`
 const Loaned = () => {
   const [booksInfo, setBooksInfo] = useState([]);
   const [recoverBooks, setRecoverBooks] = useState([]);
-
   const auth = firebase.auth();
-
   const user = auth.currentUser;
-
   const docRef = firebase.firestore().collection("books");
 
   const getBooks = () => {
@@ -101,9 +102,23 @@ const Loaned = () => {
           <u>Loaned Books:</u>
         </h5>
         <Container1>
-          {booksInfo.map(book => (
-            <Book key={Math.random()} book={book} getBooks={getBooks} />
-          ))}
+          {booksInfo.length > 0 ? (
+            booksInfo.map(book => (
+              <Book key={Math.random()} book={book} getBooks={getBooks} />
+            ))
+          ) : (
+            <div>
+              <h6>You have no books currently checked-out</h6>
+              <p>Add more books to your library?</p>
+              <NavLink to="/shelf/add">
+                <Button>Add book</Button>
+              </NavLink>
+              <p>Change the location of your personal library?</p>
+              <NavLink to="/shelf/map">
+                <Button>Map settings</Button>
+              </NavLink>
+            </div>
+          )}
         </Container1>
       </div>
       <div>
@@ -111,9 +126,19 @@ const Loaned = () => {
           <u>Check-In Books:</u>
         </h5>
         <Container2>
-          {recoverBooks.map(book => (
-            <RecoverBook key={Math.random()} book={book} getBooks={getBooks} />
-          ))}
+          {recoverBooks.length > 0 ? (
+            recoverBooks.map(book => (
+              <RecoverBook
+                key={Math.random()}
+                book={book}
+                getBooks={getBooks}
+              />
+            ))
+          ) : (
+            <div>
+              <h6>You have no pending books to be checked in...</h6>
+            </div>
+          )}
         </Container2>
       </div>
     </ContainerWrapper>
