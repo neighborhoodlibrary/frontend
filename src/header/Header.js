@@ -2,12 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import NavMenu from "./NavMenu";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import SignInComponent from "./SignInComponent";
 import UserContext from "../context/user/userContext";
 import firebase from "../firebase/firebase.utils";
 import "firebase/auth";
-
-import neiImg from "../assets/neighborpic2.jpg";
 
 const HeaderDiv = styled.div`
   display: flex;
@@ -48,76 +45,6 @@ const HeaderDiv = styled.div`
   }
 `;
 
-const LOHeadDiv = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: url(${neiImg});
-  background-size: cover;
-  background-position: center top;
-`;
-
-const ClarityDiv = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 50px 0px;
-  background-color: rgb(0,0,0,0.5);
-  width: 100vw;
-  padding: 20px 0px;
-  -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow:    2px 2px 5px 0px rgba(50, 50, 50, 0.75);
-  box-shadow:         2px 2px 5px 0px rgba(50, 50, 50, 0.75);
-
-  h1 {
-    font-size: 4em;
-    font-family: "Merriweather", serif;
-    color: rgba(250,250,250,.95);
-  }
-
-  h2 {
-    color: rgba(250,250,250,.9);
-    font-family: "Merriweather", serif;
-    font-size: 1.75em;
-  }
-
-  }
-  
-  @media (max-width: 800px) {
-    h1 {
-      font-size: 3em;
-    }
-  
-    h2 {
-      color: white;
-      font-size: 1.25em;
-    }
-  }
-
-  @media (max-width: 500px) {
-    h1 {
-      font-size: 2.5em;
-    }
-  
-    h2 {
-      color: white;
-      font-size: 1em;
-    }
-  }
-`;
-
-const LOButtonHold = styled.div`
-  padding: 40px 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const SideBar = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -128,14 +55,12 @@ const SideBar = styled.div`
   }
 `;
 
-export default function Header() {
+const Header = props => {
   const userContext = useContext(UserContext);
   const auth = firebase.auth();
-
   const db = firebase.firestore();
-
   const [loggedIn, setLoggedIn] = useState(false);
-
+  //
   useEffect(() => {
     if (loggedIn === false) {
       firebase.auth().onAuthStateChanged(function(user) {
@@ -150,46 +75,41 @@ export default function Header() {
               console.log(error);
             });
           loggedInToTrue();
+        } else {
+          props.history.push("/landing");
         }
       });
     }
-  });
-
+  }, {});
   const loggedInToTrue = () => {
     setLoggedIn(true);
   };
-
-  function signOut() {
+  //
+  const signOut = () => {
     auth
       .signOut()
-      .then(setLoggedIn(false))
+      .then(() => {
+        setLoggedIn(false);
+        userContext.setLogin(false);
+      })
       .catch(function(error) {});
-    userContext.setLogin(false);
-  }
+  };
+  return (
+    <div>
+      {loggedIn ? (
+        <HeaderDiv>
+          <h1>
+            <NavLink to="/shelf">Neighborhood Library</NavLink>
+          </h1>
+          <SideBar>
+            <NavMenu signOut={signOut} />
+          </SideBar>
+        </HeaderDiv>
+      ) : (
+        ""
+      )}
+    </div>
+  );
+};
 
-  if (!userContext.userState.loggedIn) {
-    return (
-      <LOHeadDiv>
-        <ClarityDiv>
-          <h1>Neighborhood Library</h1>
-          <h2>Read great books in your area</h2>
-        </ClarityDiv>
-        <LOButtonHold>
-          <SignInComponent signOut={signOut} />
-        </LOButtonHold>
-      </LOHeadDiv>
-    );
-  } else {
-    return (
-      <HeaderDiv>
-        <h1>
-          <NavLink to="/shelf">Neighborhood Library</NavLink>
-        </h1>
-        <SideBar>
-          {loggedIn === true ? <NavMenu signOut={signOut} /> : ""}
-          <SignInComponent />
-        </SideBar>
-      </HeaderDiv>
-    );
-  }
-}
+export default Header;

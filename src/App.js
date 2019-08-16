@@ -1,4 +1,5 @@
-// app=> header(navMenu/signInComponent) && landing && privateRoute if(loggedIn)=> shelf
+// app=> header (render navmenu only if loggedIn)()=> if(loggedIn)=> shelf
+// else (!loggedIn)=> landing(signInComponent)
 import React from "react";
 import Header from "./header/Header";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
@@ -30,8 +31,6 @@ import MapComponent from "./components/Map/MapComponent";
 import Profile from "./components/Profile/Profile";
 // styling components
 import styled from "styled-components";
-// background image
-import neighborImg from "./assets/neighborpic2.jpg";
 
 const LowerSection = styled.div`
   padding: 0px 20px;
@@ -50,6 +49,7 @@ function App() {
           <AlertProvider template={AlertTemplate} {...alertOptions}>
             <Router>
               <Route path="/" component={Header} />
+              <Route exact path="/landing" component={Landing} />
               <LowerSection>
                 <Switch>
                   {/* shelf components */}
@@ -95,8 +95,6 @@ function App() {
                     path="/shelf/profile"
                     component={Profile}
                   />
-                  {/* Landing or user not logged in */}
-                  <Route exact path="/" component={Landing} />
                 </Switch>
               </LowerSection>
             </Router>
