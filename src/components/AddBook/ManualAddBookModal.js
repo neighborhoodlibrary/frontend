@@ -290,12 +290,8 @@ const ManualAddBookModal = props => {
         </ManualAddBookForm>
       </ModalBody>
       <ModalFooter>
-        <Button color="success" onClick={manualAddBook}>
-          Add Book
-        </Button>
-        <Button color="secondary" onClick={props.toggleManualAddModal}>
-          Cancel
-        </Button>
+        <Button onClick={manualAddBook}>Add Book</Button>
+        <Button onClick={props.toggleManualAddModal}>Cancel</Button>
       </ModalFooter>
     </Modal>
   );

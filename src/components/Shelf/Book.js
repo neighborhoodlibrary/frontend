@@ -108,7 +108,6 @@ const LibraryBook = props => {
             ) : (
               <div>
                 <Button
-                  color="danger"
                   onClick={toggleDeleteBookModal}
                   id={`${props.book.id}-d`}
                 >
@@ -125,11 +124,7 @@ const LibraryBook = props => {
             {props.book.title}
             {props.book.ownerId && !props.book.checkedOut ? (
               <div>
-                <Button
-                  color="primary"
-                  onClick={toggleEditBookModal}
-                  id={`${props.book.id}-e`}
-                >
+                <Button onClick={toggleEditBookModal} id={`${props.book.id}-e`}>
                   =
                 </Button>
                 <UncontrolledTooltip
@@ -154,9 +149,7 @@ const LibraryBook = props => {
         </NavLink>
         <CardFooter>
           {props.book.borrowerId === user.uid ? (
-            <Button color="primary" onClick={toggleReturnBookModal}>
-              Return Book
-            </Button>
+            <Button onClick={toggleReturnBookModal}>Return Book</Button>
           ) : (
             ""
           )}
@@ -168,9 +161,7 @@ const LibraryBook = props => {
           Are you sure you want to delete book from your library?
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" onClick={deleteBook}>
-            Confirm
-          </Button>
+          <Button onClick={deleteBook}>Confirm</Button>
           <Button onClick={toggleDeleteBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
@@ -180,9 +171,7 @@ const LibraryBook = props => {
           Are you sure you want to return book back to owner?
         </ModalBody>
         <ModalFooter>
-          <Button color="success" onClick={returnBook}>
-            Confirm
-          </Button>
+          <Button onClick={returnBook}>Confirm</Button>
           <Button onClick={toggleReturnBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>

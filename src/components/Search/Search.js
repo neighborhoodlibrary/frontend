@@ -39,14 +39,14 @@ const mapStyle = {
 };
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 
   @media (max-width: 1100px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   @media (max-width: 870px) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   @media (max-width: 550px) {
@@ -244,7 +244,7 @@ const Search = props => {
               />
             </SliderContainerDiv>
             <ButtonContainerDiv>
-              <Button color="primary" onClick={populateLibraryFunc}>
+              <Button onClick={populateLibraryFunc}>
                 Search for Libraries
               </Button>
             </ButtonContainerDiv>
@@ -280,9 +280,7 @@ const Search = props => {
         <div>
           <h5>Search for books within the set search distances</h5>
         </div>
-        <Button color="primary" onClick={searchBooksFunc}>
-          Search for Books
-        </Button>
+        <Button onClick={searchBooksFunc}>Search for Books</Button>
         <div>
           <h6>Book results:</h6>
         </div>

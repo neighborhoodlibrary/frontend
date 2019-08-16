@@ -163,12 +163,8 @@ const RequestedBook = props => {
         </CardBody>
         <CardFooter>
           <CardFooterDiv>
-            <Button color="primary" onClick={toggleLoanBookModal}>
-              Set to Lend User
-            </Button>
-            <Button color="danger" onClick={toggleRemoveRequestModal}>
-              Remove
-            </Button>
+            <Button onClick={toggleLoanBookModal}>Set to Lend User</Button>
+            <Button onClick={toggleRemoveRequestModal}>Remove</Button>
           </CardFooterDiv>
         </CardFooter>
       </Card>
@@ -199,7 +195,6 @@ const RequestedBook = props => {
         </ModalBody>
         <ModalFooter>
           <Button
-            color="danger"
             onClick={() => {
               submitRemove(userOption);
             }}
@@ -232,7 +227,6 @@ const RequestedBook = props => {
         </ModalBody>
         <ModalFooter>
           <Button
-            color="success"
             onClick={() => {
               submitLoan(userOption);
             }}
