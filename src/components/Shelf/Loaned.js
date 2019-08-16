@@ -108,7 +108,7 @@ const Loaned = () => {
       </div>
       <div>
         <h5>
-          <u>Recovering Books:</u>
+          <u>Check-In Books:</u>
         </h5>
         <Container2>
           {recoverBooks.map(book => (

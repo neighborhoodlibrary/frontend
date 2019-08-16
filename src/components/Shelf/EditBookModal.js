@@ -45,8 +45,9 @@ const EditBookModal = props => {
   });
 
   useEffect(() => {
+    const authInput = props.book.authors.join(",");
     setBookValues({
-      authorsInput: props.book.authors,
+      authorsInput: authInput,
       titleInput: props.book.title,
       descriptionInput: props.book.description,
       isbnInput: props.book.isbn,
