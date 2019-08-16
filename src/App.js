@@ -32,8 +32,8 @@ import Profile from "./components/Profile/Profile";
 // styling components
 import styled from "styled-components";
 
-const LowerSection = styled.div`
-  padding: 0px 20px;
+const LoggedInDiv = styled.div`
+  margin: 0 20px;
 `;
 
 const alertOptions = {
@@ -48,9 +48,9 @@ function App() {
         <BookState>
           <AlertProvider template={AlertTemplate} {...alertOptions}>
             <Router>
-              <Route path="/" component={Header} />
               <Route exact path="/landing" component={Landing} />
-              <LowerSection>
+              <LoggedInDiv>
+              <Route path="/" component={Header} />
                 <Switch>
                   {/* shelf components */}
                   <PrivateRoute exact path="/shelf" component={MainShelf} />
@@ -96,7 +96,7 @@ function App() {
                     component={Profile}
                   />
                 </Switch>
-              </LowerSection>
+              </LoggedInDiv>
             </Router>
           </AlertProvider>
         </BookState>
