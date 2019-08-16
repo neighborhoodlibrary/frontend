@@ -67,12 +67,7 @@ const ToBeGivenBook = props => {
     <CardDiv>
       <Card>
         <CardHeader>
-          <CardHeaderDiv>
-            <Button color="danger" onClick={toggleRemoveToGiveModal}>
-              X
-            </Button>
-            {props.book.title}
-          </CardHeaderDiv>
+          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
         </CardHeader>
         <CardBody>
           <CardBodyDiv>
@@ -80,7 +75,9 @@ const ToBeGivenBook = props => {
             <BookCover src={props.book.image} alt="book_thumb" />
           </CardBodyDiv>
         </CardBody>
-        <CardFooter />
+        <CardFooter>
+          <Button onClick={toggleRemoveToGiveModal}>Undo</Button>
+        </CardFooter>
       </Card>
       <Modal
         isOpen={removeToGiveModal}
@@ -92,9 +89,7 @@ const ToBeGivenBook = props => {
           Are you sure you want to remove user from the to loan section?
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" onClick={submitRemoveTransition}>
-            Confirm
-          </Button>
+          <Button onClick={submitRemoveTransition}>Confirm</Button>
           <Button onClick={toggleRemoveToGiveModal}>Cancel</Button>
         </ModalFooter>
       </Modal>

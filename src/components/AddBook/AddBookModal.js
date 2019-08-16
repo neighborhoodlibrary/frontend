@@ -75,12 +75,8 @@ const AddBookModal = props => {
         publisher: {props.bookInfoValues.publisher}
       </ModalBody>
       <ModalFooter>
-        <Button color="success" onClick={addBook}>
-          Add Book
-        </Button>
-        <Button color="secondary" onClick={props.toggleBookInfoModal}>
-          Cancel
-        </Button>
+        <Button onClick={addBook}>Add Book</Button>
+        <Button onClick={props.toggleBookInfoModal}>Cancel</Button>
       </ModalFooter>
     </Modal>
   );

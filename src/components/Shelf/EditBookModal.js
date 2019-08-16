@@ -256,12 +256,8 @@ const EditBookModal = props => {
         </EditBookForm>
       </ModalBody>
       <ModalFooter>
-        <Button color="success" onClick={submitEditBook}>
-          Edit Book
-        </Button>
-        <Button color="secondary" onClick={props.toggleEditBookModal}>
-          Cancel
-        </Button>
+        <Button onClick={submitEditBook}>Edit Book</Button>
+        <Button onClick={props.toggleEditBookModal}>Cancel</Button>
       </ModalFooter>
     </Modal>
   );

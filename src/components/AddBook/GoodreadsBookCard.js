@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardBody, Button } from "reactstrap";
+import { Card, CardHeader, CardBody, CardFooter, Button } from "reactstrap";
 import styled from "styled-components";
 import AddBookModal from "./AddBookModal";
 import Axios from "axios";
@@ -110,14 +110,16 @@ const GoodreadsBookCard = props => {
               ))
             : ""}
         </CardHeader>
-        <div className="imghold">
-          <BookCover src={bookInfoValues.image} alt="thumbnail" />
-        </div>
         <CardBody>
-          <Button color="info" onClick={toggleBookInfoModal}>
+          <div className="imghold">
+            <BookCover src={bookInfoValues.image} alt="thumbnail" />
+          </div>
+        </CardBody>
+        <CardFooter>
+          <Button onClick={toggleBookInfoModal}>
             More details... / Add Book
           </Button>
-        </CardBody>
+        </CardFooter>
       </Card>
       <AddBookModal
         bookInfoValues={bookInfoValues}

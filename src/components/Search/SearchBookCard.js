@@ -4,8 +4,9 @@ import { useAlert } from "react-alert";
 import styled from "styled-components";
 import {
   Card,
-  CardBody,
   CardHeader,
+  CardBody,
+  CardFooter,
   Button,
   Modal,
   ModalHeader,
@@ -145,46 +146,39 @@ const SearchBookCard = props => {
             <div>by: NA</div>
           )}
         </CardHeader>
-        <div className="imghold">
-          <BookCover src={props.book.image} alt="book_thumb" />
-        </div>
         <CardBody>
-          <Modal isOpen={infoModal} toggle={toggleInfoModal} centered>
-            <h3>
-              <u>Book Information</u>
-            </h3>
-            <ModalHeader>Page Count: {props.book.pageCount}</ModalHeader>
-            <ModalHeader>Publisher: {props.book.publisher}</ModalHeader>
-            <ModalHeader>Published: {props.book.publishDate}</ModalHeader>
-            <ModalHeader>Description: {props.book.description}</ModalHeader>
-            <ModalHeader>ISBN13: {props.book.isbn13}</ModalHeader>
-            <ModalHeader>ISBN: {props.book.isbn}</ModalHeader>
-          </Modal>
-          <div className="buttonz">
-            <Button color="info" onClick={toggleInfoModal}>
-              More Details
-            </Button>
-            <Button color="primary" onClick={toggleRequestModal}>
-              Request Book
-            </Button>
-            <Modal isOpen={requestModal} toggle={toggleRequestModal} centered>
-              <ModalHeader>Request Book from user</ModalHeader>
-              <ModalBody>
-                Are you sure you want to request book: {props.book.title} from
-                user?
-              </ModalBody>
-              <ModalFooter>
-                <Button onClick={submitRequest} color="success">
-                  Confirm
-                </Button>
-                <Button onClick={toggleRequestModal} color="secondary">
-                  Cancel
-                </Button>
-              </ModalFooter>
-            </Modal>
+          <div className="imghold">
+            <BookCover src={props.book.image} alt="book_thumb" />
           </div>
         </CardBody>
+        <CardFooter>
+          <div className="buttonz">
+            <Button onClick={toggleInfoModal}>More Details</Button>
+            <Button onClick={toggleRequestModal}>Request Book</Button>
+          </div>
+        </CardFooter>
       </Card>
+      <Modal isOpen={infoModal} toggle={toggleInfoModal} centered>
+        <h3>
+          <u>Book Information</u>
+        </h3>
+        <ModalHeader>Page Count: {props.book.pageCount}</ModalHeader>
+        <ModalHeader>Publisher: {props.book.publisher}</ModalHeader>
+        <ModalHeader>Published: {props.book.publishDate}</ModalHeader>
+        <ModalHeader>Description: {props.book.description}</ModalHeader>
+        <ModalHeader>ISBN13: {props.book.isbn13}</ModalHeader>
+        <ModalHeader>ISBN: {props.book.isbn}</ModalHeader>
+      </Modal>
+      <Modal isOpen={requestModal} toggle={toggleRequestModal} centered>
+        <ModalHeader>Request Book from user</ModalHeader>
+        <ModalBody>
+          Are you sure you want to request book: {props.book.title} from user?
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={submitRequest}>Confirm</Button>
+          <Button onClick={toggleRequestModal}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
     </SearchBookCardDiv>
   );
 };
