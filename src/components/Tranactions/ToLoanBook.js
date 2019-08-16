@@ -67,12 +67,7 @@ const ToBeGivenBook = props => {
     <CardDiv>
       <Card>
         <CardHeader>
-          <CardHeaderDiv>
-            <Button color="danger" onClick={toggleRemoveToGiveModal}>
-              X
-            </Button>
-            {props.book.title}
-          </CardHeaderDiv>
+          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
         </CardHeader>
         <CardBody>
           <CardBodyDiv>
@@ -80,7 +75,11 @@ const ToBeGivenBook = props => {
             <BookCover src={props.book.image} alt="book_thumb" />
           </CardBodyDiv>
         </CardBody>
-        <CardFooter />
+        <CardFooter>
+          <Button color="danger" onClick={toggleRemoveToGiveModal}>
+            Undo
+          </Button>
+        </CardFooter>
       </Card>
       <Modal
         isOpen={removeToGiveModal}

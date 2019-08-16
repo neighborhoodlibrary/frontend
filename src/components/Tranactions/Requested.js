@@ -137,7 +137,9 @@ const Requested = () => {
             ))
           ) : (
             <div>
-              <h6>Someone needs to request a book first...</h6>
+              <h6>
+                Set a user to loan a book, and the book will be placed here
+              </h6>
             </div>
           )}
         </Container2>

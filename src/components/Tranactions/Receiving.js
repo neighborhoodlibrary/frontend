@@ -76,7 +76,9 @@ const Receiving = () => {
         ) : (
           <EmptyBooksContainer>
             <h6>You need to request a book first</h6>
-            <h6>This will auto-generate an email from the other user to you</h6>
+            <h6>
+              Requesting a book will auto-generate an email to the other user
+            </h6>
             <h6>Then the other user can set a book to be loaned to you</h6>
             <h6>What are you waiting for?</h6>
             <h6>Start searching libraries in your area</h6>

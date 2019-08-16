@@ -43,6 +43,10 @@ const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
 `;
+const CardFooterDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const RequestedBook = props => {
   const bookDocRef = firebase
@@ -149,12 +153,7 @@ const RequestedBook = props => {
     <CardDiv>
       <Card>
         <CardHeader>
-          <CardHeaderDiv>
-            <Button color="danger" onClick={toggleRemoveRequestModal}>
-              X
-            </Button>
-            {props.book.title}
-          </CardHeaderDiv>
+          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
         </CardHeader>
         <CardBody>
           <CardBodyDiv>
@@ -163,9 +162,14 @@ const RequestedBook = props => {
           </CardBodyDiv>
         </CardBody>
         <CardFooter>
-          <Button color="primary" onClick={toggleLoanBookModal}>
-            Set to Lend User
-          </Button>
+          <CardFooterDiv>
+            <Button color="primary" onClick={toggleLoanBookModal}>
+              Set to Lend User
+            </Button>
+            <Button color="danger" onClick={toggleRemoveRequestModal}>
+              Remove
+            </Button>
+          </CardFooterDiv>
         </CardFooter>
       </Card>
       <Modal
