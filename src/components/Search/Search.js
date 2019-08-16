@@ -245,7 +245,7 @@ const Search = props => {
             </SliderContainerDiv>
             <ButtonContainerDiv>
               <Button color="primary" onClick={populateLibraryFunc}>
-                Populate Libraries
+                Search for Libraries
               </Button>
             </ButtonContainerDiv>
           </DistanceContainerDiv>

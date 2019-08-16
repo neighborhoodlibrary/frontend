@@ -78,7 +78,7 @@ const RecoverBook = props => {
         </CardBody>
         <CardFooter>
           <Button onClick={toggleRecoverBookModal}>
-            Confirm recovery of book
+            Confirm check-in of book
           </Button>
         </CardFooter>
       </Card>
