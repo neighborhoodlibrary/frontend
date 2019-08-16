@@ -142,9 +142,7 @@ const MapComponent = props => {
             </CardText>
           </CardBody>
           <CardFooter>
-            <Button color="primary" onClick={toggleLocationModal}>
-              Submit Location
-            </Button>
+            <Button onClick={toggleLocationModal}>Submit Location</Button>
           </CardFooter>
         </Card>
         <Modal isOpen={locationModal} toggle={toggleLocationModal} centered>
@@ -153,9 +151,7 @@ const MapComponent = props => {
             Are you sure you want to set your personal library to this location?
           </ModalBody>
           <ModalFooter>
-            <Button color="success" onClick={submitCoordinates}>
-              Confirm
-            </Button>
+            <Button onClick={submitCoordinates}>Confirm</Button>
             <Button onClick={toggleLocationModal}>Cancel</Button>
           </ModalFooter>
         </Modal>
