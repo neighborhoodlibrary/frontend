@@ -67,7 +67,6 @@ const SearchBookCard = props => {
     .collection("books")
     .doc(props.book.id);
   const alert = useAlert();
-  const [infoModal, setInfoModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [emailValue, setEmailValue] = useState({});

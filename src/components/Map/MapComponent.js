@@ -128,7 +128,7 @@ const MapComponent = props => {
               This will return coordinates to initialize your personal library
               location
             </CardText>
-            <CardText>
+            {/* <CardText>
               <b>Latitude:</b>
               {markerPosition.lat
                 ? `  ${markerPosition.lat}`
@@ -139,7 +139,7 @@ const MapComponent = props => {
               {markerPosition.lng
                 ? `  ${markerPosition.lng}`
                 : " No marker initialized"}
-            </CardText>
+            </CardText> */}
           </CardBody>
           <CardFooter>
             <Button onClick={toggleLocationModal}>Submit Location</Button>
