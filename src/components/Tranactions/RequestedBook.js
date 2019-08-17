@@ -27,13 +27,6 @@ const CardDiv = styled.div`
     color: black;
   }
 `;
-
-const CardHeaderDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 const CardBodyDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,10 +35,6 @@ const CardBodyDiv = styled.div`
 const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
-`;
-const CardFooterDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 const CardContainerDiv = styled.div`
   cursor: pointer;
@@ -161,18 +150,14 @@ const RequestedBook = props => {
     <CardDiv>
       <Card>
         <CardContainerDiv onClick={toggleLoanBookModal}>
-          <CardHeader>
-            <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
-          </CardHeader>
+          <CardHeader>{props.book.title}</CardHeader>
           <CardBody>
             <CardBodyDiv>
               <BookCover src={props.book.image} alt="book_thumb" />
             </CardBodyDiv>
           </CardBody>
           <CardFooter>
-            <CardFooterDiv>
-              <p>by: {props.book.authors.join(" , ")}</p>
-            </CardFooterDiv>
+            <p>by: {props.book.authors.join(" , ")}</p>
           </CardFooter>
         </CardContainerDiv>
       </Card>

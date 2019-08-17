@@ -24,11 +24,6 @@ const CardDiv = styled.div`
     color: black;
   }
 `;
-const CardHeaderDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 const CardBodyDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -75,9 +70,7 @@ const ReceivingBook = props => {
     <CardDiv>
       <Card>
         <CardContainerDiv onClick={toggleReceiveBookModal}>
-          <CardHeader>
-            <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
-          </CardHeader>
+          <CardHeader>{props.book.title}</CardHeader>
           <CardBody>
             <CardBodyDiv>
               <BookCover src={props.book.image} alt="book_thumb" />

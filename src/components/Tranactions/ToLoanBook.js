@@ -24,10 +24,6 @@ const CardDiv = styled.div`
     color: black;
   }
 `;
-const CardHeaderDiv = styled.div`
-  display: flex;
-  align-items: center;
-`;
 const CardBodyDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -70,9 +66,7 @@ const ToBeGivenBook = props => {
     <CardDiv>
       <Card>
         <CardContainerDiv onClick={toggleRemoveToGiveModal}>
-          <CardHeader>
-            <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
-          </CardHeader>
+          <CardHeader>{props.book.title}</CardHeader>
           <CardBody>
             <CardBodyDiv>
               <BookCover src={props.book.image} alt="book_thumb" />
