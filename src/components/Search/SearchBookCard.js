@@ -148,7 +148,9 @@ const SearchBookCard = props => {
             </CardBodyDiv>
           </CardBody>
           <CardFooter>
-            <p>by: {props.book.authors.join(" , ")}</p>
+            <p>
+              by: {props.book.authors ? props.book.authors.join(" , ") : "N/A"}
+            </p>
           </CardFooter>
         </CardContainerDiv>
       </Card>
