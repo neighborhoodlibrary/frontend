@@ -37,6 +37,9 @@ const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
 `;
+const CardContainerDiv = styled.div`
+  cursor: pointer;
+`;
 
 const ToBeGivenBook = props => {
   const bookDocRef = firebase
@@ -66,18 +69,19 @@ const ToBeGivenBook = props => {
   return (
     <CardDiv>
       <Card>
-        <CardHeader>
-          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
-        </CardHeader>
-        <CardBody>
-          <CardBodyDiv>
-            <p>by: {props.book.authors}</p>
-            <BookCover src={props.book.image} alt="book_thumb" />
-          </CardBodyDiv>
-        </CardBody>
-        <CardFooter>
-          <Button onClick={toggleRemoveToGiveModal}>Undo</Button>
-        </CardFooter>
+        <CardContainerDiv onClick={toggleRemoveToGiveModal}>
+          <CardHeader>
+            <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
+          </CardHeader>
+          <CardBody>
+            <CardBodyDiv>
+              <BookCover src={props.book.image} alt="book_thumb" />
+            </CardBodyDiv>
+          </CardBody>
+          <CardFooter>
+            <p>by: {props.book.authors.join(" , ")}</p>
+          </CardFooter>
+        </CardContainerDiv>
       </Card>
       <Modal
         isOpen={removeToGiveModal}

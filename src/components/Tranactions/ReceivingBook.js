@@ -88,7 +88,7 @@ const ReceivingBook = props => {
           </CardFooter>
         </CardContainerDiv>
       </Card>
-      <Modal isOpen={receiveBookModal} toggle={toggleReceiveBookModal}>
+      <Modal isOpen={receiveBookModal} toggle={toggleReceiveBookModal} centered>
         <ModalHeader>Confirm book is now in your possession</ModalHeader>
         <ModalBody>
           Confirm you have received book, set book in the Borrowed section?
