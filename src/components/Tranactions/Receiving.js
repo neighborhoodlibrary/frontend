@@ -7,6 +7,11 @@ import { Button } from "reactstrap";
 import styled from "styled-components";
 
 const Container = styled.div`
+  width: 100%;
+  font-family: 'Merriweather Sans', sans-serif;
+`;
+
+const MapHold = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 
@@ -24,9 +29,7 @@ const Container = styled.div`
 `;
 
 const EmptyBooksContainer = styled.div`
-min-height: 50vh;
-width: 98vw
-border: 2px solid #28a745
+  min-height: 50vh;
 `;
 
 const Receiving = () => {
