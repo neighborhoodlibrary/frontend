@@ -28,6 +28,7 @@ const NavMenuDiv = styled.div`
   @media(max-width: 800px) {
     justify-content: center;
     align-items: center;
+    padding: 0;
   }
 `;
 
