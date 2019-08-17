@@ -11,13 +11,6 @@ import {
   UncontrolledTooltip
 } from "reactstrap";
 import classnames from "classnames";
-// import {
-//   Dropdown,
-//   DropdownToggle,
-//   DropdownMenu,
-//   DropdownItem,
-//   UncontrolledTooltip
-// } from "reactstrap";
 
 const NavMenuDiv = styled.div`
   display: flex

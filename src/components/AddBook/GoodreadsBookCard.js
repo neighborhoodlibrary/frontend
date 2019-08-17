@@ -44,10 +44,17 @@ const AddBookCardDiv = styled.div`
     display: flex;
   }
 `;
-
+const CardBodyDiv = styled.div`
+display: flex;
+flex-direction: column
+align-items: center
+`;
 const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
+`;
+const CardContainerDiv = styled.div`
+  cursor: pointer;
 `;
 
 const GoodreadsBookCard = props => {
@@ -101,25 +108,23 @@ const GoodreadsBookCard = props => {
 
   return (
     <AddBookCardDiv>
-      <Card className="heightLimiter">
-        <CardHeader tag="h4">{bookInfoValues.title}</CardHeader>
-        <CardHeader tag="h6">
-          {bookInfoValues.authors
-            ? bookInfoValues.authors.map(author => (
-                <div key={Math.random()}>{author}</div>
-              ))
-            : ""}
-        </CardHeader>
-        <CardBody>
-          <div className="imghold">
-            <BookCover src={bookInfoValues.image} alt="thumbnail" />
-          </div>
-        </CardBody>
-        <CardFooter>
-          <Button onClick={toggleBookInfoModal}>
-            More details... / Add Book
-          </Button>
-        </CardFooter>
+      <Card>
+        <CardContainerDiv onClick={toggleBookInfoModal}>
+          <CardHeader>{bookInfoValues.title}</CardHeader>
+          <CardBody>
+            <CardBodyDiv>
+              <BookCover src={bookInfoValues.image} alt="thumbnail" />
+            </CardBodyDiv>
+          </CardBody>
+          <CardFooter>
+            <p>
+              by:{" "}
+              {bookInfoValues.authors
+                ? bookInfoValues.authors.join(" , ")
+                : "N/A"}
+            </p>
+          </CardFooter>
+        </CardContainerDiv>
       </Card>
       <AddBookModal
         bookInfoValues={bookInfoValues}

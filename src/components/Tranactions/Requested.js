@@ -84,8 +84,12 @@ const Requested = () => {
         });
       })
       .then(() => {
-        setRequestedBooks(tempRequestedBooksArr);
-        setToBeGivenBooks(tempToBeGivenBooksArr);
+        tempRequestedBooksArr.length > 0
+          ? setRequestedBooks(tempRequestedBooksArr)
+          : setRequestedBooks(null);
+        tempToBeGivenBooksArr.length > 0
+          ? setToBeGivenBooks(tempToBeGivenBooksArr)
+          : setToBeGivenBooks(null);
       })
       .catch(error => {
         console.log("Error getting the documents:", error);
@@ -102,15 +106,7 @@ const Requested = () => {
           <u>Requested Books:</u>
         </h5>
         <Container1>
-          {requestedBooks.length > 0 ? (
-            requestedBooks.map(book => (
-              <RequestedBook
-                key={Math.random()}
-                book={book}
-                getRequested={getRequested}
-              />
-            ))
-          ) : (
+          {requestedBooks === null ? (
             <div>
               <h6>No one has requested a book from you</h6>
               <h6>You can initiate... start a dialogue</h6>
@@ -119,6 +115,14 @@ const Requested = () => {
                 <Button>Search for other libraries in your area</Button>
               </NavLink>
             </div>
+          ) : (
+            requestedBooks.map(book => (
+              <RequestedBook
+                key={Math.random()}
+                book={book}
+                getRequested={getRequested}
+              />
+            ))
           )}
         </Container1>
       </div>
@@ -127,7 +131,13 @@ const Requested = () => {
           <u>Books To Loan:</u>
         </h5>
         <Container2>
-          {toBeGivenBooks.length > 0 ? (
+          {toBeGivenBooks === null ? (
+            <div>
+              <h6>
+                Set a user to loan a book, and the book will be placed here
+              </h6>
+            </div>
+          ) : (
             toBeGivenBooks.map(book => (
               <ToBeGivenBook
                 key={Math.random()}
@@ -135,12 +145,6 @@ const Requested = () => {
                 getRequested={getRequested}
               />
             ))
-          ) : (
-            <div>
-              <h6>
-                Set a user to loan a book, and the book will be placed here
-              </h6>
-            </div>
           )}
         </Container2>
       </div>

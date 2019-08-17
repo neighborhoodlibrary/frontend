@@ -27,13 +27,6 @@ const CardDiv = styled.div`
     color: black;
   }
 `;
-
-const CardHeaderDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 const CardBodyDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,9 +36,13 @@ const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
 `;
-const CardFooterDiv = styled.div`
+const CardContainerDiv = styled.div`
+  cursor: pointer;
+`;
+const ModalHeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 465px;
 `;
 
 const RequestedBook = props => {
@@ -152,22 +149,59 @@ const RequestedBook = props => {
   return (
     <CardDiv>
       <Card>
-        <CardHeader>
-          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
-        </CardHeader>
-        <CardBody>
-          <CardBodyDiv>
-            <p>by: {props.book.authors}</p>
-            <BookCover src={props.book.image} alt="book_thumb" />
-          </CardBodyDiv>
-        </CardBody>
-        <CardFooter>
-          <CardFooterDiv>
-            <Button onClick={toggleLoanBookModal}>Set to Lend User</Button>
-            <Button onClick={toggleRemoveRequestModal}>Remove</Button>
-          </CardFooterDiv>
-        </CardFooter>
+        <CardContainerDiv onClick={toggleLoanBookModal}>
+          <CardHeader>{props.book.title}</CardHeader>
+          <CardBody>
+            <CardBodyDiv>
+              <BookCover src={props.book.image} alt="book_thumb" />
+            </CardBodyDiv>
+          </CardBody>
+          <CardFooter>
+            <p>
+              by: {props.book.authors ? props.book.authors.join(" , ") : "N/A"}
+            </p>
+          </CardFooter>
+        </CardContainerDiv>
       </Card>
+      <Modal isOpen={loanBookModal} toggle={toggleLoanBookModal} centered>
+        <ModalHeader>
+          <ModalHeaderDiv>
+            <div>Set Loan Book</div>
+            <Button onClick={toggleRemoveRequestModal}>Remove</Button>
+          </ModalHeaderDiv>
+        </ModalHeader>
+        <ModalBody>
+          Please choose who to loan Book to:
+          <ButtonDropdown
+            isOpen={loanButtonDropdown}
+            toggle={toggleLoanButtonDropdown}
+          >
+            <DropdownToggle caret>Choose user to loan book</DropdownToggle>
+            <DropdownMenu>
+              {props.book.requestedId.map(rId => (
+                <DropdownItem
+                  key={Math.random()}
+                  onClick={() => userOptionFunc(rId)}
+                >
+                  {rId}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </ButtonDropdown>
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            onClick={() => {
+              submitLoan(userOption);
+            }}
+          >
+            {userOption
+              ? `Confirm Loan to: ${userOption}`
+              : "Choose user to loan first"}
+          </Button>
+          <Button onClick={toggleLoanBookModal}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
       <Modal
         isOpen={removeRequestModal}
         toggle={toggleRemoveRequestModal}
@@ -202,40 +236,6 @@ const RequestedBook = props => {
             {userOption ? `Confirm Remove ${userOption}` : "Remove all"}
           </Button>
           <Button onClick={toggleRemoveRequestModal}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
-      <Modal isOpen={loanBookModal} toggle={toggleLoanBookModal} centered>
-        <ModalHeader>Set Loan Book</ModalHeader>
-        <ModalBody>
-          Please choose who to loan Book to:
-          <ButtonDropdown
-            isOpen={loanButtonDropdown}
-            toggle={toggleLoanButtonDropdown}
-          >
-            <DropdownToggle caret>Choose user to loan book</DropdownToggle>
-            <DropdownMenu>
-              {props.book.requestedId.map(rId => (
-                <DropdownItem
-                  key={Math.random()}
-                  onClick={() => userOptionFunc(rId)}
-                >
-                  {rId}
-                </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </ButtonDropdown>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            onClick={() => {
-              submitLoan(userOption);
-            }}
-          >
-            {userOption
-              ? `Confirm Loan to: ${userOption}`
-              : "Choose user to loan first"}
-          </Button>
-          <Button onClick={toggleLoanBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </CardDiv>
