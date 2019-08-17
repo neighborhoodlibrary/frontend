@@ -17,7 +17,7 @@ import { GeoFire } from "geofire";
 import SearchBookCard from "./SearchBookCard";
 
 const ContainerDiv = styled.div`
-  max-width: 98vw;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

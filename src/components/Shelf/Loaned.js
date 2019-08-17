@@ -8,54 +8,25 @@ import { Button } from "reactstrap";
 import styled from "styled-components";
 
 const ContainerWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
+  box-sizing: border-box;
+  display: grid;
+  justify-content: space-apart;
+  grid-template-columns: 2fr 1fr;
+  font-family: 'Merriweather Sans', 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+
+  h5 {
+    font-family: 'Merriweather', serif;
+  }
 `;
 
 const Container1 = styled.div`
   display: grid;
-  min-height: 75vh
-  width: 75vw
-  border: 2px solid #28a745
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-
-  @media (max-width: 1100px) {
-    width: 70vw
-    grid-template-columns: 1fr 1fr 1fr;
-    
-  }
-
-  @media (max-width: 870px) {
-    width: 63vw
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (max-width: 550px) {
-    width:48vw
-    grid-template-columns: 1fr;
-  }
+  height: 100%;
 `;
 const Container2 = styled.div`
-  display: grid;
-  min-height: 75vh
-  width: 20vw
-  border: 2px solid #28a745
-  grid-template-columns:1fr;
 
-  @media (max-width: 1100px) {
-    width: 25vw
-    grid-template-columns: 1fr; 
-  }
-
-  @media (max-width: 870px) {
-    width:33vw
-    grid-template-columns: 1fr; 
-  }
-
-  @media (max-width: 550px) {
-    width:48vw
-    grid-template-columns: 1fr;
-  }
 `;
 
 const Loaned = () => {
