@@ -24,11 +24,6 @@ const CardDiv = styled.div`
     color: black;
   }
 `;
-const CardHeaderDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 const CardBodyDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,6 +32,9 @@ const CardBodyDiv = styled.div`
 const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
+`;
+const CardContainerDiv = styled.div`
+  cursor: pointer;
 `;
 
 const ReceivingBook = props => {
@@ -71,22 +69,21 @@ const ReceivingBook = props => {
   return (
     <CardDiv>
       <Card>
-        <CardHeader>
-          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
-        </CardHeader>
-        <CardBody>
-          <CardBodyDiv>
-            <p>by: {props.book.authors}</p>
-            <BookCover src={props.book.image} alt="book_thumb" />
-          </CardBodyDiv>
-        </CardBody>
-        <CardFooter>
-          <Button onClick={toggleReceiveBookModal}>
-            Confirm recieved Book
-          </Button>
-        </CardFooter>
+        <CardContainerDiv onClick={toggleReceiveBookModal}>
+          <CardHeader>{props.book.title}</CardHeader>
+          <CardBody>
+            <CardBodyDiv>
+              <BookCover src={props.book.image} alt="book_thumb" />
+            </CardBodyDiv>
+          </CardBody>
+          <CardFooter>
+            <p>
+              by: {props.book.authors ? props.book.authors.join(" , ") : "N/A"}
+            </p>
+          </CardFooter>
+        </CardContainerDiv>
       </Card>
-      <Modal isOpen={receiveBookModal} toggle={toggleReceiveBookModal}>
+      <Modal isOpen={receiveBookModal} toggle={toggleReceiveBookModal} centered>
         <ModalHeader>Confirm book is now in your possession</ModalHeader>
         <ModalBody>
           Confirm you have received book, set book in the Borrowed section?

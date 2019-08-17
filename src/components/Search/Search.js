@@ -3,15 +3,7 @@ import { GoogleApiWrapper, Map, Marker, InfoWindow } from "google-maps-react";
 import firebase from "../../firebase/firebase.utils";
 import styled from "styled-components";
 import Slider from "react-input-slider";
-import {
-  Col,
-  Form,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  Button,
-  Label
-} from "reactstrap";
+import { Col, Form, Button, Label } from "reactstrap";
 import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
 import SearchBookCard from "./SearchBookCard";
@@ -215,7 +207,9 @@ const Search = props => {
             });
           });
       });
-      setBooksArray(tempBooksArr);
+      tempBooksArr.length > 0
+        ? setBooksArray(tempBooksArr)
+        : setBooksArray(null);
     };
     aFunc();
   };
@@ -285,9 +279,19 @@ const Search = props => {
           <h6>Book results:</h6>
         </div>
         <Container>
-          {booksArray.map(book => (
-            <SearchBookCard key={Math.random()} book={book} />
-          ))}
+          {booksArray === null ? (
+            <div>
+              <h6>No books to borrow in the area, change search radius</h6>
+            </div>
+          ) : booksArray.length > 0 ? (
+            booksArray.map(book => (
+              <SearchBookCard key={Math.random()} book={book} />
+            ))
+          ) : (
+            <div>
+              <h6>Start by setting the search radius of your search</h6>
+            </div>
+          )}
         </Container>
       </Col>
     </ContainerDiv>

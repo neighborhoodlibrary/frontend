@@ -49,7 +49,9 @@ const Receiving = () => {
         });
       })
       .then(() => {
-        setReceivingBooks(tempReceivingBooksArr);
+        tempReceivingBooksArr.length > 0
+          ? setReceivingBooks(tempReceivingBooksArr)
+          : setReceivingBooks(null);
       })
       .catch(error => {
         console.log("Error getting the documents:", error);
@@ -65,15 +67,7 @@ const Receiving = () => {
         <u>Receiving Books:</u>
       </h5>
       <Container>
-        {receivingBooks.length > 0 ? (
-          receivingBooks.map(book => (
-            <ReceivingBook
-              key={Math.random()}
-              book={book}
-              getReceiving={getReceiving}
-            />
-          ))
-        ) : (
+        {receivingBooks === null ? (
           <EmptyBooksContainer>
             <h6>You need to request a book first</h6>
             <h6>
@@ -86,6 +80,14 @@ const Receiving = () => {
               <Button>Search libraries</Button>
             </NavLink>
           </EmptyBooksContainer>
+        ) : (
+          receivingBooks.map(book => (
+            <ReceivingBook
+              key={Math.random()}
+              book={book}
+              getReceiving={getReceiving}
+            />
+          ))
         )}
       </Container>
     </div>

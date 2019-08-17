@@ -42,10 +42,17 @@ const SearchBookCardDiv = styled.div`
     padding-top: 10px;
   }
 `;
-
+const CardBodyDiv = styled.div`
+display: flex;
+flex-direction: column
+align-items: center
+`;
 const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
+`;
+const CardContainerDiv = styled.div`
+  cursor: pointer;
 `;
 
 const SearchBookCard = props => {
@@ -60,7 +67,6 @@ const SearchBookCard = props => {
     .collection("books")
     .doc(props.book.id);
   const alert = useAlert();
-  const [infoModal, setInfoModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [emailValue, setEmailValue] = useState({});
@@ -81,9 +87,6 @@ const SearchBookCard = props => {
       });
   }, "");
 
-  const toggleInfoModal = () => {
-    infoModal ? setInfoModal(false) : setInfoModal(true);
-  };
   const toggleRequestModal = () => {
     if (requestModal) {
       setRequestModal(false);
@@ -135,47 +138,40 @@ const SearchBookCard = props => {
   };
   return (
     <SearchBookCardDiv>
-      <Card className="heightLimiter">
-        <CardHeader tag="h4">{props.book.title}</CardHeader>
-        <CardHeader tag="h6">
-          {props.book.authors ? (
-            props.book.authors.map(author => (
-              <div key={Math.random()}>by: {author}</div>
-            ))
-          ) : (
-            <div>by: NA</div>
-          )}
-        </CardHeader>
-        <CardBody>
-          <div className="imghold">
-            <BookCover src={props.book.image} alt="book_thumb" />
-          </div>
-        </CardBody>
-        <CardFooter>
-          <div className="buttonz">
-            <Button onClick={toggleInfoModal}>More Details</Button>
-            <Button onClick={toggleRequestModal}>Request Book</Button>
-          </div>
-        </CardFooter>
+      <Card>
+        <CardContainerDiv onClick={toggleRequestModal}>
+          <CardHeader>{props.book.title}</CardHeader>
+          <CardBody>
+            <CardBodyDiv>
+              <BookCover src={props.book.image} alt="book_thumb" />
+            </CardBodyDiv>
+          </CardBody>
+          <CardFooter>
+            <p>
+              by: {props.book.authors ? props.book.authors.join(" , ") : "N/A"}
+            </p>
+          </CardFooter>
+        </CardContainerDiv>
       </Card>
-      <Modal isOpen={infoModal} toggle={toggleInfoModal} centered>
-        <h3>
-          <u>Book Information</u>
-        </h3>
-        <ModalHeader>Page Count: {props.book.pageCount}</ModalHeader>
-        <ModalHeader>Publisher: {props.book.publisher}</ModalHeader>
-        <ModalHeader>Published: {props.book.publishDate}</ModalHeader>
-        <ModalHeader>Description: {props.book.description}</ModalHeader>
-        <ModalHeader>ISBN13: {props.book.isbn13}</ModalHeader>
-        <ModalHeader>ISBN: {props.book.isbn}</ModalHeader>
-      </Modal>
       <Modal isOpen={requestModal} toggle={toggleRequestModal} centered>
-        <ModalHeader>Request Book from user</ModalHeader>
+        <ModalHeader>Book Info:</ModalHeader>
         <ModalBody>
-          Are you sure you want to request book: {props.book.title} from user?
+          description: {props.book.description}
+          <br />
+          isbn: {props.book.isbn}
+          <br />
+          isbn13: {props.book.isbn13}
+          <br />
+          language: {props.book.language}
+          <br />
+          page-count: {props.book.pageCount}
+          <br />
+          publish-date: {props.book.publishDate}
+          <br />
+          publisher: {props.book.publisher}
         </ModalBody>
         <ModalFooter>
-          <Button onClick={submitRequest}>Confirm</Button>
+          <Button onClick={submitRequest}>Request Book</Button>
           <Button onClick={toggleRequestModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
