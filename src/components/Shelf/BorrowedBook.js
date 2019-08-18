@@ -23,7 +23,6 @@ const CardDiv = styled.div`
     color: black;
   }
 `;
-
 const CardBodyDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -37,35 +36,30 @@ const CardContainerDiv = styled.div`
   cursor: pointer;
 `;
 
-const ReturnBook = props => {
-  const bookDocRef = firebase
-    .firestore()
-    .collection("books")
-    .doc(props.book.id);
+const BorrowedBook = props => {
+  const db = firebase.firestore();
+  const [returnBookModal, setReturnBookModal] = useState(false);
   const alert = useAlert();
-  const [removeReturnModal, setRemoveReturnModal] = useState(false);
 
-  const toggleRemoveReturnModal = () => {
-    removeReturnModal
-      ? setRemoveReturnModal(false)
-      : setRemoveReturnModal(true);
+  const toggleReturnBookModal = () => {
+    returnBookModal ? setReturnBookModal(false) : setReturnBookModal(true);
   };
-
-  const submitRemoveTransition = () => {
-    bookDocRef
+  const returnBook = () => {
+    const ownerId = props.book.ownerId;
+    db.collection("books")
+      .doc(props.book.id)
       .update({
-        transitionUser: ""
+        transitionUser: ownerId
       })
       .then(() => {
-        alert.success("Removal from the return section successful");
+        alert.success("Book is set to return to owner");
         props.getBooks();
       });
   };
-
   return (
     <CardDiv>
       <Card>
-        <CardContainerDiv onClick={toggleRemoveReturnModal}>
+        <CardContainerDiv onClick={toggleReturnBookModal}>
           <CardHeader>{props.book.title}</CardHeader>
           <CardBody>
             <CardBodyDiv>
@@ -79,22 +73,18 @@ const ReturnBook = props => {
           </CardFooter>
         </CardContainerDiv>
       </Card>
-      <Modal
-        isOpen={removeReturnModal}
-        toggle={toggleRemoveReturnModal}
-        centered
-      >
-        <ModalHeader>Remove from the return section</ModalHeader>
+      <Modal isOpen={returnBookModal} toggle={toggleReturnBookModal} centered>
+        <ModalHeader>Return Book</ModalHeader>
         <ModalBody>
-          Are you sure you want to remove the book from the return section?
+          Are you sure you want to return book back to owner?
         </ModalBody>
         <ModalFooter>
-          <Button onClick={submitRemoveTransition}>Confirm</Button>
-          <Button onClick={toggleRemoveReturnModal}>Cancel</Button>
+          <Button onClick={returnBook}>Confirm</Button>
+          <Button onClick={toggleReturnBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </CardDiv>
   );
 };
 
-export default ReturnBook;
+export default BorrowedBook;

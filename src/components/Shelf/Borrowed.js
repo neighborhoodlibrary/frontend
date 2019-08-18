@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
-import Book from "./Book";
+import BorrowedBook from "./BorrowedBook";
 import ReturnBook from "./ReturnBook";
 import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
@@ -59,7 +59,7 @@ const Container2 = styled.div`
 `;
 
 const Borrowed = () => {
-  const [booksInfo, setBooksInfo] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [returnBooks, setReturnBooks] = useState([]);
   const auth = firebase.auth();
   const user = auth.currentUser;
@@ -82,8 +82,12 @@ const Borrowed = () => {
         });
       })
       .then(() => {
-        setBooksInfo(tempBorrowedBooksArr);
-        setReturnBooks(tempReturnBooksArr);
+        tempBorrowedBooksArr.length > 0
+          ? setBorrowedBooks(tempBorrowedBooksArr)
+          : setBorrowedBooks(null);
+        tempReturnBooksArr.length > 0
+          ? setReturnBooks(tempReturnBooksArr)
+          : setReturnBooks(null);
       })
       .catch(error => {
         console.log("Error getting the docs:", error);
@@ -101,11 +105,7 @@ const Borrowed = () => {
           <u>Borrowed Books:</u>
         </h5>
         <Container1>
-          {booksInfo.length > 0 ? (
-            booksInfo.map(book => (
-              <Book key={Math.random()} book={book} getBooks={getBooks} />
-            ))
-          ) : (
+          {borrowedBooks === null ? (
             <div>
               <h6>You have no books that you are currently borrowing</h6>
               <p>Search for books to borrow?</p>
@@ -113,6 +113,14 @@ const Borrowed = () => {
                 <Button>Search for books</Button>
               </NavLink>
             </div>
+          ) : (
+            borrowedBooks.map(book => (
+              <BorrowedBook
+                key={Math.random()}
+                book={book}
+                getBooks={getBooks}
+              />
+            ))
           )}
         </Container1>
       </div>
@@ -121,14 +129,14 @@ const Borrowed = () => {
           <u>Returning Books:</u>
         </h5>
         <Container2>
-          {returnBooks.length > 0 ? (
-            returnBooks.map(book => (
-              <ReturnBook key={Math.random()} book={book} getBooks={getBooks} />
-            ))
-          ) : (
+          {returnBooks === null ? (
             <div>
               <h6>You need to borrow a book first...</h6>
             </div>
+          ) : (
+            returnBooks.map(book => (
+              <ReturnBook key={Math.random()} book={book} getBooks={getBooks} />
+            ))
           )}
         </Container2>
       </div>
