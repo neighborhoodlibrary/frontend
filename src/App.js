@@ -33,7 +33,12 @@ import Profile from "./components/Profile/Profile";
 import styled from "styled-components";
 
 const LoggedInDiv = styled.div`
-  margin: 0 20px;
+  margin: auto;
+  width: 86%;
+
+  @medix(max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const alertOptions = {
@@ -48,9 +53,9 @@ function App() {
         <BookState>
           <AlertProvider template={AlertTemplate} {...alertOptions}>
             <Router>
+            <Route path="/" component={Header} />
               <Route exact path="/landing" component={Landing} />
               <LoggedInDiv>
-              <Route path="/" component={Header} />
                 <Switch>
                   {/* shelf components */}
                   <PrivateRoute exact path="/shelf" component={MainShelf} />

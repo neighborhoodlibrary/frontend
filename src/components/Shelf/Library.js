@@ -7,6 +7,10 @@ import { Button } from "reactstrap";
 import styled from "styled-components";
 
 const Container = styled.div`
+
+`;
+
+const MapHold = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 
@@ -21,12 +25,10 @@ const Container = styled.div`
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
   }
-`;
+`
 
 const EmptyBooksContainer = styled.div`
-min-height: 50vh;
-width: 98vw
-border: 2px solid #28a745
+  width: 100%;
 `;
 
 const Library = () => {
@@ -56,6 +58,8 @@ const Library = () => {
       });
   };
 
+  const theMap = 
+
   useEffect(() => {
     getBooks();
   }, []);
@@ -74,14 +78,16 @@ const Library = () => {
           </NavLink>
         </EmptyBooksContainer>
       ) : (
-        booksInfo.map(book => (
+       <MapHold>
+       {booksInfo.map(book => (
           <Book
             key={Math.random()}
             book={book}
             getBooks={getBooks}
             userUid={user.uid}
           />
-        ))
+        ))}
+      </MapHold>
       )}
     </Container>
   );

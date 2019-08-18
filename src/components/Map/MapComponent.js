@@ -20,15 +20,25 @@ import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
 
 const ContainerDiv = styled.div`
-  max-width: 98vw;
+  width: 100%;
   display: flex;
   justify-content: space-around;
+  
+  @media(max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const MapContainer = styled.div`
-  margin: auto;
-  width: 50vw;
-  height: 75vh;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 10px;
+  height: 50vh;
+  border-radius: 2px;
 `;
 
 const MapComponent = props => {

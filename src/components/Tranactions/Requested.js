@@ -9,54 +9,25 @@ import RequestedBook from "./RequestedBook";
 import ToBeGivenBook from "./ToLoanBook";
 
 const ContainerWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
+  box-sizing: border-box;
+  display: grid;
+  justify-content: space-apart;
+  grid-template-columns: 1fr 1fr;
+  font-family: 'Merriweather Sans', 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+
+  h5 {
+    font-family: 'Merriweather', serif;
+  }
 `;
 
 const Container1 = styled.div`
   display: grid;
-  min-height: 75vh
-  width:48vw
-  border: 2px solid #28a745
-  grid-template-columns: 1fr 1fr;
-  
-  @media (max-width: 1100px) {
-    width: 48vw
-    grid-template-columns: 1fr 1fr;
-    
-  }
-  
-  @media (max-width: 870px) {
-    width: 48vw
-    grid-template-columns: 1fr;
-  }
-  
-  @media (max-width: 550px) {
-    width:48vw
-    grid-template-columns: 1fr;
-  }
-  `;
+  height: 100%;
+`;
 const Container2 = styled.div`
-  display: grid;
-  min-height: 75vh
-  width: 48vw
-  border: 2px solid #28a745
-  grid-template-columns: 1fr 1fr;
 
-  @media (max-width: 1100px) {
-    width: 48vw
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (max-width: 870px) {
-    width:48vw
-    grid-template-columns: 1fr; 
-  }
-
-  @media (max-width: 550px) {
-    width:48vw
-    grid-template-columns: 1fr;
-  }
 `;
 
 const Requested = () => {

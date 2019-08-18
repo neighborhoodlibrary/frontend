@@ -19,10 +19,12 @@ export default function Profile() {
 
     const [values, setValues] = useState({
         edited: {
-          displayName: curUser.displayName
+          displayName: curUser.displayName,
+          favoriteBook: curUser.favoriteBook
         },
         locked: {
           displayName: curUser.displayName,
+          favoriteBook: curUser.favoriteBook,
           uid: curUser.uid
         }
       });
@@ -55,6 +57,7 @@ export default function Profile() {
         })
 
         setValues({
+          ...values,
           locked: values.edited
         });
 
@@ -69,21 +72,38 @@ export default function Profile() {
 
     if(edit.isOn === false) {
       return (
-          <div className="editOff">
-            <div className="profileBox">
-              Display Name: {values.locked.displayName}
+          <div className="editProfile">
+            <div className="editOff">
+              <div className="profileBox">
+
+                  <div className="profileSlot"><h3>
+                  Display Name:
+                  </h3><p>
+                  {values.locked.displayName}
+                  </p></div>
+
+                  <div className="profileSlot"><h3>
+                  Favorite Book:
+                  </h3> <p>
+                  {values.locked.favoriteBook}
+                  </p></div>
+
+              </div>
+              <button className="heartbeat" onClick={toggleEdit}>Edit</button>
             </div>
-            <button onClick={toggleEdit}>Edit</button>
           </div>
       )
     } else {
       return (
-        <div className="editOn">
-          <form onSubmit={updateProfile}>
-            <input name="displayName" value={values.edited.displayName} onChange={handleChanges} placeholder="Enter display name" />
-            <button>Submit Changes</button>
-          </form>
-          <button onClick={toggleEdit}>Close Edit</button>
+        <div className="editProfile">
+          <div className="editOn">
+            <form onSubmit={updateProfile}>
+              <input name="displayName" value={values.edited.displayName} onChange={handleChanges} placeholder="Enter display name" />
+              <input name="favoriteBook" value={values.edited.favoriteBook} onChange={handleChanges} placeholder="Enter your favorite Book" />
+              <button>Submit Changes</button>
+            </form>
+            <button onClick={toggleEdit}>Close Edit</button>
+          </div>
         </div>
       )
     }
