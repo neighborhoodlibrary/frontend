@@ -190,6 +190,7 @@ const NavMenu = props => {
         <TabBottom>
           <NavLink to="/shelf/profile">Profile</NavLink>
           <NavLink to="/shelf/map">Map</NavLink>
+          <button onClick={props.signOut}>Sign Out</button>
         </TabBottom>
       </NavTabs>
     </NavMenuDiv>
