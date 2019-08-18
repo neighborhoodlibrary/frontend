@@ -24,20 +24,17 @@ const CardDiv = styled.div`
     color: black;
   }
 `;
-const CardHeaderDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
 const CardBodyDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
-
 const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
+`;
+const CardContainerDiv = styled.div`
+  cursor: pointer;
 `;
 
 const RecoverBook = props => {
@@ -67,22 +64,19 @@ const RecoverBook = props => {
   return (
     <CardDiv>
       <Card>
-        <CardHeader>
-          <CardHeaderDiv>{props.book.title}</CardHeaderDiv>
-        </CardHeader>
-        <CardBody>
-          <CardBodyDiv>
+        <CardContainerDiv onClick={toggleRecoverBookModal}>
+          <CardHeader>{props.book.title}</CardHeader>
+          <CardBody>
+            <CardBodyDiv>
+              <BookCover src={props.book.image} alt="book_thumb" />
+            </CardBodyDiv>
+          </CardBody>
+          <CardFooter>
             <p>by: {props.book.authors}</p>
-            <BookCover src={props.book.image} alt="book_thumb" />
-          </CardBodyDiv>
-        </CardBody>
-        <CardFooter>
-          <Button onClick={toggleRecoverBookModal}>
-            Confirm check-in of book
-          </Button>
-        </CardFooter>
+          </CardFooter>
+        </CardContainerDiv>
       </Card>
-      <Modal isOpen={recoverBookModal} toggle={toggleRecoverBookModal}>
+      <Modal isOpen={recoverBookModal} toggle={toggleRecoverBookModal} centered>
         <ModalHeader>Confirm book is now in your possession</ModalHeader>
         <ModalBody>
           Confirm you have received book, and set it back to your Library?

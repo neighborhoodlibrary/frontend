@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
-import Book from "./Book";
 import BorrowedBook from "./BorrowedBook";
 import ReturnBook from "./ReturnBook";
 import { NavLink } from "react-router-dom";

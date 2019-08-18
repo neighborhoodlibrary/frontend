@@ -36,30 +36,19 @@ const CardContainerDiv = styled.div`
   cursor: pointer;
 `;
 
-const BorrowedBook = props => {
+const LoanedBook = props => {
   const db = firebase.firestore();
-  const [returnBookModal, setReturnBookModal] = useState(false);
+  const [loanedBookModal, setLoanedBookModal] = useState(false);
   const alert = useAlert();
 
-  const toggleReturnBookModal = () => {
-    returnBookModal ? setReturnBookModal(false) : setReturnBookModal(true);
+  const toggleLoanedBookModal = () => {
+    loanedBookModal ? setLoanedBookModal(false) : setLoanedBookModal(true);
   };
-  const returnBook = () => {
-    const ownerId = props.book.ownerId;
-    db.collection("books")
-      .doc(props.book.id)
-      .update({
-        transitionUser: ownerId
-      })
-      .then(() => {
-        alert.success("Book is set to return to owner");
-        props.getBooks();
-      });
-  };
+
   return (
     <CardDiv>
       <Card>
-        <CardContainerDiv onClick={toggleReturnBookModal}>
+        <CardContainerDiv onClick={toggleLoanedBookModal}>
           <CardHeader>{props.book.title}</CardHeader>
           <CardBody>
             <CardBodyDiv>
@@ -73,18 +62,16 @@ const BorrowedBook = props => {
           </CardFooter>
         </CardContainerDiv>
       </Card>
-      <Modal isOpen={returnBookModal} toggle={toggleReturnBookModal} centered>
-        <ModalHeader>Return Book</ModalHeader>
-        <ModalBody>
-          Are you sure you want to return book back to owner?
-        </ModalBody>
+      <Modal isOpen={loanedBookModal} toggle={toggleLoanedBookModal} centered>
+        <ModalHeader>Loaned Book</ModalHeader>
+        <ModalBody>You have lent out this book</ModalBody>
         <ModalFooter>
-          <Button onClick={returnBook}>Confirm</Button>
-          <Button onClick={toggleReturnBookModal}>Cancel</Button>
+          <Button onClick={toggleLoanedBookModal}>Confirm</Button>
+          <Button onClick={toggleLoanedBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </CardDiv>
   );
 };
 
-export default BorrowedBook;
+export default LoanedBook;

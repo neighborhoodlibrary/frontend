@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import Book from "./Book";
+import LoanedBook from "./LoanedBook";
 import RecoverBook from "./RecoverBook";
 import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
@@ -59,7 +60,7 @@ const Container2 = styled.div`
 `;
 
 const Loaned = () => {
-  const [booksInfo, setBooksInfo] = useState([]);
+  const [loanedBooks, setLoanedBooks] = useState([]);
   const [recoverBooks, setRecoverBooks] = useState([]);
   const auth = firebase.auth();
   const user = auth.currentUser;
@@ -83,8 +84,12 @@ const Loaned = () => {
         });
       })
       .then(() => {
-        setBooksInfo(tempLoanedBooksArr);
-        setRecoverBooks(tempRecoverBooksArr);
+        tempLoanedBooksArr.length > 0
+          ? setLoanedBooks(tempLoanedBooksArr)
+          : setLoanedBooks(null);
+        tempRecoverBooksArr.length > 0
+          ? setRecoverBooks(tempRecoverBooksArr)
+          : setRecoverBooks(null);
       })
       .catch(error => {
         console.log("Error getting the docs:", error);
@@ -102,11 +107,7 @@ const Loaned = () => {
           <u>Loaned Books:</u>
         </h5>
         <Container1>
-          {booksInfo.length > 0 ? (
-            booksInfo.map(book => (
-              <Book key={Math.random()} book={book} getBooks={getBooks} />
-            ))
-          ) : (
+          {loanedBooks === null ? (
             <div>
               <h6>You have no books currently checked-out</h6>
               <p>Add more books to your library?</p>
@@ -118,6 +119,10 @@ const Loaned = () => {
                 <Button>Map settings</Button>
               </NavLink>
             </div>
+          ) : (
+            loanedBooks.map(book => (
+              <LoanedBook key={Math.random()} book={book} getBooks={getBooks} />
+            ))
           )}
         </Container1>
       </div>
@@ -126,7 +131,11 @@ const Loaned = () => {
           <u>Check-In Books:</u>
         </h5>
         <Container2>
-          {recoverBooks.length > 0 ? (
+          {recoverBooks === null ? (
+            <div>
+              <h6>You have no pending books to be checked in...</h6>
+            </div>
+          ) : (
             recoverBooks.map(book => (
               <RecoverBook
                 key={Math.random()}
@@ -134,10 +143,6 @@ const Loaned = () => {
                 getBooks={getBooks}
               />
             ))
-          ) : (
-            <div>
-              <h6>You have no pending books to be checked in...</h6>
-            </div>
           )}
         </Container2>
       </div>
