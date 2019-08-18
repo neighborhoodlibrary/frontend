@@ -78,14 +78,16 @@ const Library = () => {
           </NavLink>
         </EmptyBooksContainer>
       ) : (
-        booksInfo.map(book => (
+       <MapHold>
+       {booksInfo.map(book => (
           <Book
             key={Math.random()}
             book={book}
             getBooks={getBooks}
             userUid={user.uid}
           />
-        ))
+        ))}
+      </MapHold>
       )}
     </Container>
   );
