@@ -1,8 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import BookContext from "../../context/book/bookContext";
+import EditBookModal from "./EditBookModal";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
-import { Card, CardHeader, CardBody, Button } from "reactstrap";
+import firebase from "../../firebase/firebase.utils";
+import "firebase/auth";
+import { Card, CardHeader, CardBody, CardFooter, Button } from "reactstrap";
 
 const ContainerDiv = styled.div`
   display: flex;
@@ -11,6 +14,7 @@ const ContainerDiv = styled.div`
 
 const BookHold = styled.div`
   width: 75%;
+  margin: 10px
   padding: 17px;
   border-radius: 3px;
   border: 1px solid rgb(0, 0, 0, 0.2);
@@ -34,16 +38,28 @@ const CardInfoDiv = styled.div`
   }
 `;
 
+const CardFooterDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const BookCover = styled.img`
   max-height: 200px;
   max-width: 200px;
 `;
 
 const Book = props => {
+  console.log(props);
+  const auth = firebase.auth();
+  const curUser = auth.currentUser;
   const bookContext = useContext(BookContext);
+  const [user, setUser] = useState("");
   const [displayedBook, getDisplayedBook] = useState([]);
+  const [editBookModal, setEditBookModal] = useState(false);
 
   useEffect(() => {
+    setUser(curUser.uid);
     getBook();
   }, []);
 
@@ -56,20 +72,30 @@ const Book = props => {
     }
   };
 
+  const toggleEditBookModal = () => {
+    editBookModal ? setEditBookModal(false) : setEditBookModal(true);
+  };
+
   const goBack = e => {
     props.history.goBack();
   };
-
+  console.log(displayedBook);
+  console.log(user);
   return (
     <ContainerDiv>
       <BookHold>
         <Card>
           <CardHeader>
             <CardHeaderDiv>
+              <div>
+                {displayedBook.ownerId === user && !displayedBook.checkedOut ? (
+                  <Button onClick={toggleEditBookModal}>Edit</Button>
+                ) : (
+                  ""
+                )}
+              </div>
               <h5>{displayedBook.title}</h5>
-              <Button color="secondary" onClick={goBack}>
-                Back
-              </Button>
+              <Button onClick={goBack}>Back</Button>
             </CardHeaderDiv>
           </CardHeader>
           <CardBody>
@@ -79,22 +105,22 @@ const Book = props => {
               </div>
               <p>
                 {!displayedBook.authors
-                  ? ""
+                  ? "Author: N/A"
                   : displayedBook.authors.length === 1
                   ? `Author: ${displayedBook.authors[0]}`
-                  : `Authors: ${displayedBook.authors}`}
+                  : `Authors: ${displayedBook.authors.join(" , ")}`}
               </p>
               <p>Description: {displayedBook.description}</p>
-              <p>Page Count: {displayedBook.pageCount}</p>
-              <p>Isbn13: {displayedBook.isbn13}</p>
               <p>Isbn: {displayedBook.isbn}</p>
+              <p>Isbn13: {displayedBook.isbn13}</p>
               <p>Language: {displayedBook.language}</p>
+              <p>Page Count: {displayedBook.pageCount}</p>
               <p>Publish Date: {displayedBook.publishDate}</p>
               <p>Publisher: {displayedBook.publisher}</p>
             </CardInfoDiv>
           </CardBody>
-          <CardHeader>
-            <CardHeaderDiv>
+          <CardFooter>
+            <CardFooterDiv>
               <p>Owner of Book: {displayedBook.ownerId}</p>
               <p>
                 Currently Checked out by:
@@ -102,10 +128,20 @@ const Book = props => {
                   ? displayedBook.borrowerId
                   : " Not Checked Out"}
               </p>
-            </CardHeaderDiv>
-          </CardHeader>
+            </CardFooterDiv>
+          </CardFooter>
         </Card>
       </BookHold>
+      {displayedBook.title ? (
+        <EditBookModal
+          book={displayedBook}
+          toggleEditBookModal={toggleEditBookModal}
+          editBookModal={editBookModal}
+          getBook={getBook}
+        />
+      ) : (
+        ""
+      )}
     </ContainerDiv>
   );
 };

@@ -18,13 +18,6 @@ import styled from "styled-components";
 
 const ManualAddBookForm = styled.div`
   margin: 20px;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 5px 15px 20px;
-
-  authors {
-    padding: 5px;
-  }
 `;
 
 const uniqueID = require("uniqid");
@@ -171,20 +164,18 @@ const ManualAddBookModal = props => {
       <ModalBody>
         <ManualAddBookForm>
           <Form>
-            <div className="authors">
-              <FormGroup row>
-                <Label for="authorI">Authors</Label>
-                <Input
-                  type="text"
-                  name="authorsInput"
-                  id="authorI"
-                  placeholder="Separate authors with comma"
-                  onChange={handleChanges}
-                  value={bookValues.authorsInput}
-                  required
-                />
-              </FormGroup>
-            </div>
+            <FormGroup row>
+              <Label for="authorI">Authors</Label>
+              <Input
+                type="text"
+                name="authorsInput"
+                id="authorI"
+                placeholder="Separate authors with comma"
+                onChange={handleChanges}
+                value={bookValues.authorsInput}
+                required
+              />
+            </FormGroup>
             <FormGroup row>
               <Label for="titleI">Title</Label>
               <Input

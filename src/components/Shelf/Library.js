@@ -33,11 +33,8 @@ const EmptyBooksContainer = styled.div`
 
 const Library = () => {
   const [booksInfo, setBooksInfo] = useState([]);
-
   const auth = firebase.auth();
-
   const user = auth.currentUser;
-
   const docRef = firebase.firestore().collection("books");
 
   const getBooks = () => {
@@ -52,7 +49,9 @@ const Library = () => {
         });
       })
       .then(() => {
-        setBooksInfo(tempBooksArr);
+        tempBooksArr.length > 0
+          ? setBooksInfo(tempBooksArr)
+          : setBooksInfo(null);
       })
       .catch(error => {
         console.log("Error getting the documents:", error);
@@ -67,17 +66,7 @@ const Library = () => {
 
   return (
     <Container>
-      {booksInfo.length > 0 ? (
-        <MapHold>{booksInfo.map(book => (
-          <Book
-            key={Math.random()}
-            book={book}
-            getBooks={getBooks}
-            userUid={user.uid}
-          />
-        ))}
-        </MapHold>
-      ) : (
+      {booksInfo === null ? (
         <EmptyBooksContainer>
           <h6>You currently have no books in your library...</h6>
           <h6>Get started by searching through an option of 3 APIs</h6>
@@ -88,6 +77,15 @@ const Library = () => {
             <Button>Add a book</Button>
           </NavLink>
         </EmptyBooksContainer>
+      ) : (
+        booksInfo.map(book => (
+          <Book
+            key={Math.random()}
+            book={book}
+            getBooks={getBooks}
+            userUid={user.uid}
+          />
+        ))
       )}
     </Container>
   );
