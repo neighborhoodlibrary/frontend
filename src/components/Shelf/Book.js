@@ -77,23 +77,6 @@ const LibraryBook = props => {
       .catch(error => alert.error("Unable to delete book!"));
   };
 
-  // const toggleReturnBookModal = () => {
-  //   returnBookModal ? setReturnBookModal(false) : setReturnBookModal(true);
-  // };
-
-  // const returnBook = () => {
-  //   const ownerId = props.book.ownerId;
-  //   db.collection("books")
-  //     .doc(props.book.id)
-  //     .update({
-  //       transitionUser: ownerId
-  //     })
-  //     .then(() => {
-  //       alert.success("Book is set to return to owner");
-  //       props.getBooks();
-  //     });
-  // };
-
   const toggleEditBookModal = () => {
     editBookModal ? setEditBookModal(false) : setEditBookModal(true);
   };
@@ -147,13 +130,7 @@ const LibraryBook = props => {
             </CardBodyDiv>
           </CardBody>
         </NavLink>
-        <CardFooter>
-          {/* {props.book.borrowerId === user.uid ? (
-            <Button onClick={toggleReturnBookModal}>Return Book</Button>
-          ) : (
-            ""
-          )} */}
-        </CardFooter>
+        <CardFooter />
       </Card>
       <Modal isOpen={deleteBookModal} toggle={toggleDeleteBookModal} centered>
         <ModalHeader>Delete Book</ModalHeader>
@@ -165,16 +142,6 @@ const LibraryBook = props => {
           <Button onClick={toggleDeleteBookModal}>Cancel</Button>
         </ModalFooter>
       </Modal>
-      {/* <Modal isOpen={returnBookModal} toggle={toggleReturnBookModal} centered>
-        <ModalHeader>Return Book</ModalHeader>
-        <ModalBody>
-          Are you sure you want to return book back to owner?
-        </ModalBody>
-        <ModalFooter>
-          <Button onClick={returnBook}>Confirm</Button>
-          <Button onClick={toggleReturnBookModal}>Cancel</Button>
-        </ModalFooter>
-      </Modal> */}
       <EditBookModal
         book={props.book}
         toggleEditBookModal={toggleEditBookModal}

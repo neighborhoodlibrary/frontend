@@ -40,6 +40,7 @@ const BookCover = styled.img`
 `;
 
 const Book = props => {
+  console.log(props);
   const bookContext = useContext(BookContext);
   const [displayedBook, getDisplayedBook] = useState([]);
 
@@ -67,9 +68,7 @@ const Book = props => {
           <CardHeader>
             <CardHeaderDiv>
               <h5>{displayedBook.title}</h5>
-              <Button color="secondary" onClick={goBack}>
-                Back
-              </Button>
+              <Button onClick={goBack}>Back</Button>
             </CardHeaderDiv>
           </CardHeader>
           <CardBody>
@@ -79,16 +78,16 @@ const Book = props => {
               </div>
               <p>
                 {!displayedBook.authors
-                  ? ""
+                  ? "Author: N/A"
                   : displayedBook.authors.length === 1
                   ? `Author: ${displayedBook.authors[0]}`
-                  : `Authors: ${displayedBook.authors}`}
+                  : `Authors: ${displayedBook.authors.join(" , ")}`}
               </p>
               <p>Description: {displayedBook.description}</p>
-              <p>Page Count: {displayedBook.pageCount}</p>
-              <p>Isbn13: {displayedBook.isbn13}</p>
               <p>Isbn: {displayedBook.isbn}</p>
+              <p>Isbn13: {displayedBook.isbn13}</p>
               <p>Language: {displayedBook.language}</p>
+              <p>Page Count: {displayedBook.pageCount}</p>
               <p>Publish Date: {displayedBook.publishDate}</p>
               <p>Publisher: {displayedBook.publisher}</p>
             </CardInfoDiv>
