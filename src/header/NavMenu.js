@@ -99,6 +99,7 @@ const TabBottom = styled.div`
   justify-content: space-evenly;
   align-items: center;
   font-size: .89em;
+  box-sizing: border-box;
 
   a {
     padding: 3px 6px;
@@ -109,6 +110,13 @@ const TabBottom = styled.div`
     &:hover {
 
     }
+  }
+
+  button {
+    padding: 3px 6px;
+    border: none;
+    border-radius: 3px;
+    margin: 0px 1px;
   }
 `;
 
@@ -190,6 +198,7 @@ const NavMenu = props => {
         <TabBottom>
           <NavLink to="/shelf/profile">Profile</NavLink>
           <NavLink to="/shelf/map">Map</NavLink>
+          <button onClick={props.signOut}>Sign Out</button>
         </TabBottom>
       </NavTabs>
     </NavMenuDiv>
