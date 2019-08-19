@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   width: 100%;
-  font-family: 'Merriweather Sans', sans-serif;
+  font-family: "Merriweather Sans", sans-serif;
 `;
 
 const MapHold = styled.div`

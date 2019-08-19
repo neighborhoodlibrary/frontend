@@ -27,7 +27,6 @@ const ModalHeaderDiv = styled.div`
 `;
 
 const EditBookModal = props => {
-  console.log(props.book);
   const alert = useAlert();
   const db = firebase.firestore();
   const storage = firebase.storage();
@@ -103,7 +102,7 @@ const EditBookModal = props => {
                 .then(() => {
                   props.toggleEditBookModal();
                   alert.success("Successfully edited book!");
-                  props.getBook();
+                  props.goBack();
                 });
             });
         });
@@ -127,7 +126,7 @@ const EditBookModal = props => {
         .then(() => {
           props.toggleEditBookModal();
           alert.success("Successfully edited book!");
-          props.getBook();
+          props.goBack();
         });
     }
   };
@@ -142,10 +141,15 @@ const EditBookModal = props => {
       .doc(`${props.book.id}`)
       .delete()
       .then(() => {
-        props.getBook();
+        toggleDeleteBookModal();
+        props.toggleEditBookModal();
         alert.success("Book deleted!");
+        props.goBack();
       })
-      .catch(error => alert.error("Unable to delete book!"));
+      .catch(error => {
+        console.log(error);
+        alert.error("Unable to delete book!");
+      });
   };
 
   return (

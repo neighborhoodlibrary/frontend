@@ -50,7 +50,6 @@ const BookCover = styled.img`
 `;
 
 const Book = props => {
-  console.log(props);
   const auth = firebase.auth();
   const curUser = auth.currentUser;
   const bookContext = useContext(BookContext);
@@ -76,11 +75,9 @@ const Book = props => {
     editBookModal ? setEditBookModal(false) : setEditBookModal(true);
   };
 
-  const goBack = e => {
+  const goBack = () => {
     props.history.goBack();
   };
-  console.log(displayedBook);
-  console.log(user);
   return (
     <ContainerDiv>
       <BookHold>
@@ -137,7 +134,7 @@ const Book = props => {
           book={displayedBook}
           toggleEditBookModal={toggleEditBookModal}
           editBookModal={editBookModal}
-          getBook={getBook}
+          goBack={goBack}
         />
       ) : (
         ""

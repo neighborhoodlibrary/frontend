@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardHeader, CardBody, CardFooter, Button } from "reactstrap";
+import { Card, CardHeader, CardBody, CardFooter } from "reactstrap";
 import styled from "styled-components";
 import AddBookModal from "./AddBookModal";
 import Axios from "axios";
