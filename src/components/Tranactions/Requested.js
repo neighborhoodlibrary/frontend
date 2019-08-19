@@ -13,12 +13,12 @@ const ContainerWrapper = styled.div`
   display: grid;
   justify-content: space-apart;
   grid-template-columns: 1fr 1fr;
-  font-family: 'Merriweather Sans', 'Roboto', sans-serif;
+  font-family: "Merriweather Sans", "Roboto", sans-serif;
   width: 100%;
   height: 100%;
 
   h5 {
-    font-family: 'Merriweather', serif;
+    font-family: "Merriweather", serif;
   }
 `;
 
@@ -26,9 +26,7 @@ const Container1 = styled.div`
   display: grid;
   height: 100%;
 `;
-const Container2 = styled.div`
-
-`;
+const Container2 = styled.div``;
 
 const Requested = () => {
   const auth = firebase.auth();

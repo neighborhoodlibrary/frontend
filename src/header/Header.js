@@ -15,19 +15,18 @@ const HeaderDiv = styled.div`
   width: 88%;
   margin: 0px auto 20px auto;
   border-radius: 2px;
-  border: 1px solid rgba(0,0,0,.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-top: none;
-  -webkit-box-shadow:3px 4.5px 4px 0px #bfbfbf ;
-  -moz-box-shadow:3px 4.5px 4px 0px #bfbfbf ;
-  box-shadow:3px 4.5px 4px 0px #bfbfbf ;
-  -webkit-animation: slide-in-top 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-          animation: slide-in-top 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-
+  -webkit-box-shadow: 3px 4.5px 4px 0px #bfbfbf;
+  -moz-box-shadow: 3px 4.5px 4px 0px #bfbfbf;
+  box-shadow: 3px 4.5px 4px 0px #bfbfbf;
+  -webkit-animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
   h1 {
     font-size: 1.5em;
     font-family: "Merriweather", serif;
-    border-bottom: 2px solid #6CC444;
+    border-bottom: 2px solid #6cc444;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +38,7 @@ const HeaderDiv = styled.div`
   }
 
   a {
-    font-family: 'Merriweather Sans';
+    font-family: "Merriweather Sans";
     text-decoration: none;
     color: black;
   }
@@ -66,36 +65,35 @@ const HeaderDiv = styled.div`
  * w: http://animista.net, t: @cssanimista
  * ---------------------------------------------- */
 
-/**
+  /**
  * ----------------------------------------
  * animation slide-in-top
  * ----------------------------------------
  */
-@-webkit-keyframes slide-in-top {
-  0% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-    opacity: 0;
+  @-webkit-keyframes slide-in-top {
+    0% {
+      -webkit-transform: translateY(-1000px);
+      transform: translateY(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
-  100% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-    opacity: 1;
+  @keyframes slide-in-top {
+    0% {
+      -webkit-transform: translateY(-1000px);
+      transform: translateY(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
-}
-@keyframes slide-in-top {
-  0% {
-    -webkit-transform: translateY(-1000px);
-            transform: translateY(-1000px);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-    opacity: 1;
-  }
-}
-
 `;
 
 const SideBar = styled.div`
@@ -123,7 +121,6 @@ const Header = props => {
             .get()
             .then(function(user) {
               userContext.addUser(user.data());
-              // props.history.push('/shelf');
             })
             .catch(function(error) {
               console.log(error);
@@ -146,7 +143,9 @@ const Header = props => {
         setLoggedIn(false);
         userContext.setLogin(false);
       })
-      .catch(function(error) {});
+      .catch(function(error) {
+        console.log(error);
+      });
   };
   return (
     <div>

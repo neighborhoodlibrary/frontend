@@ -6,9 +6,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
 import styled from "styled-components";
 
-const Container = styled.div`
-
-`;
+const Container = styled.div``;
 
 const MapHold = styled.div`
   display: grid;
@@ -25,7 +23,7 @@ const MapHold = styled.div`
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
   }
-`
+`;
 
 const EmptyBooksContainer = styled.div`
   width: 100%;
@@ -58,8 +56,6 @@ const Library = () => {
       });
   };
 
-  const theMap = 
-
   useEffect(() => {
     getBooks();
   }, []);
@@ -78,16 +74,16 @@ const Library = () => {
           </NavLink>
         </EmptyBooksContainer>
       ) : (
-       <MapHold>
-       {booksInfo.map(book => (
-          <Book
-            key={Math.random()}
-            book={book}
-            getBooks={getBooks}
-            userUid={user.uid}
-          />
-        ))}
-      </MapHold>
+        <MapHold>
+          {booksInfo.map(book => (
+            <Book
+              key={Math.random()}
+              book={book}
+              getBooks={getBooks}
+              userUid={user.uid}
+            />
+          ))}
+        </MapHold>
       )}
     </Container>
   );
