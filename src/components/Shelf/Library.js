@@ -190,16 +190,32 @@ const Library = () => {
   const toggleSortIsbn = () => {
     let books = [...booksResults];
     if (!sortDirection.isbn || sortDirection.isbn === "▲") {
+      books = books.sort((a, b) => {
+        return a.isbn - b.isbn;
+      });
+      setBooksResults(books);
       setSortDirection({ ...sortDirection, isbn: "▼" });
     } else {
+      books = books.sort((a, b) => {
+        return b.isbn - a.isbn;
+      });
+      setBooksResults(books);
       setSortDirection({ ...sortDirection, isbn: "▲" });
     }
   };
   const toggleSortIsbn13 = () => {
     let books = [...booksResults];
     if (!sortDirection.isbn13 || sortDirection.isbn13 === "▲") {
+      books = books.sort((a, b) => {
+        return a.isbn13 - b.isbn13;
+      });
+      setBooksResults(books);
       setSortDirection({ ...sortDirection, isbn13: "▼" });
     } else {
+      books = books.sort((a, b) => {
+        return b.isbn13 - a.isbn13;
+      });
+      setBooksResults(books);
       setSortDirection({ ...sortDirection, isbn13: "▲" });
     }
   };
