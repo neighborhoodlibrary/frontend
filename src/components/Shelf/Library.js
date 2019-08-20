@@ -57,9 +57,13 @@ const Library = () => {
         });
       })
       .then(() => {
-        tempBooksArr.length > 0
-          ? setBooksInfo(tempBooksArr)
-          : setBooksInfo(null);
+        if (tempBooksArr.length > 0) {
+          setBooksInfo(tempBooksArr);
+          setBooksResults(tempBooksArr);
+        } else {
+          setBooksInfo(null);
+          setBooksResults(null);
+        }
       })
       .catch(error => {
         console.log("Error getting the documents:", error);
@@ -75,19 +79,50 @@ const Library = () => {
     filterDropdown ? setFilterDropdown(false) : setFilterDropdown(true);
   };
   const handleFilterName = filterInput => {
+    if (filterInput === null) {
+      setFilterName(null);
+      setBooksResults([...booksInfo]);
+    }
     setFilterName(filterInput);
   };
   const filterSearch = e => {
     let books = [...booksInfo];
-    books = books.filter(book => {
-      if (book[filterName].includes(e.target.value)) {
-        return book;
-      }
-    });
-    setBooksResults(books);
+    if (filterName === null) {
+      setBooksResults([...booksInfo]);
+    } else if (filterName === "authors") {
+      books = books.filter(book => {
+        if (
+          book[filterName]
+            .join(",")
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase())
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    } else if (filterName === "isbn") {
+      books = books.filter(book => {
+        if (
+          book[filterName].toString().includes(e.target.value) ||
+          book[`${filterName}13`].toString().includes(e.target.value)
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    } else {
+      books = books.filter(book => {
+        if (
+          book[filterName].toLowerCase().includes(e.target.value.toLowerCase())
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    }
   };
-  console.log(filterName);
-  console.log([booksResults]);
+
   return (
     <Container>
       {booksInfo === null ? (
@@ -137,7 +172,7 @@ const Library = () => {
             <Input onChange={filterSearch} />
           </InputGroup>
           <MapHold>
-            {booksInfo.map(book => (
+            {booksResults.map(book => (
               <Book
                 key={Math.random()}
                 book={book}
