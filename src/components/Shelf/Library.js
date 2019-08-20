@@ -136,13 +136,31 @@ const Library = () => {
     sortDropdown ? setSortDropdown(false) : setSortDropdown(true);
   };
   const toggleSortTitle = () => {
+    let books = [...booksResults];
     if (!sortDirection.title || sortDirection.title === "▲") {
+      books = books.sort((a, b) => {
+        return a.title.toLowerCase() > b.title.toLowerCase()
+          ? 1
+          : b.title.toLowerCase() > a.title.toLowerCase()
+          ? -1
+          : 0;
+      });
+      setBooksResults(books);
       setSortDirection({ ...sortDirection, title: "▼" });
     } else {
+      books = books.sort((a, b) => {
+        return a.title.toLowerCase() < b.title.toLowerCase()
+          ? 1
+          : b.title.toLowerCase() < a.title.toLowerCase()
+          ? -1
+          : 0;
+      });
+      setBooksResults(books);
       setSortDirection({ ...sortDirection, title: "▲" });
     }
   };
   const toggleSortAuthors = () => {
+    let books = [...booksResults];
     if (!sortDirection.authors || sortDirection.authors === "▲") {
       setSortDirection({ ...sortDirection, authors: "▼" });
     } else {
@@ -150,6 +168,7 @@ const Library = () => {
     }
   };
   const toggleSortIsbn = () => {
+    let books = [...booksResults];
     if (!sortDirection.isbn || sortDirection.isbn === "▲") {
       setSortDirection({ ...sortDirection, isbn: "▼" });
     } else {
@@ -157,6 +176,7 @@ const Library = () => {
     }
   };
   const toggleSortIsbn13 = () => {
+    let books = [...booksResults];
     if (!sortDirection.isbn13 || sortDirection.isbn13 === "▲") {
       setSortDirection({ ...sortDirection, isbn13: "▼" });
     } else {
