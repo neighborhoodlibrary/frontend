@@ -162,8 +162,28 @@ const Library = () => {
   const toggleSortAuthors = () => {
     let books = [...booksResults];
     if (!sortDirection.authors || sortDirection.authors === "▲") {
+      books = books.sort((a, b) => {
+        return a.authors.join(",").toLowerCase() >
+          b.authors.join(",").toLowerCase()
+          ? 1
+          : b.authors.join(",").toLowerCase() >
+            a.authors.join(",").toLowerCase()
+          ? -1
+          : 0;
+      });
+      setBooksResults(books);
       setSortDirection({ ...sortDirection, authors: "▼" });
     } else {
+      books = books.sort((a, b) => {
+        return a.authors.join(",").toLowerCase() <
+          b.authors.join(",").toLowerCase()
+          ? 1
+          : b.authors.join(",").toLowerCase() <
+            a.authors.join(",").toLowerCase()
+          ? -1
+          : 0;
+      });
+      setBooksResults(books);
       setSortDirection({ ...sortDirection, authors: "▲" });
     }
   };
