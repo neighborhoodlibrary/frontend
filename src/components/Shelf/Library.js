@@ -43,6 +43,14 @@ const Library = () => {
   const [filterDropdown, setFilterDropdown] = useState(false);
   const [filterName, setFilterName] = useState(null);
   //
+  const [sortDropdown, setSortDropdown] = useState(false);
+  const [sortDirection, setSortDirection] = useState({
+    authors: "",
+    isbn: "",
+    isbn13: "",
+    title: ""
+  });
+  //
   const [booksResults, setBooksResults] = useState([]);
 
   const getBooks = () => {
@@ -81,6 +89,7 @@ const Library = () => {
   const handleFilterName = filterInput => {
     if (filterInput === null) {
       setFilterName(null);
+      setSortDirection({ authors: "", isbn: "", isbn13: "", title: "" });
       setBooksResults([...booksInfo]);
     }
     setFilterName(filterInput);
@@ -120,6 +129,38 @@ const Library = () => {
         }
       });
       setBooksResults(books);
+    }
+  };
+  // sort
+  const toggleSortDropdown = () => {
+    sortDropdown ? setSortDropdown(false) : setSortDropdown(true);
+  };
+  const toggleSortTitle = () => {
+    if (!sortDirection.title || sortDirection.title === "▲") {
+      setSortDirection({ ...sortDirection, title: "▼" });
+    } else {
+      setSortDirection({ ...sortDirection, title: "▲" });
+    }
+  };
+  const toggleSortAuthors = () => {
+    if (!sortDirection.authors || sortDirection.authors === "▲") {
+      setSortDirection({ ...sortDirection, authors: "▼" });
+    } else {
+      setSortDirection({ ...sortDirection, authors: "▲" });
+    }
+  };
+  const toggleSortIsbn = () => {
+    if (!sortDirection.isbn || sortDirection.isbn === "▲") {
+      setSortDirection({ ...sortDirection, isbn: "▼" });
+    } else {
+      setSortDirection({ ...sortDirection, isbn: "▲" });
+    }
+  };
+  const toggleSortIsbn13 = () => {
+    if (!sortDirection.isbn13 || sortDirection.isbn13 === "▲") {
+      setSortDirection({ ...sortDirection, isbn13: "▼" });
+    } else {
+      setSortDirection({ ...sortDirection, isbn13: "▲" });
     }
   };
 
@@ -165,11 +206,32 @@ const Library = () => {
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={() => handleFilterName(null)}>
-                  No filter
+                  No filter / Clear sort
                 </DropdownItem>
               </DropdownMenu>
             </InputGroupButtonDropdown>
             <Input onChange={filterSearch} />
+            <InputGroupButtonDropdown
+              addonType="append"
+              isOpen={sortDropdown}
+              toggle={toggleSortDropdown}
+            >
+              <DropdownToggle caret>Sort Library</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={toggleSortTitle}>
+                  by Title {sortDirection.title}
+                </DropdownItem>
+                <DropdownItem onClick={toggleSortAuthors}>
+                  by Authors {sortDirection.authors}
+                </DropdownItem>
+                <DropdownItem onClick={toggleSortIsbn}>
+                  by Isbn {sortDirection.isbn}
+                </DropdownItem>
+                <DropdownItem onClick={toggleSortIsbn13}>
+                  by Isbn13 {sortDirection.isbn13}
+                </DropdownItem>
+              </DropdownMenu>
+            </InputGroupButtonDropdown>
           </InputGroup>
           <MapHold>
             {booksResults.map(book => (
