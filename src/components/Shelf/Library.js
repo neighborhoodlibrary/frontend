@@ -3,11 +3,17 @@ import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import Book from "./Book";
 import { NavLink } from "react-router-dom";
-import { Button } from "reactstrap";
+import {
+  Button,
+  InputGroup,
+  InputGroupButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Input
+} from "reactstrap";
 import styled from "styled-components";
-
 const Container = styled.div``;
-
 const MapHold = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -24,7 +30,6 @@ const MapHold = styled.div`
     grid-template-columns: 1fr;
   }
 `;
-
 const EmptyBooksContainer = styled.div`
   width: 100%;
 `;
@@ -34,6 +39,11 @@ const Library = () => {
   const auth = firebase.auth();
   const user = auth.currentUser;
   const docRef = firebase.firestore().collection("books");
+  //
+  const [filterDropdown, setFilterDropdown] = useState(false);
+  const [filterName, setFilterName] = useState(null);
+  //
+  const [booksResults, setBooksResults] = useState([]);
 
   const getBooks = () => {
     let tempBooksArr = [];
@@ -47,9 +57,13 @@ const Library = () => {
         });
       })
       .then(() => {
-        tempBooksArr.length > 0
-          ? setBooksInfo(tempBooksArr)
-          : setBooksInfo(null);
+        if (tempBooksArr.length > 0) {
+          setBooksInfo(tempBooksArr);
+          setBooksResults(tempBooksArr);
+        } else {
+          setBooksInfo(null);
+          setBooksResults(null);
+        }
       })
       .catch(error => {
         console.log("Error getting the documents:", error);
@@ -59,6 +73,55 @@ const Library = () => {
   useEffect(() => {
     getBooks();
   }, []);
+
+  // filter
+  const toggleFilterDropdown = () => {
+    filterDropdown ? setFilterDropdown(false) : setFilterDropdown(true);
+  };
+  const handleFilterName = filterInput => {
+    if (filterInput === null) {
+      setFilterName(null);
+      setBooksResults([...booksInfo]);
+    }
+    setFilterName(filterInput);
+  };
+  const filterSearch = e => {
+    let books = [...booksInfo];
+    if (filterName === null) {
+      setBooksResults([...booksInfo]);
+    } else if (filterName === "authors") {
+      books = books.filter(book => {
+        if (
+          book[filterName]
+            .join(",")
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase())
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    } else if (filterName === "isbn") {
+      books = books.filter(book => {
+        if (
+          book[filterName].toString().includes(e.target.value) ||
+          book[`${filterName}13`].toString().includes(e.target.value)
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    } else {
+      books = books.filter(book => {
+        if (
+          book[filterName].toLowerCase().includes(e.target.value.toLowerCase())
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    }
+  };
 
   return (
     <Container>
@@ -74,16 +137,51 @@ const Library = () => {
           </NavLink>
         </EmptyBooksContainer>
       ) : (
-        <MapHold>
-          {booksInfo.map(book => (
-            <Book
-              key={Math.random()}
-              book={book}
-              getBooks={getBooks}
-              userUid={user.uid}
-            />
-          ))}
-        </MapHold>
+        <div>
+          <InputGroup>
+            <InputGroupButtonDropdown
+              addonType="prepend"
+              isOpen={filterDropdown}
+              toggle={toggleFilterDropdown}
+            >
+              <DropdownToggle caret>
+                Filter Library {filterName ? `by ${filterName}` : ""}
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={() => handleFilterName("title")}>
+                  Title
+                </DropdownItem>
+                <DropdownItem onClick={() => handleFilterName("authors")}>
+                  Author
+                </DropdownItem>
+                <DropdownItem onClick={() => handleFilterName("language")}>
+                  Language
+                </DropdownItem>
+                <DropdownItem onClick={() => handleFilterName("description")}>
+                  Description
+                </DropdownItem>
+                <DropdownItem onClick={() => handleFilterName("isbn")}>
+                  Isbn
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem onClick={() => handleFilterName(null)}>
+                  No filter
+                </DropdownItem>
+              </DropdownMenu>
+            </InputGroupButtonDropdown>
+            <Input onChange={filterSearch} />
+          </InputGroup>
+          <MapHold>
+            {booksResults.map(book => (
+              <Book
+                key={Math.random()}
+                book={book}
+                getBooks={getBooks}
+                userUid={user.uid}
+              />
+            ))}
+          </MapHold>
+        </div>
       )}
     </Container>
   );
