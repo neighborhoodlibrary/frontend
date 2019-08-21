@@ -32,7 +32,10 @@ export default function SignInComponent(props) {
               photoURL,
               books: [],
               loaned: [],
-              borrowed: []
+              borrowed: [],
+              setDistance: 5,
+              loanPeriod: 21,
+              favoriteBook: ""
             });
             countDocRef.update({
               userCount: firebase.firestore.FieldValue.increment(1)
