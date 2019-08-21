@@ -3,7 +3,18 @@ import { GoogleApiWrapper, Map, Marker, InfoWindow } from "google-maps-react";
 import firebase from "../../firebase/firebase.utils";
 import styled from "styled-components";
 import Slider from "react-input-slider";
-import { Col, Form, Button, Label } from "reactstrap";
+import {
+  Col,
+  Form,
+  Button,
+  Label,
+  InputGroup,
+  InputGroupButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Input
+} from "reactstrap";
 import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
 import SearchBookCard from "./SearchBookCard";
@@ -46,6 +57,22 @@ const Container = styled.div`
   }
 `;
 
+const SearchBookDiv = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const SearchBookButtonDiv = styled.div`
+  margin-left: 50px;
+`;
+
+const InfoGuide = styled.h6`
+  margin: 10px 0px;
+`;
+
+const InputContainerDiv = styled.div`
+  margin: 10px 0px 0px 0px;
+`;
+
 const Search = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
@@ -59,7 +86,6 @@ const Search = props => {
   const [defaultZoom, setDefaultZoom] = useState(0);
   const [markerPosition, setMarkerPosition] = useState({});
   const [resultsArray, setResultsArray] = useState([]);
-
   //
   const [sliderValue, setSliderValue] = useState({ x: 0.1 });
   const [distanceValue, setDistanceValue] = useState("");
@@ -68,6 +94,19 @@ const Search = props => {
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   //
   const [booksArray, setBooksArray] = useState([]);
+  //
+  const [filterDropdown, setFilterDropdown] = useState(false);
+  const [filterName, setFilterName] = useState(null);
+  //
+  const [sortDropdown, setSortDropdown] = useState(false);
+  const [sortDirection, setSortDirection] = useState({
+    authors: "",
+    isbn: "",
+    isbn13: "",
+    title: ""
+  });
+  //
+  const [booksResults, setBooksResults] = useState([]);
 
   useEffect(() => {
     setDefaultCenter({
@@ -207,11 +246,156 @@ const Search = props => {
             });
           });
       });
-      tempBooksArr.length > 0
-        ? setBooksArray(tempBooksArr)
-        : setBooksArray(null);
+      // tempBooksArr.length > 0
+      //   ? setBooksArray(tempBooksArr)
+      //   : setBooksArray(null);
+      if (tempBooksArr.length > 0) {
+        setBooksArray(tempBooksArr);
+        setBooksResults(tempBooksArr);
+      } else {
+        setBooksArray(null);
+        setBooksResults(null);
+      }
     };
     aFunc();
+  };
+
+  // filter
+  const toggleFilterDropdown = () => {
+    filterDropdown ? setFilterDropdown(false) : setFilterDropdown(true);
+  };
+  const handleFilterName = filterInput => {
+    if (filterInput === null) {
+      setFilterName(null);
+      setSortDirection({ authors: "", isbn: "", isbn13: "", title: "" });
+      setBooksResults([...booksArray]);
+    }
+    setFilterName(filterInput);
+  };
+  const filterSearch = e => {
+    let books = [...booksArray];
+    if (filterName === null) {
+      setBooksResults([...booksArray]);
+    } else if (filterName === "authors") {
+      books = books.filter(book => {
+        if (
+          book[filterName]
+            .join(",")
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase())
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    } else if (filterName === "isbn") {
+      books = books.filter(book => {
+        if (
+          book[filterName].toString().includes(e.target.value) ||
+          book[`${filterName}13`].toString().includes(e.target.value)
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    } else {
+      books = books.filter(book => {
+        if (
+          book[filterName].toLowerCase().includes(e.target.value.toLowerCase())
+        ) {
+          return book;
+        }
+      });
+      setBooksResults(books);
+    }
+  };
+  // sort
+  const toggleSortDropdown = () => {
+    sortDropdown ? setSortDropdown(false) : setSortDropdown(true);
+  };
+  const toggleSortTitle = () => {
+    let books = [...booksResults];
+    if (!sortDirection.title || sortDirection.title === "▲") {
+      books = books.sort((a, b) => {
+        return a.title.toLowerCase() > b.title.toLowerCase()
+          ? 1
+          : b.title.toLowerCase() > a.title.toLowerCase()
+          ? -1
+          : 0;
+      });
+      setBooksResults(books);
+      setSortDirection({ ...sortDirection, title: "▼" });
+    } else {
+      books = books.sort((a, b) => {
+        return a.title.toLowerCase() < b.title.toLowerCase()
+          ? 1
+          : b.title.toLowerCase() < a.title.toLowerCase()
+          ? -1
+          : 0;
+      });
+      setBooksResults(books);
+      setSortDirection({ ...sortDirection, title: "▲" });
+    }
+  };
+  const toggleSortAuthors = () => {
+    let books = [...booksResults];
+    if (!sortDirection.authors || sortDirection.authors === "▲") {
+      books = books.sort((a, b) => {
+        return a.authors.join(",").toLowerCase() >
+          b.authors.join(",").toLowerCase()
+          ? 1
+          : b.authors.join(",").toLowerCase() >
+            a.authors.join(",").toLowerCase()
+          ? -1
+          : 0;
+      });
+      setBooksResults(books);
+      setSortDirection({ ...sortDirection, authors: "▼" });
+    } else {
+      books = books.sort((a, b) => {
+        return a.authors.join(",").toLowerCase() <
+          b.authors.join(",").toLowerCase()
+          ? 1
+          : b.authors.join(",").toLowerCase() <
+            a.authors.join(",").toLowerCase()
+          ? -1
+          : 0;
+      });
+      setBooksResults(books);
+      setSortDirection({ ...sortDirection, authors: "▲" });
+    }
+  };
+  const toggleSortIsbn = () => {
+    let books = [...booksResults];
+    if (!sortDirection.isbn || sortDirection.isbn === "▲") {
+      books = books.sort((a, b) => {
+        return a.isbn - b.isbn;
+      });
+      setBooksResults(books);
+      setSortDirection({ ...sortDirection, isbn: "▼" });
+    } else {
+      books = books.sort((a, b) => {
+        return b.isbn - a.isbn;
+      });
+      setBooksResults(books);
+      setSortDirection({ ...sortDirection, isbn: "▲" });
+    }
+  };
+  const toggleSortIsbn13 = () => {
+    let books = [...booksResults];
+    if (!sortDirection.isbn13 || sortDirection.isbn13 === "▲") {
+      books = books.sort((a, b) => {
+        return a.isbn13 - b.isbn13;
+      });
+      setBooksResults(books);
+      setSortDirection({ ...sortDirection, isbn13: "▼" });
+    } else {
+      books = books.sort((a, b) => {
+        return b.isbn13 - a.isbn13;
+      });
+      setBooksResults(books);
+      setSortDirection({ ...sortDirection, isbn13: "▲" });
+    }
   };
 
   return (
@@ -271,28 +455,96 @@ const Search = props => {
         </Map>
       </Col>
       <Col xs="12" md="6">
-        <div>
+        <SearchBookDiv>
           <h5>Search for books within the set search distances</h5>
-        </div>
-        <Button onClick={searchBooksFunc}>Search for Books</Button>
+          <SearchBookButtonDiv>
+            <Button onClick={searchBooksFunc}>Search for Books</Button>
+          </SearchBookButtonDiv>
+        </SearchBookDiv>
         <div>
-          <h6>Book results:</h6>
-        </div>
-        <Container>
           {booksArray === null ? (
             <div>
-              <h6>No books to borrow in the area, change search radius</h6>
+              <InfoGuide>
+                No books to borrow in the area, change search radius
+              </InfoGuide>
             </div>
           ) : booksArray.length > 0 ? (
-            booksArray.map(book => (
-              <SearchBookCard key={Math.random()} book={book} />
-            ))
+            <div>
+              <InputContainerDiv>
+                <InputGroup>
+                  <InputGroupButtonDropdown
+                    addonType="prepend"
+                    isOpen={filterDropdown}
+                    toggle={toggleFilterDropdown}
+                  >
+                    <DropdownToggle caret>
+                      Filter Library {filterName ? `by ${filterName}` : ""}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem onClick={() => handleFilterName("title")}>
+                        Title
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleFilterName("authors")}>
+                        Author
+                      </DropdownItem>
+                      <DropdownItem
+                        onClick={() => handleFilterName("language")}
+                      >
+                        Language
+                      </DropdownItem>
+                      <DropdownItem
+                        onClick={() => handleFilterName("description")}
+                      >
+                        Description
+                      </DropdownItem>
+                      <DropdownItem onClick={() => handleFilterName("isbn")}>
+                        Isbn
+                      </DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem onClick={() => handleFilterName(null)}>
+                        No filter / Clear sort
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </InputGroupButtonDropdown>
+                  <Input onChange={filterSearch} />
+                  <InputGroupButtonDropdown
+                    addonType="append"
+                    isOpen={sortDropdown}
+                    toggle={toggleSortDropdown}
+                  >
+                    <DropdownToggle caret>Sort Library</DropdownToggle>
+                    <DropdownMenu>
+                      <DropdownItem onClick={toggleSortTitle}>
+                        by Title {sortDirection.title}
+                      </DropdownItem>
+                      <DropdownItem onClick={toggleSortAuthors}>
+                        by Authors {sortDirection.authors}
+                      </DropdownItem>
+                      <DropdownItem onClick={toggleSortIsbn}>
+                        by Isbn {sortDirection.isbn}
+                      </DropdownItem>
+                      <DropdownItem onClick={toggleSortIsbn13}>
+                        by Isbn13 {sortDirection.isbn13}
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </InputGroupButtonDropdown>
+                </InputGroup>
+              </InputContainerDiv>
+              <InfoGuide>Book results:</InfoGuide>
+              <Container>
+                {booksResults.map(book => (
+                  <SearchBookCard key={Math.random()} book={book} />
+                ))}
+              </Container>
+            </div>
           ) : (
             <div>
-              <h6>Start by setting the search radius of your search</h6>
+              <InfoGuide>
+                Start by setting the search radius of your search
+              </InfoGuide>
             </div>
           )}
-        </Container>
+        </div>
       </Col>
     </ContainerDiv>
   );

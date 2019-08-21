@@ -43,6 +43,12 @@ const AddBookModal = props => {
               checkedOut: false,
               borrowerId: ""
             });
+          // count ref
+          db.collection("count")
+            .doc("counter")
+            .update({
+              bookCount: firebase.firestore.FieldValue.increment(1)
+            });
           alert.success("Success!");
         } else {
           console.log("No such document!");

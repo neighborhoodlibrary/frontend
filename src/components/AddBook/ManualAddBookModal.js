@@ -100,6 +100,14 @@ const ManualAddBookModal = props => {
                         borrowerId: ""
                       })
                       .then(() => {
+                        // count ref
+                        db.collection("count")
+                          .doc("counter")
+                          .update({
+                            bookCount: firebase.firestore.FieldValue.increment(
+                              1
+                            )
+                          });
                         props.toggleManualAddModal();
                         alert.success("Success!");
                       });
@@ -145,6 +153,12 @@ const ManualAddBookModal = props => {
                 borrowerId: ""
               })
               .then(() => {
+                // count ref
+                db.collection("count")
+                  .doc("counter")
+                  .update({
+                    bookCount: firebase.firestore.FieldValue.increment(1)
+                  });
                 props.toggleManualAddModal();
                 alert.success("Success!");
               });

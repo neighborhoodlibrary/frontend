@@ -141,6 +141,12 @@ const EditBookModal = props => {
       .doc(`${props.book.id}`)
       .delete()
       .then(() => {
+        // count ref
+        db.collection("count")
+          .doc("counter")
+          .update({
+            bookCount: firebase.firestore.FieldValue.increment(-1)
+          });
         toggleDeleteBookModal();
         props.toggleEditBookModal();
         alert.success("Book deleted!");
