@@ -19,6 +19,8 @@ export default function SignInComponent(props) {
       .then(result => {
         const { displayName, email, photoURL, uid } = result.user;
         const docRef = db.collection("users").doc(uid);
+        // count ref, only increments with new user
+        const countDocRef = db.collection("count").doc("counter");
         docRef.get().then(doc => {
           if (doc.exists) {
             userContext.addUser(result.user);
@@ -31,6 +33,9 @@ export default function SignInComponent(props) {
               books: [],
               loaned: [],
               borrowed: []
+            });
+            countDocRef.update({
+              userCount: firebase.firestore.FieldValue.increment(1)
             });
             userContext.addUser(result.user);
             props.routerProps.history.push("/shelf");
