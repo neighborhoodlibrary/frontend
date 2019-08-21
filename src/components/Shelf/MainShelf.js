@@ -3,8 +3,36 @@ import UserContext from "../../context/user/userContext";
 import { Jumbotron } from "reactstrap";
 import styled from 'styled-components';
 
+//SHELF PLUGS
+import Analytics from "./Plugs/Analytics";
+import UserInfo from "./Plugs/UserInfo";
+
+const MainShelfDiv = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    'jm jm jm uin'
+    'jm jm jm an' ;
+  grid-gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  #analytics {
+    grid-area: an;
+  }
+
+  #userinfo {
+    grid-area: uin;
+  }
+
+  @media(max-width: 800px){
+    display: flex;
+    flex-direction: column;
+  }
+`
+
 const IntroNew = styled.div`
-  height: 250px;
+  height: 100%;
   width: 100%;
   border-radius: 2px;
   background-color: rgba(0,0,0,0.03);
@@ -14,6 +42,7 @@ const IntroNew = styled.div`
   align-items: center;
   -webkit-animation: fade-in 0.8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
   animation: fade-in 0.8s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  grid-area: jm;
 
   h2 {
     font-size: 1.3em;
@@ -70,13 +99,15 @@ export default function MainShelf() {
   }, {});
 
   return (
-    <div>
-      <IntroNew>
-        <h2>
-          Hello {user.displayName}! Welcome to your shelf.
-        </h2>
-        <h3>Use the tabs above to navigate</h3>
-      </IntroNew>
-    </div>
+    <MainShelfDiv>
+        <UserInfo id="userinfo" />
+        <Analytics id="analytics"/>
+        <IntroNew id="jumbo">
+          <h2>
+            Hello {user.displayName}! Welcome to your shelf.
+          </h2>
+          <h3>Use the tabs above to navigate</h3>
+        </IntroNew>
+    </MainShelfDiv>
   );
 }
