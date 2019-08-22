@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import UserContext from "../../context/user/userContext";
 import "firebase/auth";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
@@ -46,8 +45,8 @@ const Profile = () => {
   const [curUser, setCurUser] = useState({});
   const [values, setValues] = useState({
     displayName: "",
-    loanPeriod: "",
-    setDistance: "",
+    loanPeriod: null,
+    setDistance: null,
     favoriteBook: ""
   });
   const handleChanges = e => {

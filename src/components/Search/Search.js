@@ -78,6 +78,7 @@ const Search = props => {
   const user = auth.currentUser;
   const alert = useAlert();
   const docRef = firebase.firestore().collection("books");
+  const userRef = firebase.firestore().collection("users");
   //
   const firebaseRef = firebase.database().ref("coordinates");
   const geoFire = new GeoFire(firebaseRef);
@@ -194,6 +195,7 @@ const Search = props => {
       center: [defaultCenter.lat, defaultCenter.lng],
       radius: radiusInKm
     });
+    console.log(geoQuery);
     const results = [];
     geoQuery.on("key_entered", (key, location, distance) => {
       if (key !== user.uid)
@@ -209,7 +211,39 @@ const Search = props => {
         setResultsArray([]);
         alert.error("No personal libraries in your search distance.");
       } else {
-        setResultsArray(results);
+        console.log(results);
+        // check to see if user.setDistance is within center dest.
+        const tempUsersArr = [];
+        async function asyncForEach(arr, cb) {
+          for (let i = 0; i < arr.length; i++) {
+            await cb(arr[i], i, arr);
+          }
+        }
+        const aFunc = async () => {
+          await asyncForEach(results, async user => {
+            let userId = user.userId;
+            await userRef
+              .doc(userId)
+              .get()
+              .then(doc => {
+                if (doc.exists) {
+                  let checkUser = doc.data();
+                  if (checkUser.setDistance >= user.distance) {
+                    tempUsersArr.push(user);
+                  }
+                } else {
+                  console.log("No such document!");
+                }
+              })
+              .catch(error => {
+                console.log("Error getting document: ", error);
+              });
+          });
+          setResultsArray(tempUsersArr);
+        };
+        aFunc();
+        //
+        // setResultsArray(results);
       }
     });
   };
@@ -235,6 +269,7 @@ const Search = props => {
     }
     const aFunc = async () => {
       await asyncForEach(resultsArray, async user => {
+        console.log(user);
         let userId = user.userId;
         await docRef
           .where("ownerId", "==", userId)
@@ -246,9 +281,6 @@ const Search = props => {
             });
           });
       });
-      // tempBooksArr.length > 0
-      //   ? setBooksArray(tempBooksArr)
-      //   : setBooksArray(null);
       if (tempBooksArr.length > 0) {
         setBooksArray(tempBooksArr);
         setBooksResults(tempBooksArr);
@@ -259,6 +291,7 @@ const Search = props => {
     };
     aFunc();
   };
+  console.log(resultsArray);
 
   // filter
   const toggleFilterDropdown = () => {
