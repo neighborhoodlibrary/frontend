@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
 import {
@@ -43,7 +43,19 @@ const CardHeaderDiv = styled.div`
 const BorrowedBook = props => {
   const db = firebase.firestore();
   const [returnBookModal, setReturnBookModal] = useState(false);
+  const [dayValue, setDayValue] = useState(null);
   const alert = useAlert();
+
+  useEffect(() => {
+    getDay();
+  }, []);
+
+  const getDay = () => {
+    let currentDate = new Date();
+    let dueDate = new Date(props.book.dueDate);
+    let difference = Math.round((dueDate - currentDate) / 86400000);
+    setDayValue(difference);
+  };
 
   const toggleReturnBookModal = () => {
     returnBookModal ? setReturnBookModal(false) : setReturnBookModal(true);
@@ -60,15 +72,8 @@ const BorrowedBook = props => {
         props.getBooks();
       });
   };
-  // let dueDate = new Date(props.book.dueDate);
-  // let currentDate = new Date();
-  // let difference = dueDate - currentDate;
-  // let dayDiff = difference / 86400000;
-  // console.log(dueDate);
-  // console.log(currentDate);
-  // console.log(dueDate - currentDate);
-  // console.log(currentDate - dueDate);
-  // console.log(dayDiff);
+
+  console.log(dayValue);
   return (
     <CardDiv>
       <Card>
@@ -77,11 +82,11 @@ const BorrowedBook = props => {
             <CardHeaderDiv>
               <div>{props.book.title}</div>
               <div>
-                {props.book.dueDate
-                  ? `due in: ${Math.round(
-                      (new Date(props.book.dueDate) - new Date()) / 86400000
-                    )} days`
-                  : ""}
+                {!dayValue
+                  ? ""
+                  : dayValue >= 0
+                  ? `due in: ${dayValue} days`
+                  : `overdue by: ${Math.abs(dayValue)} days`}
               </div>
             </CardHeaderDiv>
           </CardHeader>

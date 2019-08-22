@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
 import {
@@ -43,7 +43,19 @@ const CardHeaderDiv = styled.div`
 const LoanedBook = props => {
   const db = firebase.firestore();
   const [loanedBookModal, setLoanedBookModal] = useState(false);
+  const [dayValue, setDayValue] = useState(null);
   const alert = useAlert();
+
+  useEffect(() => {
+    getDay();
+  }, []);
+
+  const getDay = () => {
+    let currentDate = new Date();
+    let dueDate = new Date(props.book.dueDate);
+    let difference = Math.round((dueDate - currentDate) / 86400000);
+    setDayValue(difference);
+  };
 
   const toggleLoanedBookModal = () => {
     loanedBookModal ? setLoanedBookModal(false) : setLoanedBookModal(true);
@@ -57,11 +69,12 @@ const LoanedBook = props => {
             <CardHeaderDiv>
               <div>{props.book.title}</div>
               <div>
-                {props.book.dueDate
-                  ? `due in: ${Math.round(
-                      (new Date(props.book.dueDate) - new Date()) / 86400000
-                    )} days`
-                  : ""}
+                {" "}
+                {!dayValue
+                  ? ""
+                  : dayValue >= 0
+                  ? `due in: ${dayValue} days`
+                  : `overdue by: ${Math.abs(dayValue)} days`}
               </div>
             </CardHeaderDiv>
           </CardHeader>
