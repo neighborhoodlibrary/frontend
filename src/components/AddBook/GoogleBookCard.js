@@ -74,7 +74,7 @@ const GoogleBookCard = props => {
   useEffect(() => {
     setBookInfoValues({
       ...bookInfoValues,
-      authors: props.book.authors,
+      authors: props.book.authors ? props.book.authors : [],
       image: props.book.thumbnail,
       title: props.book.title
     });
@@ -101,7 +101,7 @@ const GoogleBookCard = props => {
         isbn: isbn,
         isbn13: isbn13,
         language: props.book.language,
-        pageCount: props.book.pageCount.toString(),
+        pageCount: props.book.pageCount ? props.book.pageCount.toString() : "",
         publishDate: props.book.publishedDate,
         publisher: props.book.publisher
       });
