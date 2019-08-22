@@ -35,6 +35,7 @@ const AddBookModal = props => {
               pageCount: bookObj.pageCount,
               publishDate: bookObj.publishDate,
               publisher: bookObj.publisher,
+              dueDate: "",
               // user info
               ownerId: curUser.uid,
               ownerEmail: userEmail,
