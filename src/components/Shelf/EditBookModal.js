@@ -30,6 +30,8 @@ const EditBookModal = props => {
   const alert = useAlert();
   const db = firebase.firestore();
   const storage = firebase.storage();
+  const auth = firebase.auth();
+  const curUser = auth.currentUser;
   const [bookValues, setBookValues] = useState({
     authorsInput: "",
     titleInput: "",
@@ -141,6 +143,12 @@ const EditBookModal = props => {
       .doc(`${props.book.id}`)
       .delete()
       .then(() => {
+        // personal count
+        db.collection("users")
+          .doc(curUser.uid)
+          .update({
+            personalBookCount: firebase.firestore.FieldValue.increment(-1)
+          });
         // count ref
         db.collection("count")
           .doc("counter")

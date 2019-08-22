@@ -195,7 +195,6 @@ const Search = props => {
       center: [defaultCenter.lat, defaultCenter.lng],
       radius: radiusInKm
     });
-    console.log(geoQuery);
     const results = [];
     geoQuery.on("key_entered", (key, location, distance) => {
       if (key !== user.uid)
@@ -212,7 +211,7 @@ const Search = props => {
         alert.error("No personal libraries in your search distance.");
       } else {
         console.log(results);
-        // check to see if user.setDistance is within center dest.
+        // check to see if user.setDistance is within searching user library
         const tempUsersArr = [];
         async function asyncForEach(arr, cb) {
           for (let i = 0; i < arr.length; i++) {
@@ -242,8 +241,6 @@ const Search = props => {
           setResultsArray(tempUsersArr);
         };
         aFunc();
-        //
-        // setResultsArray(results);
       }
     });
   };
@@ -291,7 +288,6 @@ const Search = props => {
     };
     aFunc();
   };
-  console.log(resultsArray);
 
   // filter
   const toggleFilterDropdown = () => {

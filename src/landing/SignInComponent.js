@@ -35,6 +35,7 @@ export default function SignInComponent(props) {
               borrowed: [],
               setDistance: 5,
               loanPeriod: 21,
+              personalBookCount: 0,
               favoriteBook: ""
             });
             countDocRef.update({
