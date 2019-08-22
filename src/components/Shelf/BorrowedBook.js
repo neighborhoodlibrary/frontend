@@ -35,6 +35,10 @@ const BookCover = styled.img`
 const CardContainerDiv = styled.div`
   cursor: pointer;
 `;
+const CardHeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const BorrowedBook = props => {
   const db = firebase.firestore();
@@ -56,11 +60,31 @@ const BorrowedBook = props => {
         props.getBooks();
       });
   };
+  // let dueDate = new Date(props.book.dueDate);
+  // let currentDate = new Date();
+  // let difference = dueDate - currentDate;
+  // let dayDiff = difference / 86400000;
+  // console.log(dueDate);
+  // console.log(currentDate);
+  // console.log(dueDate - currentDate);
+  // console.log(currentDate - dueDate);
+  // console.log(dayDiff);
   return (
     <CardDiv>
       <Card>
         <CardContainerDiv onClick={toggleReturnBookModal}>
-          <CardHeader>{props.book.title}</CardHeader>
+          <CardHeader>
+            <CardHeaderDiv>
+              <div>{props.book.title}</div>
+              <div>
+                {props.book.dueDate
+                  ? `due in: ${Math.round(
+                      (new Date(props.book.dueDate) - new Date()) / 86400000
+                    )} days`
+                  : ""}
+              </div>
+            </CardHeaderDiv>
+          </CardHeader>
           <CardBody>
             <CardBodyDiv>
               <BookCover src={props.book.image} alt="book_thumb" />
@@ -76,7 +100,12 @@ const BorrowedBook = props => {
       <Modal isOpen={returnBookModal} toggle={toggleReturnBookModal} centered>
         <ModalHeader>Return Book</ModalHeader>
         <ModalBody>
-          Are you sure you want to return book back to owner?
+          <p>
+            {props.book.dueDate
+              ? `Due by: ${props.book.dueDate.split("T")[0]}`
+              : ""}
+          </p>
+          <p>Are you sure you want to return book back to owner?</p>
         </ModalBody>
         <ModalFooter>
           <Button onClick={returnBook}>Confirm</Button>

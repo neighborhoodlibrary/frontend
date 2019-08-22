@@ -35,6 +35,10 @@ const BookCover = styled.img`
 const CardContainerDiv = styled.div`
   cursor: pointer;
 `;
+const CardHeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const LoanedBook = props => {
   const db = firebase.firestore();
@@ -49,7 +53,18 @@ const LoanedBook = props => {
     <CardDiv>
       <Card>
         <CardContainerDiv onClick={toggleLoanedBookModal}>
-          <CardHeader>{props.book.title}</CardHeader>
+          <CardHeader>
+            <CardHeaderDiv>
+              <div>{props.book.title}</div>
+              <div>
+                {props.book.dueDate
+                  ? `due in: ${Math.round(
+                      (new Date(props.book.dueDate) - new Date()) / 86400000
+                    )} days`
+                  : ""}
+              </div>
+            </CardHeaderDiv>
+          </CardHeader>
           <CardBody>
             <CardBodyDiv>
               <BookCover src={props.book.image} alt="book_thumb" />
@@ -64,7 +79,14 @@ const LoanedBook = props => {
       </Card>
       <Modal isOpen={loanedBookModal} toggle={toggleLoanedBookModal} centered>
         <ModalHeader>Loaned Book</ModalHeader>
-        <ModalBody>You have lent out this book</ModalBody>
+        <ModalBody>
+          <p>You have lent out this book</p>
+          <p>
+            {props.book.dueDate
+              ? `Due by: ${props.book.dueDate.split("T")[0]}`
+              : ""}
+          </p>
+        </ModalBody>
         <ModalFooter>
           <Button onClick={toggleLoanedBookModal}>Confirm</Button>
           <Button onClick={toggleLoanedBookModal}>Cancel</Button>

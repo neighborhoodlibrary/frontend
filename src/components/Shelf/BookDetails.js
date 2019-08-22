@@ -120,6 +120,11 @@ const Book = props => {
             <CardFooterDiv>
               <p>Owner of Book: {displayedBook.ownerId}</p>
               <p>
+                {displayedBook.dueDate
+                  ? `due: ${displayedBook.dueDate.split("T")[0]}`
+                  : ""}
+              </p>
+              <p>
                 Currently Checked out by:
                 {displayedBook.checkedOut
                   ? displayedBook.borrowerId
