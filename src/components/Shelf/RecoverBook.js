@@ -51,6 +51,7 @@ const RecoverBook = props => {
   const confirmRecoverBookFunc = () => {
     bookDocRef
       .update({
+        dueDate: "",
         borrowerId: "",
         checkedOut: false,
         transitionUser: ""

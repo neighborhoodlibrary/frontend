@@ -67,9 +67,9 @@ const ReceivingBook = props => {
         }
       })
       .then(() => {
-        console.log(loanPeriod);
         let currentDate = new Date();
         let dueDate = currentDate.setDate(currentDate.getDate() + loanPeriod);
+        dueDate = new Date(dueDate).toISOString();
         bookDocRef
           .update({
             dueDate: dueDate,
