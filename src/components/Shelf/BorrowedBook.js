@@ -51,24 +51,10 @@ const BorrowedBook = props => {
   const auth = firebase.auth();
   const user = auth.currentUser;
   const userDocRef = db.collection("users").doc(user.uid);
-  // const [userEmail, setUserEmail] = useState("");
   const [emailValue, setEmailValue] = useState({});
   const alert = useAlert();
   useEffect(() => {
     getDay();
-    // userDocRef
-    //   .get()
-    //   .then(doc => {
-    //     if (doc.exists) {
-    //       let email = doc.data().email;
-    //       setUserEmail(email);
-    //     } else {
-    //       console.log("No such document!");
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log("Error getting the document:", error);
-    //   });
   }, "");
 
   const getDay = () => {
@@ -79,7 +65,6 @@ const BorrowedBook = props => {
   };
 
   const toggleReturnBookModal = () => {
-    // returnBookModal ? setReturnBookModal(false) : setReturnBookModal(true);
     if (returnBookModal) {
       setReturnBookModal(false);
       setEmailValue({});
