@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "firebase/auth";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
@@ -183,9 +183,7 @@ const Profile = () => {
       <CardContainer>
         <Card>
           <CardHeader>
-            <CardHeaderDiv>
-              <h3>Notes</h3>
-            </CardHeaderDiv>
+            <h3>Notes</h3>
           </CardHeader>
           <CardBody>
             <NoteBody>{curUser.notes}</NoteBody>

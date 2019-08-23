@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BookContext from "../../context/book/bookContext";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
@@ -25,12 +25,28 @@ const BookCover = styled.img`
 
 const LibraryBook = props => {
   const bookContext = useContext(BookContext);
+  const [bookStatus, setBookStatus] = useState(null);
   const setBookFunc = () => {
     bookContext.setBook(props.book);
   };
+  //
+  // useEffect(() => {
+  //   checkBook();
+  // }, "");
+  // const checkBook = () => {
+  //   switch (true) {
+  //     case props.book.hasOwnProperty("title"):
+  //       console.log("something");
+  //       break;
+  //     default:
+  //       console.log("finished");
+  //       break;
+  //   }
+  // };
+  // console.log(props.book);
   return (
     <CardDiv>
-      <Card>
+      <Card body outline color={bookStatus}>
         <NavLink to={`/shelf/book/${props.book.id}`} onClick={setBookFunc}>
           <CardHeader>{props.book.title}</CardHeader>
           <CardBody>
