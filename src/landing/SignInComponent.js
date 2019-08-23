@@ -36,7 +36,8 @@ export default function SignInComponent(props) {
               setDistance: 5,
               loanPeriod: 21,
               personalBookCount: 0,
-              favoriteBook: ""
+              favoriteBook: "",
+              notes: ""
             });
             countDocRef.update({
               userCount: firebase.firestore.FieldValue.increment(1)
