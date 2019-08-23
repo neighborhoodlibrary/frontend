@@ -49,9 +49,11 @@ const ReturnBook = props => {
   const alert = useAlert();
   const [removeReturnModal, setRemoveReturnModal] = useState(false);
   const [dayValue, setDayValue] = useState(null);
+  const [bookStatus, setBookStatus] = useState(null);
 
   useEffect(() => {
     getDay();
+    checkBook();
   }, []);
 
   const getDay = () => {
@@ -59,6 +61,16 @@ const ReturnBook = props => {
     let dueDate = new Date(props.book.dueDate);
     let difference = Math.round((dueDate - currentDate) / 86400000);
     setDayValue(difference);
+  };
+  const checkBook = () => {
+    if (dayValue <= 5 && dayValue >= 0) {
+      return setBookStatus("warning");
+    }
+    if (dayValue < 0) {
+      return setBookStatus("danger");
+    } else {
+      return setBookStatus(null);
+    }
   };
 
   const toggleRemoveReturnModal = () => {
@@ -80,15 +92,13 @@ const ReturnBook = props => {
 
   return (
     <CardDiv>
-      <Card>
+      <Card body outline color={bookStatus}>
         <CardContainerDiv onClick={toggleRemoveReturnModal}>
           <CardHeader>
             <CardHeaderDiv>
               <div>{props.book.title}</div>
               <div>
-                {!dayValue
-                  ? ""
-                  : dayValue >= 0
+                {dayValue >= 0
                   ? `due in: ${dayValue} days`
                   : `overdue by: ${Math.abs(dayValue)} days`}
               </div>

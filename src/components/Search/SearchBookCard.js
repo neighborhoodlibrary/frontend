@@ -11,7 +11,8 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  UncontrolledTooltip
 } from "reactstrap";
 //
 import Axios from "axios";
@@ -54,6 +55,9 @@ const BookCover = styled.img`
 const CardContainerDiv = styled.div`
   cursor: pointer;
 `;
+const ModalHeaderDiv = styled.div`
+  disply: flex;
+`;
 
 const SearchBookCard = props => {
   const auth = firebase.auth();
@@ -70,6 +74,7 @@ const SearchBookCard = props => {
   const [requestModal, setRequestModal] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [emailValue, setEmailValue] = useState({});
+  const [bookStatus, setBookStatus] = useState(null);
 
   useEffect(() => {
     userDocRef
@@ -85,7 +90,16 @@ const SearchBookCard = props => {
       .catch(error => {
         console.log("Error getting the document:", error);
       });
+    checkBook();
   }, "");
+
+  const checkBook = () => {
+    if (props.book.checkedOut === true) {
+      setBookStatus("warning");
+    } else {
+      setBookStatus(null);
+    }
+  };
 
   const toggleRequestModal = () => {
     if (requestModal) {
@@ -137,11 +151,11 @@ const SearchBookCard = props => {
       .catch(error => {
         console.log("Error getting document:", error);
       });
-    //
   };
+  console.log(props);
   return (
     <SearchBookCardDiv>
-      <Card>
+      <Card body outline color={bookStatus} id={props.book.id}>
         <CardContainerDiv onClick={toggleRequestModal}>
           <CardHeader>{props.book.title}</CardHeader>
           <CardBody>
@@ -156,8 +170,27 @@ const SearchBookCard = props => {
           </CardFooter>
         </CardContainerDiv>
       </Card>
+      {bookStatus !== null ? (
+        <UncontrolledTooltip placement="auto" target={props.book.id}>
+          Book is currently checked out, dute date:{" "}
+          {props.book.dueDate.split("T")[0]}
+        </UncontrolledTooltip>
+      ) : (
+        ""
+      )}
       <Modal isOpen={requestModal} toggle={toggleRequestModal} centered>
-        <ModalHeader>Book Info:</ModalHeader>
+        <ModalHeader>
+          <ModalHeaderDiv>
+            <div>Book Info:</div>
+            <div>
+              {props.book.checkedOut === true
+                ? `Book currently checked-out, due: ${
+                    props.book.dueDate.split("T")[0]
+                  }`
+                : ""}
+            </div>
+          </ModalHeaderDiv>
+        </ModalHeader>
         <ModalBody>
           description: {props.book.description}
           <br />
