@@ -44,10 +44,11 @@ const LoanedBook = props => {
   const db = firebase.firestore();
   const [loanedBookModal, setLoanedBookModal] = useState(false);
   const [dayValue, setDayValue] = useState(null);
-  const alert = useAlert();
+  const [bookStatus, setBookStatus] = useState(null);
 
   useEffect(() => {
     getDay();
+    checkBook();
   }, []);
 
   const getDay = () => {
@@ -57,13 +58,24 @@ const LoanedBook = props => {
     setDayValue(difference);
   };
 
+  const checkBook = () => {
+    if (dayValue <= 5 && dayValue >= 0) {
+      return setBookStatus("warning");
+    }
+    if (dayValue < 0) {
+      return setBookStatus("danger");
+    } else {
+      return setBookStatus(null);
+    }
+  };
+
   const toggleLoanedBookModal = () => {
     loanedBookModal ? setLoanedBookModal(false) : setLoanedBookModal(true);
   };
 
   return (
     <CardDiv>
-      <Card>
+      <Card body outline color={bookStatus}>
         <CardContainerDiv onClick={toggleLoanedBookModal}>
           <CardHeader>
             <CardHeaderDiv>

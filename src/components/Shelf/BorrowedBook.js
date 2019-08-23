@@ -52,9 +52,11 @@ const BorrowedBook = props => {
   const user = auth.currentUser;
   const userDocRef = db.collection("users").doc(user.uid);
   const [emailValue, setEmailValue] = useState({});
+  const [bookStatus, setBookStatus] = useState(null);
   const alert = useAlert();
   useEffect(() => {
     getDay();
+    checkBook();
   }, "");
 
   const getDay = () => {
@@ -62,6 +64,17 @@ const BorrowedBook = props => {
     let dueDate = new Date(props.book.dueDate);
     let difference = Math.round((dueDate - currentDate) / 86400000);
     setDayValue(difference);
+  };
+
+  const checkBook = () => {
+    if (dayValue <= 5 && dayValue >= 0) {
+      return setBookStatus("warning");
+    }
+    if (dayValue < 0) {
+      return setBookStatus("danger");
+    } else {
+      return setBookStatus(null);
+    }
   };
 
   const toggleReturnBookModal = () => {
@@ -117,7 +130,7 @@ const BorrowedBook = props => {
 
   return (
     <CardDiv>
-      <Card>
+      <Card body outline color={bookStatus}>
         <CardContainerDiv onClick={toggleReturnBookModal}>
           <CardHeader>
             <CardHeaderDiv>
