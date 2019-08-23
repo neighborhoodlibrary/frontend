@@ -266,7 +266,6 @@ const Search = props => {
     }
     const aFunc = async () => {
       await asyncForEach(resultsArray, async user => {
-        console.log(user);
         let userId = user.userId;
         await docRef
           .where("ownerId", "==", userId)
