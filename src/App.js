@@ -6,7 +6,7 @@ import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import PrivateRoute from "./authentication/PrivateRoute";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
-// gloabal state components
+// global state components
 import UserState from "./context/user/UserState";
 import BookState from "./context/book/BookState";
 // when user is not logged in...
