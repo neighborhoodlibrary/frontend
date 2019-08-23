@@ -13,6 +13,9 @@ import {
   ModalFooter
 } from "reactstrap";
 import styled from "styled-components";
+//
+import Axios from "axios";
+const URL = "https://neighborhoodlibraryback.herokuapp.com/email";
 
 const CardDiv = styled.div`
   margin: 15px;
@@ -44,11 +47,29 @@ const BorrowedBook = props => {
   const db = firebase.firestore();
   const [returnBookModal, setReturnBookModal] = useState(false);
   const [dayValue, setDayValue] = useState(null);
+  //
+  const auth = firebase.auth();
+  const user = auth.currentUser;
+  const userDocRef = db.collection("users").doc(user.uid);
+  // const [userEmail, setUserEmail] = useState("");
+  const [emailValue, setEmailValue] = useState({});
   const alert = useAlert();
-
   useEffect(() => {
     getDay();
-  }, []);
+    // userDocRef
+    //   .get()
+    //   .then(doc => {
+    //     if (doc.exists) {
+    //       let email = doc.data().email;
+    //       setUserEmail(email);
+    //     } else {
+    //       console.log("No such document!");
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log("Error getting the document:", error);
+    //   });
+  }, "");
 
   const getDay = () => {
     let currentDate = new Date();
@@ -58,22 +79,57 @@ const BorrowedBook = props => {
   };
 
   const toggleReturnBookModal = () => {
-    returnBookModal ? setReturnBookModal(false) : setReturnBookModal(true);
-  };
-  const returnBook = () => {
-    const ownerId = props.book.ownerId;
-    db.collection("books")
-      .doc(props.book.id)
-      .update({
-        transitionUser: ownerId
-      })
-      .then(() => {
-        alert.success("Book is set to return to owner");
-        props.getBooks();
-      });
+    // returnBookModal ? setReturnBookModal(false) : setReturnBookModal(true);
+    if (returnBookModal) {
+      setReturnBookModal(false);
+      setEmailValue({});
+    } else {
+      setReturnBookModal(true);
+      userDocRef
+        .get()
+        .then(doc => {
+          if (doc.exists) {
+            let email = doc.data().email;
+            setEmailValue({
+              to: props.book.ownerEmail,
+              from: email,
+              subject: "Book return from Neighborhood Library",
+              text: `User with email: ${email} wishes to return the book: ${
+                props.book.title
+              }, back to you, Please email them back to setup location and time of pickup.`,
+              html: `User with email: ${email} wishes to return the book: ${
+                props.book.title
+              }, back to you, Please email them back to setup location and time of pickup.`
+            });
+          } else {
+            console.log("No such document!");
+          }
+        })
+        .catch(error => {
+          console.log("Error getting the document:", error);
+        });
+    }
   };
 
-  console.log(dayValue);
+  const returnBook = () => {
+    alert.info("Please wait, sending request via email...");
+    const msg = emailValue;
+    Axios.post(URL, msg).then(res => {
+      const ownerId = props.book.ownerId;
+      db.collection("books")
+        .doc(props.book.id)
+        .update({
+          transitionUser: ownerId
+        })
+        .then(() => {
+          alert.success(
+            "Successfully requested book return, Book is set to return to owner"
+          );
+          props.getBooks();
+        });
+    });
+  };
+
   return (
     <CardDiv>
       <Card>
