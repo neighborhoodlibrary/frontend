@@ -75,7 +75,9 @@ const ManualAddBookModal = props => {
                     const userEmail = doc.data().email;
                     const idHold = uniqueID("n1-");
                     const bookObj = { ...bookValues };
-                    const authArr = bookObj.authorsInput.split(",");
+                    const authArr = bookObj.authorsInput
+                      ? bookObj.authorsInput.split(",")
+                      : [];
                     db.collection("books")
                       .doc(idHold)
                       .set({
@@ -137,7 +139,9 @@ const ManualAddBookModal = props => {
           if (doc.exists) {
             const userEmail = doc.data().email;
             const bookObj = { ...bookValues };
-            const authArr = bookObj.authorsInput.split(",");
+            const authArr = bookObj.authorsInput
+              ? bookObj.authorsInput.split(",")
+              : [];
             db.collection("books")
               .doc(idHold)
               .set({

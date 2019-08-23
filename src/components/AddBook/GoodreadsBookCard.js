@@ -76,7 +76,7 @@ const GoodreadsBookCard = props => {
   useEffect(() => {
     setBookInfoValues({
       ...bookInfoValues,
-      authors: props.book.author[0].name,
+      authors: props.book.author[0].name ? props.book.author[0].name : [],
       image: props.book.image_url ? props.book.image_url[0] : "",
       title: props.book.title ? props.book.title[0] : ""
     });

@@ -100,7 +100,7 @@ const OpenLibraryBookCard = props => {
     }
     setBookInfoValues({
       ...bookInfoValues,
-      authors: props.book.author_name,
+      authors: props.book.author_name ? props.book.author_name : [],
       image: image ? image[0] : "",
       title: props.book.title
     });

@@ -64,11 +64,11 @@ const Book = props => {
 
   const getBook = () => {
     const aBook = bookContext.getBook();
-    if (aBook.title) {
-      getDisplayedBook(aBook);
-    } else {
-      goBack();
-    }
+    // if (aBook.title) {
+    getDisplayedBook(aBook);
+    // } else {
+    //   goBack();
+    // }
   };
 
   const toggleEditBookModal = () => {
@@ -134,7 +134,7 @@ const Book = props => {
           </CardFooter>
         </Card>
       </BookHold>
-      {displayedBook.title ? (
+      {displayedBook.ownerId ? (
         <EditBookModal
           book={displayedBook}
           toggleEditBookModal={toggleEditBookModal}

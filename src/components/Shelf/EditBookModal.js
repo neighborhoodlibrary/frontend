@@ -47,7 +47,7 @@ const EditBookModal = props => {
   const [deleteBookModal, setDeleteBookModal] = useState(false);
 
   useEffect(() => {
-    const authInput = props.book.authors.join(",");
+    const authInput = props.book.authors ? props.book.authors.join(",") : "";
     setBookValues({
       authorsInput: authInput,
       titleInput: props.book.title,
