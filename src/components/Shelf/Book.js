@@ -30,20 +30,15 @@ const LibraryBook = props => {
     bookContext.setBook(props.book);
   };
   //
-  // useEffect(() => {
-  //   checkBook();
-  // }, "");
-  // const checkBook = () => {
-  //   switch (true) {
-  //     case props.book.hasOwnProperty("title"):
-  //       console.log("something");
-  //       break;
-  //     default:
-  //       console.log("finished");
-  //       break;
-  //   }
-  // };
-  // console.log(props.book);
+  useEffect(() => {
+    checkBook();
+  }, "");
+  const checkBook = () => {
+    if (props.book.authors.length === 0) {
+      setBookStatus("warning");
+    }
+  };
+  console.log(props.book);
   return (
     <CardDiv>
       <Card body outline color={bookStatus}>
