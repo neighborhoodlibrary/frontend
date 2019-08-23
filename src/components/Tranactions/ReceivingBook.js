@@ -42,6 +42,10 @@ const ReceivingBook = props => {
     .firestore()
     .collection("books")
     .doc(props.book.id);
+  const ownerRef = firebase
+    .firestore()
+    .collection("users")
+    .doc(props.book.ownerId);
   const alert = useAlert();
   const [receiveBookModal, setReceiveBookModal] = useState(false);
 
@@ -51,18 +55,42 @@ const ReceivingBook = props => {
 
   const confirmLoanBookFunc = () => {
     const currentTransitionUser = props.book.transitionUser;
-    bookDocRef
-      .update({
-        borrowerId: currentTransitionUser,
-        checkedOut: true,
-        transitionUser: "",
-        requestedId: firebase.firestore.FieldValue.arrayRemove(
-          currentTransitionUser
-        )
+    let loanPeriod = "";
+    ownerRef
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          let ownerInfo = doc.data();
+          loanPeriod = ownerInfo.loanPeriod;
+        } else {
+          console.log("No such document!");
+        }
       })
       .then(() => {
-        alert.success("Confirmed, book received, Now in you Borrowed section");
-        props.getReceiving();
+        let currentDate = new Date();
+        let dueDate = currentDate.setDate(
+          currentDate.getDate() + Number(loanPeriod)
+        );
+        dueDate = new Date(dueDate).toISOString();
+        bookDocRef
+          .update({
+            dueDate: dueDate,
+            borrowerId: currentTransitionUser,
+            checkedOut: true,
+            transitionUser: "",
+            requestedId: firebase.firestore.FieldValue.arrayRemove(
+              currentTransitionUser
+            )
+          })
+          .then(() => {
+            alert.success(
+              "Confirmed, book received, Now in you Borrowed section"
+            );
+            props.getReceiving();
+          });
+      })
+      .catch(error => {
+        console.log("Error getting document: ", error);
       });
   };
 

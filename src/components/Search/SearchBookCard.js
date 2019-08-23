@@ -108,7 +108,6 @@ const SearchBookCard = props => {
   };
 
   const submitRequest = () => {
-    alert.info("Please wait, sending request via email...");
     bookDocRef
       .get()
       .then(doc => {
@@ -118,7 +117,11 @@ const SearchBookCard = props => {
             return alert.error(
               "You have already requested this book from owner, please wait for a response back."
             );
+          }
+          if (props.book.borrowerId === user.uid) {
+            return alert.error("You are currently borrowing this book.");
           } else {
+            alert.info("Please wait, sending request via email...");
             const msg = emailValue;
             Axios.post(URL, msg).then(res => {
               bookDocRef.update({

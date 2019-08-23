@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
 import {
@@ -36,6 +36,10 @@ const BookCover = styled.img`
 const CardContainerDiv = styled.div`
   cursor: pointer;
 `;
+const CardHeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const ReturnBook = props => {
   const bookDocRef = firebase
@@ -44,6 +48,18 @@ const ReturnBook = props => {
     .doc(props.book.id);
   const alert = useAlert();
   const [removeReturnModal, setRemoveReturnModal] = useState(false);
+  const [dayValue, setDayValue] = useState(null);
+
+  useEffect(() => {
+    getDay();
+  }, []);
+
+  const getDay = () => {
+    let currentDate = new Date();
+    let dueDate = new Date(props.book.dueDate);
+    let difference = Math.round((dueDate - currentDate) / 86400000);
+    setDayValue(difference);
+  };
 
   const toggleRemoveReturnModal = () => {
     removeReturnModal
@@ -66,7 +82,18 @@ const ReturnBook = props => {
     <CardDiv>
       <Card>
         <CardContainerDiv onClick={toggleRemoveReturnModal}>
-          <CardHeader>{props.book.title}</CardHeader>
+          <CardHeader>
+            <CardHeaderDiv>
+              <div>{props.book.title}</div>
+              <div>
+                {!dayValue
+                  ? ""
+                  : dayValue >= 0
+                  ? `due in: ${dayValue} days`
+                  : `overdue by: ${Math.abs(dayValue)} days`}
+              </div>
+            </CardHeaderDiv>
+          </CardHeader>
           <CardBody>
             <CardBodyDiv>
               <BookCover src={props.book.image} alt="book_thumb" />
@@ -86,7 +113,14 @@ const ReturnBook = props => {
       >
         <ModalHeader>Remove from the return section</ModalHeader>
         <ModalBody>
-          Are you sure you want to remove the book from the return section?
+          <p>
+            {props.book.dueDate
+              ? `Due by: ${props.book.dueDate.split("T")[0]}`
+              : ""}
+          </p>
+          <p>
+            Are you sure you want to remove the book from the return section?
+          </p>
         </ModalBody>
         <ModalFooter>
           <Button onClick={submitRemoveTransition}>Confirm</Button>

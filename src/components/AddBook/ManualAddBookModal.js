@@ -91,6 +91,7 @@ const ManualAddBookModal = props => {
                         pageCount: bookObj.pageCountInput,
                         publishDate: bookObj.publishDateInput,
                         publisher: bookObj.publisherInput,
+                        dueDate: "",
                         // user info
                         ownerId: curUser.uid,
                         ownerEmail: userEmail,
@@ -152,6 +153,7 @@ const ManualAddBookModal = props => {
                 pageCount: bookObj.pageCountInput,
                 publishDate: bookObj.publishDateInput,
                 publisher: bookObj.publisherInput,
+                dueDate: "",
                 // user info
                 ownerId: curUser.uid,
                 ownerEmail: userEmail,

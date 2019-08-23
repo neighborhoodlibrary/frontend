@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
 import {
@@ -35,11 +35,27 @@ const BookCover = styled.img`
 const CardContainerDiv = styled.div`
   cursor: pointer;
 `;
+const CardHeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const LoanedBook = props => {
   const db = firebase.firestore();
   const [loanedBookModal, setLoanedBookModal] = useState(false);
+  const [dayValue, setDayValue] = useState(null);
   const alert = useAlert();
+
+  useEffect(() => {
+    getDay();
+  }, []);
+
+  const getDay = () => {
+    let currentDate = new Date();
+    let dueDate = new Date(props.book.dueDate);
+    let difference = Math.round((dueDate - currentDate) / 86400000);
+    setDayValue(difference);
+  };
 
   const toggleLoanedBookModal = () => {
     loanedBookModal ? setLoanedBookModal(false) : setLoanedBookModal(true);
@@ -49,7 +65,19 @@ const LoanedBook = props => {
     <CardDiv>
       <Card>
         <CardContainerDiv onClick={toggleLoanedBookModal}>
-          <CardHeader>{props.book.title}</CardHeader>
+          <CardHeader>
+            <CardHeaderDiv>
+              <div>{props.book.title}</div>
+              <div>
+                {" "}
+                {!dayValue
+                  ? ""
+                  : dayValue >= 0
+                  ? `due in: ${dayValue} days`
+                  : `overdue by: ${Math.abs(dayValue)} days`}
+              </div>
+            </CardHeaderDiv>
+          </CardHeader>
           <CardBody>
             <CardBodyDiv>
               <BookCover src={props.book.image} alt="book_thumb" />
@@ -64,7 +92,14 @@ const LoanedBook = props => {
       </Card>
       <Modal isOpen={loanedBookModal} toggle={toggleLoanedBookModal} centered>
         <ModalHeader>Loaned Book</ModalHeader>
-        <ModalBody>You have lent out this book</ModalBody>
+        <ModalBody>
+          <p>You have lent out this book</p>
+          <p>
+            {props.book.dueDate
+              ? `Due by: ${props.book.dueDate.split("T")[0]}`
+              : ""}
+          </p>
+        </ModalBody>
         <ModalFooter>
           <Button onClick={toggleLoanedBookModal}>Confirm</Button>
           <Button onClick={toggleLoanedBookModal}>Cancel</Button>
