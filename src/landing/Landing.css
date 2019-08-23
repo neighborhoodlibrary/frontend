@@ -1,0 +1,144 @@
+.title {
+  font-size: 4em;
+  font-family: "Merriweather", serif;
+  color: rgba(250, 250, 250, 0.95);
+}
+
+.title2 {
+  color: rgba(250, 250, 250, 0.9);
+  font-family: "Merriweather", serif;
+  font-size: 1.75em;
+}
+
+.Signin-Btn {
+  padding: 50px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-img {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  background-size: cover;
+  background-position: center top;
+}
+
+.background {
+  height: 100vh;
+  width: 100%;
+  font-size: 1em;
+  font-family: "Merriweather", serif;
+
+  background: url(../assets/neighborpic2.jpg) no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 50px 0px;
+  background-color: rgb(0, 0, 0, 0.5);
+  width: 100vw;
+  padding: 20px 0px;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+.LOHeadDiv {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url(${neiImg});
+  background-size: cover;
+  background-position: center top;
+}
+
+.ClarityDiv {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgb(0, 0, 0, 0.5);
+  width: 100vw;
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
+  box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
+}
+
+.halfBackground {
+  background: #90e45e;
+  height: 800px;
+}
+
+/* .halfIntro {
+    color: white;
+    padding-top: 80px;
+    font-size: 25px;
+    text-align: center;
+} */
+
+.halfblurb {
+  color: rgba(250, 250, 250, 0.95);
+  font-size: 20px;
+  text-align: center;
+  font-family: "Merriweather", serif;
+  padding-bottom: 40px;
+  padding-top: 40px;
+  margin-top: -25px;
+}
+
+.services {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 20px;
+  font-family: "Merriweather", serif;
+  margin-bottom: 50px;
+  text-align: left;
+}
+
+.serviceOne {
+  display: flex;
+  justify-content: left;
+  color: white;
+  margin-top: 35px;
+  padding: 0 30px;
+}
+
+.serviceOneImg {
+  width: 200px;
+  height: 140px;
+  margin-top: -20px;
+}
+
+@media (max-width: 800px) {
+  h1 {
+    font-size: 3em;
+  }
+
+  h2 {
+    color: white;
+    font-size: 1.25em;
+  }
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 2.5em;
+  }
+
+  h2 {
+    color: white;
+    font-size: 1em;
+  }
+}
