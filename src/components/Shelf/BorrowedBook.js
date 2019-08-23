@@ -123,9 +123,7 @@ const BorrowedBook = props => {
             <CardHeaderDiv>
               <div>{props.book.title}</div>
               <div>
-                {!dayValue
-                  ? ""
-                  : dayValue >= 0
+                {dayValue >= 0
                   ? `due in: ${dayValue} days`
                   : `overdue by: ${Math.abs(dayValue)} days`}
               </div>
