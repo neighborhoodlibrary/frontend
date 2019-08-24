@@ -13,18 +13,22 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  InputGroup,
+  Input,
+  InputGroupAddon
 } from "reactstrap";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
+import Geocode from "react-geocode";
 
 const ContainerDiv = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
-  
-  @media(max-width: 800px) {
+
+  @media (max-width: 800px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -53,6 +57,30 @@ const MapComponent = props => {
   const [defaultCenter, setDefaultCenter] = useState({});
   const [defaultZoom, setDefaultZoom] = useState(0);
   const [locationModal, setLocationModal] = useState(false);
+  const [addressValue, setAddressValue] = useState("");
+
+  const handleChanges = e => {
+    setAddressValue(e.target.value);
+  };
+
+  const submitAddress = () => {
+    // Geocode.fromAddress(addressValue)
+    //   .then(res => {
+    //     console.log(res);
+    //     const { lat, lng } = res.results[0].geometry.location;
+    //     console.log(lat, lng);
+    //     setMarkerPosition({
+    //       lat,
+    //       lng
+    //     });
+    //     setDefaultCenter({ lat, lng });
+    //     setDefaultZoom(14);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+  };
+  console.log(markerPosition);
 
   useEffect(() => {
     setDefaultCenter({
@@ -113,6 +141,8 @@ const MapComponent = props => {
     }
   };
 
+  console.log(Geocode);
+
   return (
     <ContainerDiv>
       <Col xs="12" md="6">
@@ -128,6 +158,20 @@ const MapComponent = props => {
         </MapContainer>
       </Col>
       <Col xs="12" md="4">
+        <div>
+          <InputGroup>
+            <Input
+              name="addressValue"
+              value={addressValue}
+              onChange={handleChanges}
+              type="text"
+              placeholder="input address"
+            />
+            <InputGroupAddon addonType="append">
+              <Button onClick={submitAddress}>Submit Address</Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
         <Card>
           <CardHeader tag="h3">Set-Up Personal Library Location</CardHeader>
           <CardBody>
