@@ -77,6 +77,7 @@ const MapComponent = props => {
         setDefaultZoom(14);
       })
       .catch(error => {
+        alert.error("No results found");
         console.log(error);
       });
   };
