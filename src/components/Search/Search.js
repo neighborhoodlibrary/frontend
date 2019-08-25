@@ -19,6 +19,8 @@ import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
 import SearchBookCard from "./SearchBookCard";
 
+const mapApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
 const ContainerDiv = styled.div`
   width: 100%;
   display: flex;
@@ -578,5 +580,5 @@ const Search = props => {
   );
 };
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyCi5wZjD4l6a21sBpeJM_jLEmWwUtqvucQ"
+  apiKey: mapApiKey
 })(Search);
