@@ -23,6 +23,8 @@ import { useAlert } from "react-alert";
 import { GeoFire } from "geofire";
 import Geocode from "react-geocode";
 
+const mapApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+
 const ContainerDiv = styled.div`
   width: 100%;
   display: flex;
@@ -64,25 +66,23 @@ const MapComponent = props => {
   };
 
   const submitAddress = () => {
-    // Geocode.fromAddress(addressValue)
-    //   .then(res => {
-    //     console.log(res);
-    //     const { lat, lng } = res.results[0].geometry.location;
-    //     console.log(lat, lng);
-    //     setMarkerPosition({
-    //       lat,
-    //       lng
-    //     });
-    //     setDefaultCenter({ lat, lng });
-    //     setDefaultZoom(14);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    Geocode.fromAddress(addressValue)
+      .then(res => {
+        const { lat, lng } = res.results[0].geometry.location;
+        setMarkerPosition({
+          lat,
+          lng
+        });
+        setDefaultCenter({ lat, lng });
+        setDefaultZoom(14);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
-  console.log(markerPosition);
 
   useEffect(() => {
+    Geocode.setApiKey(mapApiKey);
     setDefaultCenter({
       lat: 39.11599111031897,
       lng: -95.63578119495679
@@ -141,8 +141,6 @@ const MapComponent = props => {
     }
   };
 
-  console.log(Geocode);
-
   return (
     <ContainerDiv>
       <Col xs="12" md="6">
@@ -158,20 +156,6 @@ const MapComponent = props => {
         </MapContainer>
       </Col>
       <Col xs="12" md="4">
-        <div>
-          <InputGroup>
-            <Input
-              name="addressValue"
-              value={addressValue}
-              onChange={handleChanges}
-              type="text"
-              placeholder="input address"
-            />
-            <InputGroupAddon addonType="append">
-              <Button onClick={submitAddress}>Submit Address</Button>
-            </InputGroupAddon>
-          </InputGroup>
-        </div>
         <Card>
           <CardHeader tag="h3">Set-Up Personal Library Location</CardHeader>
           <CardBody>
@@ -179,21 +163,30 @@ const MapComponent = props => {
               <b>Please click on the map to create a marker</b>
             </CardTitle>
             <CardText>
-              This will return coordinates to initialize your personal library
+              This will set the coordinates to initialize your personal library
               location
             </CardText>
-            {/* <CardText>
-              <b>Latitude:</b>
-              {markerPosition.lat
-                ? `  ${markerPosition.lat}`
-                : " No marker initialized"}
-            </CardText>
+            <CardTitle>
+              <b>Or if you would like, input address and click set address</b>
+            </CardTitle>
+            <div>
+              <InputGroup>
+                <Input
+                  name="addressValue"
+                  value={addressValue}
+                  onChange={handleChanges}
+                  type="text"
+                  placeholder="input address"
+                />
+                <InputGroupAddon addonType="append">
+                  <Button onClick={submitAddress}>Set Address</Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </div>
             <CardText>
-              <b>Longitude:</b>
-              {markerPosition.lng
-                ? `  ${markerPosition.lng}`
-                : " No marker initialized"}
-            </CardText> */}
+              Then click submit location to finalize the location of your
+              personal library
+            </CardText>
           </CardBody>
           <CardFooter>
             <Button onClick={toggleLocationModal}>Submit Location</Button>
@@ -214,6 +207,7 @@ const MapComponent = props => {
   );
 };
 
+// console.log(mapApiKey);
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyCi5wZjD4l6a21sBpeJM_jLEmWwUtqvucQ"
+  apiKey: mapApiKey
 })(MapComponent);
