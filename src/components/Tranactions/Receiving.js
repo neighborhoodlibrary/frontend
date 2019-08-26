@@ -42,8 +42,8 @@ const Receiving = () => {
   const getReceiving = () => {
     let tempReceivingBooksArr = [];
     docRef
-      .where("transitionUser", "==", user.uid)
-      .where("requestedId", "array-contains", user.uid)
+      .where("transitionUser", "==", user.email)
+      .where("requestedId", "array-contains", user.email)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {

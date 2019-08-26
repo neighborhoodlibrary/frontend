@@ -111,12 +111,8 @@ const SearchBookCard = props => {
         to: props.book.ownerEmail,
         from: userEmail,
         subject: "Requested Book from Neighborhood Library",
-        text: `User with email: ${userEmail}, has requested to borrow one of your books: ${
-          props.book.title
-        }, Please email them back to setup location and time of pickup.`,
-        html: `User with email: ${userEmail}, has requested to borrow one of your books: ${
-          props.book.title
-        }, Please email them back to setup location and time of pickup.`
+        text: `User with email: ${userEmail}, has requested to borrow one of your books: ${props.book.title}, Please email them back to setup location and time of pickup.`,
+        html: `User with email: ${userEmail}, has requested to borrow one of your books: ${props.book.title}, Please email them back to setup location and time of pickup.`
       });
     }
   };
@@ -127,19 +123,21 @@ const SearchBookCard = props => {
       .then(doc => {
         if (doc.exists) {
           const requestedId = doc.data().requestedId;
-          if (requestedId.includes(user.uid)) {
+          if (requestedId.includes(user.email)) {
             return alert.error(
               "You have already requested this book from owner, please wait for a response back."
             );
           }
-          if (props.book.borrowerId === user.uid) {
+          if (props.book.borrowerId === user.email) {
             return alert.error("You are currently borrowing this book.");
           } else {
             alert.info("Please wait, sending request via email...");
             const msg = emailValue;
             Axios.post(URL, msg).then(res => {
               bookDocRef.update({
-                requestedId: firebase.firestore.FieldValue.arrayUnion(user.uid)
+                requestedId: firebase.firestore.FieldValue.arrayUnion(
+                  user.email
+                )
               });
               alert.success("Successfully requested book from owner.");
             });
