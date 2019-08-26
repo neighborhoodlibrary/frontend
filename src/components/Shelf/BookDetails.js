@@ -64,11 +64,12 @@ const Book = props => {
 
   const getBook = () => {
     const aBook = bookContext.getBook();
-    // if (aBook.title) {
-    getDisplayedBook(aBook);
-    // } else {
-    //   goBack();
-    // }
+    console.log(aBook);
+    if (aBook.hasOwnProperty("authors")) {
+      getDisplayedBook(aBook);
+    } else {
+      goBack();
+    }
   };
 
   const toggleEditBookModal = () => {
@@ -125,7 +126,7 @@ const Book = props => {
                   : ""}
               </p>
               <p>
-                Currently Checked out by:
+                Currently Checked out by:{"  "}
                 {displayedBook.checkedOut
                   ? displayedBook.borrowerId
                   : " Not Checked Out"}
