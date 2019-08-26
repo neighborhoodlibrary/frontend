@@ -175,8 +175,8 @@ const NavMenu = props => {
             </button>
           </TabTop>
           <TabBottom>
-            <NavLink to="/shelf/add">Add</NavLink>
-            <NavLink to="/shelf/search">Search</NavLink>
+            <NavLink to="/lookup/add">Add</NavLink>
+            <NavLink to="/lookup/search">Search</NavLink>
           </TabBottom>
         </NavTabs>
       </NavMenuDiv>
@@ -200,8 +200,8 @@ const NavMenu = props => {
             </button>
           </TabTop>
           <TabBottom>
-            <NavLink to="/shelf/requested">Requested</NavLink>
-            <NavLink to="/shelf/receiving">Receiving</NavLink>
+            <NavLink to="/transactions/requested">Requested</NavLink>
+            <NavLink to="/transactions/receiving">Receiving</NavLink>
           </TabBottom>
         </NavTabs>
       </NavMenuDiv>
@@ -225,8 +225,8 @@ const NavMenu = props => {
             </button>
           </TabTop>
           <TabBottom>
-            <NavLink to="/shelf/profile">Profile</NavLink>
-            <NavLink to="/shelf/map">Map</NavLink>
+            <NavLink to="/settings/profile">Profile</NavLink>
+            <NavLink to="/settings/map">Map</NavLink>
             <button onClick={props.signOut}>Sign Out</button>
           </TabBottom>
         </NavTabs>

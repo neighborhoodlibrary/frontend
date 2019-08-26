@@ -76,28 +76,32 @@ function App() {
                     component={BookDetails}
                   />
                   {/* Lookup components */}
-                  <PrivateRoute exact path="/shelf/add" component={AddBook} />
-                  <PrivateRoute exact path="/shelf/search" component={Search} />
+                  <PrivateRoute exact path="/lookup/add" component={AddBook} />
+                  <PrivateRoute
+                    exact
+                    path="/lookup/search"
+                    component={Search}
+                  />
                   {/* transactional components */}
                   <PrivateRoute
                     exact
-                    path="/shelf/requested"
+                    path="/transactions/requested"
                     component={Requested}
                   />
                   <PrivateRoute
                     exact
-                    path="/shelf/receiving"
+                    path="/transactions/receiving"
                     component={Receiving}
                   />
                   {/* settings components */}
                   <PrivateRoute
                     exact
-                    path="/shelf/map"
+                    path="/settings/map"
                     component={MapComponent}
                   />
                   <PrivateRoute
                     exact
-                    path="/shelf/profile"
+                    path="/settings/profile"
                     component={Profile}
                   />
                 </Switch>

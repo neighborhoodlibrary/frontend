@@ -43,7 +43,7 @@ export default function SignInComponent(props) {
               userCount: firebase.firestore.FieldValue.increment(1)
             });
             userContext.addUser(result.user);
-            props.routerProps.history.push("/map");
+            props.routerProps.history.push("settings/map");
           }
         });
       })
