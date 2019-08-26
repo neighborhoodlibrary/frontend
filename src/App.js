@@ -36,7 +36,7 @@ const LoggedInDiv = styled.div`
   margin: auto;
   width: 86%;
 
-  @medix(max-width: 800px) {
+  @medix (max-width: 800px) {
     width: 100%;
   }
 `;
@@ -53,12 +53,12 @@ function App() {
         <BookState>
           <AlertProvider template={AlertTemplate} {...alertOptions}>
             <Router>
-            <Route path="/" component={Header} />
+              <Route path="/" component={Header} />
               <Route exact path="/landing" component={Landing} />
               <LoggedInDiv>
                 <Switch>
                   {/* shelf components */}
-                  <PrivateRoute exact path="/shelf" component={MainShelf} />
+                  <PrivateRoute exact path="/" component={MainShelf} />
                   <PrivateRoute
                     exact
                     path="/shelf/library"

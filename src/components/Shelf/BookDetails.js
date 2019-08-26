@@ -64,7 +64,6 @@ const Book = props => {
 
   const getBook = () => {
     const aBook = bookContext.getBook();
-    console.log(aBook);
     if (aBook.hasOwnProperty("authors")) {
       getDisplayedBook(aBook);
     } else {

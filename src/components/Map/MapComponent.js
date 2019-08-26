@@ -168,7 +168,9 @@ const MapComponent = props => {
               location
             </CardText>
             <CardTitle>
-              <b>Or if you would like, input address and click set address</b>
+              <b>
+                Or if you would like, input an address and click set address
+              </b>
             </CardTitle>
             <div>
               <InputGroup>
