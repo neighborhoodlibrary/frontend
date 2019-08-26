@@ -153,7 +153,7 @@ const Header = props => {
         <HeaderDiv>
           <h1>
             <img src={tmplo} />
-            <NavLink to="/shelf">Neighborhood Library</NavLink>
+            <NavLink to="/">Neighborhood Library</NavLink>
           </h1>
           <SideBar>
             <NavMenu signOut={signOut} />
