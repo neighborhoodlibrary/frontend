@@ -38,7 +38,7 @@ const Borrowed = () => {
     let tempBorrowedBooksArr = [];
     let tempReturnBooksArr = [];
     docRef
-      .where("borrowerId", "==", user.uid)
+      .where("borrowerId", "==", user.email)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
