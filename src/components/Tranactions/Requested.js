@@ -13,6 +13,7 @@ const ContainerWrapper = styled.div`
   display: grid;
   justify-content: space-apart;
   grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
   font-family: "Merriweather Sans", "Roboto", sans-serif;
   width: 100%;
   height: 100%;
@@ -23,10 +24,22 @@ const ContainerWrapper = styled.div`
 `;
 
 const Container1 = styled.div`
-  display: grid;
-  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background-color: rgba(235,0,0,.11);
+  border: 1px solid rgba(235,0,0,.3);
+  border-radius: 2px;
 `;
-const Container2 = styled.div``;
+const Container2 = styled.div`
+  background-color: rgba(0,0,0,.2);
+  padding: 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,.4);
+`;
 
 const Requested = () => {
   const auth = firebase.auth();
@@ -77,11 +90,12 @@ const Requested = () => {
         <Container1>
           {requestedBooks === null ? (
             <div>
-              <h6>No one has requested a book from you</h6>
-              <h6>You can initiate... start a dialogue</h6>
-              <h6>Search for other libraries</h6>
+              <h4>No one has requested a book from you</h4>
+              <h6>When a user wants to read a book from your library</h6>
+              <h6>It'll show up here</h6>
+              <h6>Did you mean to borrow a book?</h6>
               <NavLink to="/shelf/search">
-                <Button>Search for other libraries in your area</Button>
+                <Button>Search your area</Button>
               </NavLink>
             </div>
           ) : (

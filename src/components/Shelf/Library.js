@@ -32,6 +32,14 @@ const MapHold = styled.div`
 `;
 const EmptyBooksContainer = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  background-color: rgba(235,0,0,.11);
+  border: 1px solid rgba(235,0,0,.3);
+  border-radius: 2px;
 `;
 
 const Library = () => {
@@ -224,7 +232,7 @@ const Library = () => {
     <Container>
       {booksInfo === null ? (
         <EmptyBooksContainer>
-          <h6>You currently have no books in your library...</h6>
+          <h4>You currently have no books in your library.</h4>
           <h6>Get started by searching through an option of 3 APIs</h6>
           <h6>Including Google Books, Goodreads, and Open Library</h6>
           <h6>If you still can't find what you are looking for</h6>

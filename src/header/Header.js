@@ -11,8 +11,9 @@ const HeaderDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 10px 17px;
-  width: 88%;
+  padding: 5px 12px;
+  width: 92%;
+  height: 100px;
   margin: 0px auto 20px auto;
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -24,7 +25,7 @@ const HeaderDiv = styled.div`
   animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
   h1 {
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-family: "Merriweather", serif;
     border-bottom: 2px solid #6cc444;
     display: flex;
@@ -33,8 +34,8 @@ const HeaderDiv = styled.div`
   }
 
   img {
-    height: 75px;
-    margin: 10px;
+    height: 50px;
+    margin: 5px;
   }
 
   a {

@@ -30,7 +30,7 @@
 
 .background {
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   font-size: 1em;
   font-family: "Merriweather", serif;
 
@@ -78,6 +78,7 @@
 .halfBackground {
   background: white;
   height: 800px;
+  box-sizing: border-box;
 }
 
 .arrowSection {

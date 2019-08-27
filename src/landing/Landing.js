@@ -108,8 +108,8 @@ const LandingTwo = props => {
             <h1 className="title">Neighborhood Library</h1>
 
             <h2 className="title2">Read Great Books In Your Area</h2>
-            <div className="Signin-Btn" />
           </div>
+          <div className="Signin-Btn" />
           <SignInComponent routerProps={props} />
           <div className="arrowSection">
           <i className="arrow down"></i>

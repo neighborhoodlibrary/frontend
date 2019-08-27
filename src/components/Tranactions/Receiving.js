@@ -29,7 +29,15 @@ const MapHold = styled.div`
 `;
 
 const EmptyBooksContainer = styled.div`
-  min-height: 50vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    background-color: rgba(235,0,0,.11);
+    border: 1px solid rgba(235,0,0,.3);
+    border-radius: 2px;
 `;
 
 const Receiving = () => {
