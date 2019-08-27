@@ -24,7 +24,7 @@ export default function SignInComponent(props) {
         docRef.get().then(doc => {
           if (doc.exists) {
             userContext.addUser(result.user);
-            props.routerProps.history.push("/shelf");
+            props.routerProps.history.push("/");
           } else {
             docRef.set({
               displayName,
@@ -43,7 +43,7 @@ export default function SignInComponent(props) {
               userCount: firebase.firestore.FieldValue.increment(1)
             });
             userContext.addUser(result.user);
-            props.routerProps.history.push("/shelf");
+            props.routerProps.history.push("settings/map");
           }
         });
       })

@@ -36,7 +36,7 @@ const LoggedInDiv = styled.div`
   margin: auto;
   width: 86%;
 
-  @medix(max-width: 800px) {
+  @medix (max-width: 800px) {
     width: 100%;
   }
 `;
@@ -53,12 +53,12 @@ function App() {
         <BookState>
           <AlertProvider template={AlertTemplate} {...alertOptions}>
             <Router>
-            <Route path="/" component={Header} />
+              <Route path="/" component={Header} />
               <Route exact path="/landing" component={Landing} />
               <LoggedInDiv>
                 <Switch>
                   {/* shelf components */}
-                  <PrivateRoute exact path="/shelf" component={MainShelf} />
+                  <PrivateRoute exact path="/" component={MainShelf} />
                   <PrivateRoute
                     exact
                     path="/shelf/library"
@@ -76,28 +76,32 @@ function App() {
                     component={BookDetails}
                   />
                   {/* Lookup components */}
-                  <PrivateRoute exact path="/shelf/add" component={AddBook} />
-                  <PrivateRoute exact path="/shelf/search" component={Search} />
+                  <PrivateRoute exact path="/lookup/add" component={AddBook} />
+                  <PrivateRoute
+                    exact
+                    path="/lookup/search"
+                    component={Search}
+                  />
                   {/* transactional components */}
                   <PrivateRoute
                     exact
-                    path="/shelf/requested"
+                    path="/transactions/requested"
                     component={Requested}
                   />
                   <PrivateRoute
                     exact
-                    path="/shelf/receiving"
+                    path="/transactions/receiving"
                     component={Receiving}
                   />
                   {/* settings components */}
                   <PrivateRoute
                     exact
-                    path="/shelf/map"
+                    path="/settings/map"
                     component={MapComponent}
                   />
                   <PrivateRoute
                     exact
-                    path="/shelf/profile"
+                    path="/settings/profile"
                     component={Profile}
                   />
                 </Switch>
