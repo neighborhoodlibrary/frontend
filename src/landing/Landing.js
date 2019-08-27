@@ -13,7 +13,7 @@ const LandingTwo = props => {
           </div>
           <SignInComponent routerProps={props} />
             <div className="arrowSection">
-            <i className="arrow down"></i>
+              <i className="arrow down"></i>
             </div>
         </div>
         <div>

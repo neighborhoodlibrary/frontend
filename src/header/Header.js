@@ -22,7 +22,7 @@ const HeaderDiv = styled.div`
   animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
   h1 {
-    font-size: 1.4em;
+    font-size: 1.25em;
     font-family: "Merriweather", serif;
     border-bottom: 2px solid #6cc444;
     display: flex;
@@ -31,8 +31,8 @@ const HeaderDiv = styled.div`
   }
 
   img {
-    height: 50px;
-    margin: 5px;
+    height: 38px;
+    margin: 4px;
   }
 
   a {

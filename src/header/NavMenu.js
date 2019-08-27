@@ -48,7 +48,7 @@ const TabTop = styled.div`
   }
 
   button {
-    font-size: 1.1em;
+    font-size: 1em;
     padding: 3px 6px;
     border: none;
     background-color: transparent;
@@ -95,9 +95,9 @@ const TabTop = styled.div`
 
 const TabBottom = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: center;
-  font-size: 0.89em;
+  font-size: 0.91em;
   box-sizing: border-box;
 
   a {
