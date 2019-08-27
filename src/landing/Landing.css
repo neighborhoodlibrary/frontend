@@ -92,8 +92,8 @@
   font-size: 20px;
   text-align: center;
   font-family: "Merriweather", serif;
-  padding-bottom: 40px;
-  padding-top: 40px;
+  padding-bottom: 50px;
+  padding-top: 50px;
   margin-top: -25px;
 }
 
@@ -122,22 +122,22 @@
 }
 
 @media (max-width: 800px) {
-  h1 {
+  title {
     font-size: 3em;
   }
 
-  h2 {
+  title2 {
     color: white;
     font-size: 1.25em;
   }
 }
 
 @media (max-width: 500px) {
-  h1 {
+  title {
     font-size: 2.5em;
   }
 
-  h2 {
+  title2 {
     color: white;
     font-size: 1em;
   }
