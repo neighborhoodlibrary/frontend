@@ -18,9 +18,6 @@ const HeaderDiv = styled.div`
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-top: none;
-  -webkit-box-shadow: 3px 4.5px 4px 0px #bfbfbf;
-  -moz-box-shadow: 3px 4.5px 4px 0px #bfbfbf;
-  box-shadow: 3px 4.5px 4px 0px #bfbfbf;
   -webkit-animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 

@@ -1,78 +1,58 @@
-.title {
-  font-size: 4em;
-  font-family: "Merriweather", serif;
-  color: rgba(250, 250, 250, 0.95);
+
+
+.landingDiv {
+  box-sizing: border-box;
 }
 
-.title2 {
-  color: rgba(250, 250, 250, 0.9);
+.bghold {
+  height: 600px;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  background: url('../assets/neighborpic2.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(2px);
+  -webkit-filter: blur(2px);
+}
+
+.topofBG {
+  height: 600px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  justify-content: stretch;
+}
+
+.landingHeaderText {
   font-family: "Merriweather", serif;
+  color: rgba(250, 250, 250, 0.95);
+  text-align: center;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(0,0,0,0.6);
+}
+
+.landingHeaderText h1 {
+  font-size: 4em;
+}
+
+.landingHeaderText h2 {
   font-size: 1.75em;
 }
 
+
 .Signin-Btn {
-  padding: 50px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.landing-img {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-  align-items: center;
-  background-size: cover;
-  background-position: center top;
-}
-
-.background {
-  height: 100vh;
-  width: 100vw;
-  font-size: 1em;
-  font-family: "Merriweather", serif;
-
-  background: url(../assets/neighborpic2.jpg) no-repeat;
-  background-size: cover;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  padding: 50px 0px;
-  background-color: rgb(0, 0, 0, 0.5);
-  width: 100vw;
-  padding: 20px 0px;
-  -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
-  box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
-}
-
-.LOHeadDiv {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: url(${neiImg});
-  background-size: cover;
-  background-position: center top;
-}
-
-.ClarityDiv {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: rgb(0, 0, 0, 0.5);
-  width: 100vw;
-  -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
-  -moz-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
-  box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
 }
 
 .halfBackground {
@@ -81,9 +61,6 @@
   box-sizing: border-box;
 }
 
-.arrowSection {
-  padding-top: 400px;
- }
 
 .arrow {
   border: solid  rgba(250, 250, 250, 0.9);
@@ -91,14 +68,13 @@
   border-width: 0 2px 2px 0;
   display: flex;
   padding: 20px;
+  height: 50px;
  }
 
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
-
-
 
 .halfblurb {
   color:black;
@@ -108,6 +84,7 @@
   padding-bottom: 50px;
   padding-top: 50px;
   margin-top: -25px;
+  box-sizing: border-box;
 }
 
 .services {
@@ -152,22 +129,22 @@
 
 
 @media (max-width: 800px) {
-  title {
+  .landingHeaderText h1 {
     font-size: 3em;
   }
 
-  title2 {
+  .landingHeaderText h2 {
     color: white;
     font-size: 1.25em;
   }
 }
 
 @media (max-width: 500px) {
-  title {
+  .landingHeaderText h1 {
     font-size: 2.5em;
   }
 
-  title2 {
+  .landingHeaderText h2 {
     color: white;
     font-size: 1em;
   }
