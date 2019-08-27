@@ -5,6 +5,11 @@ import "firebase/auth";
 // styling
 import styled from "styled-components";
 
+const BooksInfoDiv = styled.div`
+  widith: 100%;
+  display: flex;
+`
+
 const BorrowedDiv = styled.div`
   display: flex;
   margin: 1rem;
@@ -100,7 +105,7 @@ const BooksInfo = () => {
   };
 
   return (
-    <div>
+    <BooksInfoDiv id="booksinfo">
       <RequestedDiv>
         {requestedBooks === null ? (
           <div>You have 0 books that have been requested</div>
@@ -168,7 +173,7 @@ const BooksInfo = () => {
           </div>
         )}
       </BorrowedDiv>
-    </div>
+    </BooksInfoDiv>
   );
 };
 

@@ -13,7 +13,8 @@ const MainShelfDiv = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas:
     "jm jm jm uin"
-    "jm jm jm an";
+    "jm jm jm an"
+    "bkin bkin bkin bkin";
   grid-gap: 10px;
   align-items: center;
   justify-content: center;
@@ -24,6 +25,10 @@ const MainShelfDiv = styled.div`
 
   #userinfo {
     grid-area: uin;
+  }
+
+  #booksinfo {
+    grid-area: bkin;
   }
 
   @media (max-width: 800px) {
