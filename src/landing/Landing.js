@@ -2,7 +2,7 @@
 // import SignInComponent from "./SignInComponent";
 // import styled from "styled-components";
 // import neiImg from "../assets/neighborpic2.jpg";
-// import LandingTwo from './LandingTwo';
+
 
 // const LOHeadDiv = styled.div`
 //   display: flex;
@@ -111,15 +111,14 @@ const LandingTwo = props => {
             <div className="Signin-Btn" />
           </div>
           <SignInComponent routerProps={props} />
+          <div className="arrowSection">
+          <i className="arrow down"></i>
+          </div>
         </div>
         <div>
           <div className="halfBackground">
-            {/* <h1 className="mb-5 col halfIntro">NeighborHood Library</h1> 
-             <p className="blurb">
-                    NeighborHood Library To provide our users with a simple and <br/>feature-rich solution for lending and borrowing books to/from your neighbors!                                     
-                    </p> */}
 
-            <h1 className="halfblurb">How It Works:</h1>
+            <p className="halfblurb">Providing our users with a simple and <br/>feature-rich solution for lending and borrowing from their neighbors!</p>
             <div className="services">
               <p className="serviceOne">
                 Share books with neighbors, our platform <br /> let's you loan
