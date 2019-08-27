@@ -116,6 +116,10 @@ const TabBottom = styled.div`
     border-radius: 3px;
     margin: 0px 1px;
   }
+
+  @media(max-width: 800px){
+    justify-content: flex-start
+  }
 `;
 
 const NavMenu = props => {

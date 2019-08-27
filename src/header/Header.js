@@ -52,9 +52,15 @@ const HeaderDiv = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: 150px;
 
     h1 {
       width: 100%;
+      justify-content: flex-start;
+    }
+
+    img {
+      padding-right: 8px;
     }
   }
 
