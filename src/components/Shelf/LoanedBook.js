@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import firebase from "../../firebase/firebase.utils";
-import { useAlert } from "react-alert";
+// import firebase from "../../firebase/firebase.utils";
+// import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -41,14 +41,14 @@ const CardHeaderDiv = styled.div`
 `;
 
 const LoanedBook = props => {
-  const db = firebase.firestore();
+  // const db = firebase.firestore();
   const [loanedBookModal, setLoanedBookModal] = useState(false);
   const [dayValue, setDayValue] = useState(null);
-  const [bookStatus, setBookStatus] = useState(null);
+  // const [bookStatus, setBookStatus] = useState(null);
 
   useEffect(() => {
     getDay();
-    checkBook();
+    // checkBook();
   }, []);
 
   const getDay = () => {
@@ -58,16 +58,16 @@ const LoanedBook = props => {
     setDayValue(difference);
   };
 
-  const checkBook = () => {
-    if (dayValue <= 5 && dayValue >= 0) {
-      return setBookStatus("warning");
-    }
-    if (dayValue < 0) {
-      return setBookStatus("danger");
-    } else {
-      return setBookStatus(null);
-    }
-  };
+  // const checkBook = () => {
+  //   if (dayValue <= 5 && dayValue >= 0) {
+  //     return setBookStatus("warning");
+  //   }
+  //   if (dayValue < 0) {
+  //     return setBookStatus("danger");
+  //   } else {
+  //     return setBookStatus(null);
+  //   }
+  // };
 
   const toggleLoanedBookModal = () => {
     loanedBookModal ? setLoanedBookModal(false) : setLoanedBookModal(true);
@@ -75,7 +75,11 @@ const LoanedBook = props => {
 
   return (
     <CardDiv>
-      <Card body outline color={bookStatus}>
+      <Card
+        body
+        outline
+        color={dayValue < 0 ? "danger" : dayValue < 5 ? "warning" : null}
+      >
         <CardContainerDiv onClick={toggleLoanedBookModal}>
           <CardHeader>
             <CardHeaderDiv>
