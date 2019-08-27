@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import firebase from "../../firebase/firebase.utils";
-import { useAlert } from "react-alert";
+// import firebase from "../../firebase/firebase.utils";
+// import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
