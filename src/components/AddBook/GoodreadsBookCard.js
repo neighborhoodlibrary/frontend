@@ -88,9 +88,7 @@ const GoodreadsBookCard = props => {
     } else {
       let bId = { bookId: props.book.id[0]._ };
       Axios.post(`${URL}/grdetails`, bId).then(res => {
-        let publicationDate = `${res.data.publication_year}/${
-          res.data.publication_month
-        }/${res.data.publication_day}`;
+        let publicationDate = `${res.data.publication_year}/${res.data.publication_month}/${res.data.publication_day}`;
         setBookInfoValues({
           ...bookInfoValues,
           description: res.data.description ? res.data.description[0] : "",
@@ -110,18 +108,31 @@ const GoodreadsBookCard = props => {
     <AddBookCardDiv>
       <Card>
         <CardContainerDiv onClick={toggleBookInfoModal}>
-          <CardHeader>{bookInfoValues.title}</CardHeader>
-          <CardBody>
+          <CardHeader style={{ height: 50 }}>
+            {bookInfoValues.title.length > 37
+              ? `${bookInfoValues.title.substring(0, 37)}...`
+              : bookInfoValues.title}
+          </CardHeader>
+          <CardBody
+            style={{
+              height: 240,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
             <CardBodyDiv>
               <BookCover src={bookInfoValues.image} alt="thumbnail" />
             </CardBodyDiv>
           </CardBody>
-          <CardFooter>
+          <CardFooter style={{ height: 50 }}>
             <p>
               by:{" "}
-              {bookInfoValues.authors
-                ? bookInfoValues.authors.join(" , ")
-                : "N/A"}
+              {!bookInfoValues.authors
+                ? "N/A"
+                : bookInfoValues.authors.join(" , ").length > 35
+                ? `${bookInfoValues.authors.join(" , ").substring(0, 35)}...`
+                : bookInfoValues.authors.join(" , ")}
             </p>
           </CardFooter>
         </CardContainerDiv>
