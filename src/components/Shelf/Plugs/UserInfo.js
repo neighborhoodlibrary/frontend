@@ -5,7 +5,7 @@ import styled from "styled-components";
 const UserInfoDiv = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #6cc444;
+  background-color: rgb(127, 173, 80);
   color: white;
   padding: 5px;
   font-size: 0.9em;

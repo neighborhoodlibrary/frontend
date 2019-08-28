@@ -42,7 +42,7 @@ const TabTop = styled.div`
 
   #topTabS {
     font-weight: bold;
-    background-color: #6cc444;
+    background-color: rgb(127, 173, 80);
     border-radius: 2px;
     padding: 5px 10px;
     color: white;

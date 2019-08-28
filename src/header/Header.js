@@ -24,7 +24,7 @@ const HeaderDiv = styled.div`
   h1 {
     font-size: 1.25em;
     font-family: "Merriweather", serif;
-    border-bottom: 2px solid #6cc444;
+    border-bottom: 2px solid rgb(127, 173, 80);
     display: flex;
     justify-content: center;
     align-items: center;
