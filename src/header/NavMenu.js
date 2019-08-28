@@ -26,9 +26,9 @@ const NavMenuDiv = styled.div`
   }
 
   @media(max-width: 800px) {
+    padding: 3px;
     justify-content: center;
     align-items: center;
-    padding: 0;
   }
 `;
 
@@ -38,6 +38,7 @@ const NavTabs = styled.div`
 
 const TabTop = styled.div`
   padding: 5px 0;
+  width: 100%;
 
   #topTabS {
     font-weight: bold;
