@@ -30,15 +30,15 @@ const Container1 = styled.div`
   justify-content: center;
   align-items: center;
   padding: 30px;
-  background-color: rgba(235,0,0,.11);
-  border: 1px solid rgba(235,0,0,.3);
+  background-color: rgba(0,0,0,.11);
+  border: 1px solid rgba(0,0,0,.3);
   border-radius: 2px;
 `;
 const Container2 = styled.div`
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0,0,0,.1);
   padding: 10px;
   border-radius: 2px;
-  border: 1px solid rgba(0,0,0,.4);
+  border: 1px solid rgba(0,0,0,.3);
 `;
 
 const Requested = () => {

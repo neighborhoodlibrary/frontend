@@ -26,9 +26,9 @@ const NavMenuDiv = styled.div`
   }
 
   @media(max-width: 800px) {
+    padding: 3px;
     justify-content: center;
     align-items: center;
-    padding: 0;
   }
 `;
 
@@ -38,17 +38,18 @@ const NavTabs = styled.div`
 
 const TabTop = styled.div`
   padding: 5px 0;
+  width: 100%;
 
   #topTabS {
     font-weight: bold;
-    background-color: #6cc444;
+    background-color: rgb(127, 173, 80);
     border-radius: 2px;
     padding: 5px 10px;
     color: white;
   }
 
   button {
-    font-size: 1.1em;
+    font-size: 1em;
     padding: 3px 6px;
     border: none;
     background-color: transparent;
@@ -95,9 +96,9 @@ const TabTop = styled.div`
 
 const TabBottom = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: center;
-  font-size: 0.89em;
+  font-size: 0.91em;
   box-sizing: border-box;
 
   a {
@@ -115,6 +116,10 @@ const TabBottom = styled.div`
     border: none;
     border-radius: 3px;
     margin: 0px 1px;
+  }
+
+  @media(max-width: 800px){
+    justify-content: flex-start
   }
 `;
 
