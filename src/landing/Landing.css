@@ -3,7 +3,7 @@
 }
 
 .bghold {
-  height: 600px;
+  height: 700px;
   width: 100%;
   position: absolute;
   z-index: -1;
@@ -15,7 +15,7 @@
 }
 
 .topofBG {
-  height: 600px;
+  height: 700px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
@@ -36,6 +36,8 @@
   justify-content: center;
   align-items: center;
   background-color: rgb(0,0,0,0.6);
+  border-top: 2px solid rgb(0,0,0,.4);
+  border-bottom: 2px solid rgb(0,0,0,.4);
 }
 
 .landingHeaderText h1 {
