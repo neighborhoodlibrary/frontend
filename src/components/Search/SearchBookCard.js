@@ -150,7 +150,7 @@ const SearchBookCard = props => {
         console.log("Error getting document:", error);
       });
   };
-  console.log(props);
+
   return (
     <SearchBookCardDiv>
       <Card body outline color={bookStatus} id={props.book.id}>

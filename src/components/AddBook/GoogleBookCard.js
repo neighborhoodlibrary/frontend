@@ -113,18 +113,31 @@ const GoogleBookCard = props => {
     <AddBookCardDiv>
       <Card>
         <CardContainerDiv onClick={toggleBookInfoModal}>
-          <CardHeader>{bookInfoValues.title}</CardHeader>
-          <CardBody>
+          <CardHeader style={{ height: 50 }}>
+            {bookInfoValues.title.length > 37
+              ? `${bookInfoValues.title.substring(0, 37)}...`
+              : bookInfoValues.title}
+          </CardHeader>
+          <CardBody
+            style={{
+              height: 240,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
             <CardBodyDiv>
               <BookCover src={bookInfoValues.image} alt="thumbnail" />
             </CardBodyDiv>
           </CardBody>
-          <CardFooter>
+          <CardFooter style={{ height: 50 }}>
             <p>
               by:{" "}
-              {bookInfoValues.authors
-                ? bookInfoValues.authors.join(" , ")
-                : "N/A"}
+              {!bookInfoValues.authors
+                ? "N/A"
+                : bookInfoValues.authors.join(" , ").length > 35
+                ? `${bookInfoValues.authors.join(" , ").substring(0, 35)}...`
+                : bookInfoValues.authors.join(" , ")}
             </p>
           </CardFooter>
         </CardContainerDiv>

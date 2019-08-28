@@ -95,7 +95,6 @@ const LibraryBook = props => {
       setFieldMissing(tempField);
     }
   };
-  console.log(`${props.book.authors.join(" , ").substring(0, 25)}...`);
 
   return (
     <CardDiv>
