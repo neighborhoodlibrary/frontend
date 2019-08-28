@@ -27,7 +27,7 @@ const LandingTwo = props => {
               </p>
               <img
                 className="serviceOneImg"
-                src={require("../assets/library.jpg")}
+                src={require("../assets/book_lover.png")}
                 alt="bookShelf"
               />
             </div>
@@ -38,7 +38,7 @@ const LandingTwo = props => {
               </p>
               <img
                 className="serviceOneImg"
-                src={require("../assets/createLibrary.jpg")}
+                src={require("../assets/Books.png")}
                 alt="createLibrary"
               />
             </div>
@@ -49,7 +49,7 @@ const LandingTwo = props => {
               </p>
               <img
                 className="serviceOneImg"
-                src={require("../assets/meetup.jpg")}
+                src={require("../assets/conversation.png")}
                 alt="meetup"
               />
             </div>
