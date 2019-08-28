@@ -95,20 +95,37 @@ const LibraryBook = props => {
       setFieldMissing(tempField);
     }
   };
+  console.log(`${props.book.authors.join(" , ").substring(0, 25)}...`);
 
   return (
     <CardDiv>
       <Card body outline color={bookStatus} id={props.book.id}>
         <NavLink to={`/shelf/book/${props.book.id}`} onClick={setBookFunc}>
-          <CardHeader>{props.book.title}</CardHeader>
-          <CardBody>
+          <CardHeader style={{ height: 50 }}>
+            {props.book.title.length > 32
+              ? `${props.book.title.substring(0, 32)}...`
+              : props.book.title}
+          </CardHeader>
+          <CardBody
+            style={{
+              height: 240,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
             <CardBodyDiv>
               <BookCover src={props.book.image} alt="book_thumb" />
             </CardBodyDiv>
           </CardBody>
-          <CardFooter>
+          <CardFooter style={{ height: 50 }}>
             <p>
-              by: {props.book.authors ? props.book.authors.join(" , ") : "N/A"}
+              by:{" "}
+              {!props.book.authors
+                ? "N/A"
+                : props.book.authors.join(" , ").length > 30
+                ? `${props.book.authors.join(" , ").substring(0, 30)}...`
+                : props.book.authors.join(" , ")}
             </p>
           </CardFooter>
         </NavLink>
