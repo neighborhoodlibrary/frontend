@@ -87,7 +87,7 @@ const Receiving = () => {
             <h6>Then the other user can set a book to be loaned to you</h6>
             <h6>What are you waiting for?</h6>
             <h6>Start searching libraries in your area</h6>
-            <NavLink to="/shelf/search">
+            <NavLink to="/lookup/search">
               <Button>Search libraries</Button>
             </NavLink>
           </EmptyBooksContainer>

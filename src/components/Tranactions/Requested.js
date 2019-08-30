@@ -94,7 +94,7 @@ const Requested = () => {
               <h6>When a user wants to read a book from your library</h6>
               <h6>It'll show up here</h6>
               <h6>Did you mean to borrow a book?</h6>
-              <NavLink to="/shelf/search">
+              <NavLink to="/lookup/search">
                 <Button>Search your area</Button>
               </NavLink>
             </div>

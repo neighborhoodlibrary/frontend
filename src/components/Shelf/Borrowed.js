@@ -78,7 +78,7 @@ const Borrowed = () => {
             <div>
               <h6>You have no books that you are currently borrowing</h6>
               <p>Search for books to borrow?</p>
-              <NavLink to="/shelf/search">
+              <NavLink to="/lookup/search">
                 <Button>Search for books</Button>
               </NavLink>
             </div>
