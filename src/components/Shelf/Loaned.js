@@ -79,11 +79,11 @@ const Loaned = () => {
             <div>
               <h6>You have no books currently checked-out</h6>
               <p>Add more books to your library?</p>
-              <NavLink to="/shelf/add">
+              <NavLink to="/lookup/add">
                 <Button>Add book</Button>
               </NavLink>
               <p>Change the location of your personal library?</p>
-              <NavLink to="/shelf/map">
+              <NavLink to="/settings/map">
                 <Button>Map settings</Button>
               </NavLink>
             </div>
