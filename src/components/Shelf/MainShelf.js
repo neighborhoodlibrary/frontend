@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../../context/user/userContext";
-import { Jumbotron } from "reactstrap";
 import styled from "styled-components";
 
 //SHELF PLUGS

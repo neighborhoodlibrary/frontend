@@ -210,7 +210,6 @@ const MapComponent = props => {
   );
 };
 
-// console.log(mapApiKey);
 export default GoogleApiWrapper({
   apiKey: mapApiKey
 })(MapComponent);
