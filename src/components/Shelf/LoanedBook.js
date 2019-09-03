@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import firebase from "../../firebase/firebase.utils";
-// import { useAlert } from "react-alert";
 import {
   Card,
   CardHeader,
@@ -41,14 +39,11 @@ const CardHeaderDiv = styled.div`
 `;
 
 const LoanedBook = props => {
-  // const db = firebase.firestore();
   const [loanedBookModal, setLoanedBookModal] = useState(false);
   const [dayValue, setDayValue] = useState(null);
-  // const [bookStatus, setBookStatus] = useState(null);
 
   useEffect(() => {
     getDay();
-    // checkBook();
   }, []);
 
   const getDay = () => {
@@ -57,17 +52,6 @@ const LoanedBook = props => {
     let difference = Math.round((dueDate - currentDate) / 86400000);
     setDayValue(difference);
   };
-
-  // const checkBook = () => {
-  //   if (dayValue <= 5 && dayValue >= 0) {
-  //     return setBookStatus("warning");
-  //   }
-  //   if (dayValue < 0) {
-  //     return setBookStatus("danger");
-  //   } else {
-  //     return setBookStatus(null);
-  //   }
-  // };
 
   const toggleLoanedBookModal = () => {
     loanedBookModal ? setLoanedBookModal(false) : setLoanedBookModal(true);
