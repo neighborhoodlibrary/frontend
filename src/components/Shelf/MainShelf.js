@@ -9,17 +9,28 @@ import BooksInfo from "./Plugs/BooksInfo";
 
 const MainShelfDiv = styled.div`
   display: grid;
+  color: rgb(60,60,60);
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas:
-    "jm jm jm uin"
-    "jm jm jm an"
-    "bkin bkin bkin bkin";
-  grid-gap: 10px;
-  align-items: center;
-  justify-content: center;
+    "bntop bntop bntop bntop"
+    "bkin bkin bkin uin"
+    "bkin bkin bkin an";
+  align-items: stretch;
+  justify-items: center;
 
   #analytics {
     grid-area: an;
+  }
+
+  #banTop {
+    grid-area: bntop;
+    font-family: 'Merriweather', sans-serif;
+    background-color: rgb(250,250,250);
+    color: rgb(80,80,80);
+    padding: 10px;  
+    font-size: 1.1em;
+    padding-left: 24px;
+    width: 100%;
   }
 
   #userinfo {
@@ -103,13 +114,10 @@ export default function MainShelf() {
 
   return (
     <MainShelfDiv>
+      <div id="banTop">Welcome to your shelf {user.displayName}</div>
+      <BooksInfo />
       <UserInfo id="userinfo" />
       <Analytics id="analytics" />
-      <IntroNew id="jumbo">
-        <h2>Hello {user.displayName}! Welcome to your shelf.</h2>
-        <h3>Use the tabs above to navigate</h3>
-      </IntroNew>
-      <BooksInfo />
     </MainShelfDiv>
   );
 }

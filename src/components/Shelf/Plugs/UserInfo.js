@@ -5,12 +5,16 @@ import styled from "styled-components";
 const UserInfoDiv = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: rgb(127, 173, 80);
-  color: white;
-  padding: 5px;
+  background-color: rgb(252,252,252);
+  padding: 10px;
   font-size: 0.9em;
   font-family: "Merriweather Sans";
   border-radius: 2px;
+  width: 100%;
+
+  div {
+    padding: 7.5px 2px;
+  }
 `;
 
 export default function UserInfo() {

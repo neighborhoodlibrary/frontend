@@ -6,7 +6,7 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "dotenv": "^8.1.0",
-    "firebase": "^6.4.2",
+    "firebase": "^6.5.0",
     "geofire": "^5.0.1",
     "google-books-search": "^0.3.1",
     "google-maps-react": "^2.0.2",

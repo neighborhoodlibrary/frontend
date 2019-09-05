@@ -34,9 +34,9 @@ import styled from "styled-components";
 
 const LoggedInDiv = styled.div`
   margin: auto;
-  width: 86%;
+  width: 92%;
 
-  @medix (max-width: 800px) {
+  @media (max-width: 800px) {
     width: 100%;
   }
 `;
