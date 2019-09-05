@@ -8,13 +8,15 @@ import "firebase/auth";
 import tmplo from "./tmplo.png";
 
 const HeaderDiv = styled.div`
+  background-color: rgb(252,252,252);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 5px 12px;
+  margin: auto;
+  margin-bottom: 10px;
   width: 92%;
-  height: 100px;
-  margin: 0px auto 20px auto;
+  height: 75px;
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-top: none;

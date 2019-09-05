@@ -5,13 +5,13 @@ import styled from "styled-components";
 const NavMenuDiv = styled.div`
   display: flex
   flex-direction: column
-  justify-content: space-evenly;
-  align-items: space-evenly;
-  border-radius: 2px;
-  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
   box-sizing: border-box;
   height: 100%;
   width: 100%;
+  font-size: 0.95em;
 
   a:active, a:focus {
     outline: 0;
@@ -34,26 +34,31 @@ const NavMenuDiv = styled.div`
 
 const NavTabs = styled.div`
   font-family: "Merriweather Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
 `;
 
 const TabTop = styled.div`
-  padding: 5px 0;
+  padding: 5px 10px;
   width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
 
   #topTabS {
     font-weight: bold;
-    background-color: rgb(127, 173, 80);
-    border-radius: 2px;
-    padding: 5px 10px;
-    color: white;
+    border-bottom: 3px solid rgb(127, 173, 80);
+    color: black;
   }
 
   button {
     font-size: 1em;
-    padding: 3px 6px;
+    padding: 1px 2px;
     border: none;
     background-color: transparent;
-    margin: 0px 1px;
+    margin: 0px 7px;
 
     &:hover {
       -webkit-animation: slide-bck-center 0.45s
