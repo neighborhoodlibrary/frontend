@@ -27,16 +27,18 @@ const AddBookDiv = styled.div`
 `;
 
 const FormHold = styled.div`
-  background-color: rgb(80,80,80);
+  background-color: rgb(127, 173, 80);
   color: rgb(245,245,245);
   border-radius: 2px;
   box-sizing: border-box;
-  padding: 15px;
   font-size: 0.95em;
 
   h2 {
+    background-color: rgb(80,80,80);
+    border-radius: 2px;
+    padding: 15px;
     width: 100%;
-    padding-left: 15px;
+    padding-left: 25px;
     font-family: 'Merriweather', serif;
     font-size: 1.05em;
   }
@@ -64,6 +66,7 @@ const AddBookForm = styled.form`
   }
 
   input:focus {
+    color: white;
     background-color: rgba(0,0,0,0.3);
     border-color: rgba(0,0,0,0.5);
   }
@@ -83,7 +86,8 @@ const AddBookForm = styled.form`
   }
 
   button {
-    background-color: rgb(127, 173, 80);
+    background-color: white;
+    color: rgb(40,40,40);
   }
 `;
 
@@ -107,7 +111,7 @@ const ManualAddButtonDiv = styled.div`
 
   button {
     width: 150px;
-    margin: auto;
+    margin: 0px auto 10px auto;
     font-size: 0.75em;
   }
 `;
