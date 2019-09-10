@@ -9,17 +9,17 @@ const LandingDiv = styled.div`
 `;
 const BgHold = styled.div`
   background-image: url(${bgImage});
-  height: 62rem;
+  height: 650px;
   width: 100%;
   position: absolute;
   z-index: -1;
   background-size: cover;
   background-position: center;
-  filter: blur(2px);
-  -webkit-filter: blur(2px);
+  filter: blur(3px);
+  -webkit-filter: blur(3px);
 `;
 const TopOfBg = styled.div`
-  height: 50rem;
+  height: 650px;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
@@ -41,8 +41,9 @@ const LandingHeaderText = styled.div`
   background-color: rgb(0, 0, 0, 0.6);
   border-top: 2px solid rgb(0, 0, 0, 0.4);
   border-bottom: 2px solid rgb(0, 0, 0, 0.4);
+
   h1 {
-    font-size: 4em;
+    font-size: 3.5em;
     @media (max-width: 800px) {
       font-size: 3em;
     }
@@ -51,7 +52,7 @@ const LandingHeaderText = styled.div`
     }
   }
   h2 {
-    font-size: 1.75em;
+    font-size: 1.5em;
     @media (max-width: 800px) {
       font-size: 1.25em;
     }
@@ -77,18 +78,20 @@ const HalfBackground = styled.div`
   flex-direction: column;
   align-items: center;
   background: white;
-  height: 45rem;
   box-sizing: border-box;
 `;
 const HalfBlurb = styled.p`
-  color: black;
+  color: rgb(232,232,232);
+  height: 250px;
+  background-color: rgb(80,80,80);
+  width: 100%;
   font-size: 1.6rem;
+  display: flex;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   font-family: "Merriweather", serif;
-  padding-bottom: 4rem;
-  padding-top: 2rem;
   box-sizing: border-box;
-  margin: 0 1rem;
 `;
 const Services = styled.div`
   width: 80%;
