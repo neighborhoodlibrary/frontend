@@ -40,6 +40,7 @@ const NavTabs = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+  box-sizing: border-box;
 `;
 
 const TabTop = styled.div`
@@ -47,7 +48,7 @@ const TabTop = styled.div`
   width: 100%;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 
   #topTabS {
     font-weight: bold;
@@ -103,9 +104,9 @@ const TabTop = styled.div`
 
 const TabBottom = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   align-items: center;
-  font-size: 0.91em;
+  font-size: 0.9em;
   box-sizing: border-box;
 
   a {
@@ -122,7 +123,6 @@ const TabBottom = styled.div`
     padding: 3px 6px;
     border: none;
     border-radius: 3px;
-    margin: 0px 1px;
   }
 
   @media(max-width: 800px){
