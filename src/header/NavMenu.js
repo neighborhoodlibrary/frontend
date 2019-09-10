@@ -104,7 +104,7 @@ const TabTop = styled.div`
 
 const TabBottom = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  flex-end  flex-end  flex-end  justify-content: space-evenly;
   align-items: center;
   font-size: 0.9em;
   box-sizing: border-box;
