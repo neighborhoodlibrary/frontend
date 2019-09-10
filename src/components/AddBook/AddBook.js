@@ -26,6 +26,22 @@ const AddBookDiv = styled.div`
   }
 `;
 
+const FormHold = styled.div`
+  background-color: rgb(80,80,80);
+  color: rgb(245,245,245);
+  border-radius: 2px;
+  box-sizing: border-box;
+  padding: 15px;
+  font-size: 0.95em;
+
+  h2 {
+    width: 100%;
+    padding-left: 15px;
+    font-family: 'Merriweather', serif;
+    font-size: 1.05em;
+  }
+`
+
 const AddBookForm = styled.form`
   padding: 5px;
   width: 100%;
@@ -43,10 +59,27 @@ const AddBookForm = styled.form`
 
   input {
     width: 250px;
+    background-color: rgba(0,0,0,0.4);
+    border-color: rgba(0,0,0,0.6);
+  }
+
+  input:focus {
+    background-color: rgba(0,0,0,0.3);
+    border-color: rgba(0,0,0,0.5);
   }
 
   select {
-    width: 150px;
+    width: 170px;
+    text-align: right;
+    color: rgba(255,255,255,0.8);
+    background-color: rgba(0,0,0,0.4);
+    border-color: rgba(0,0,0,0.6);
+  }
+
+  select:focus {
+    color: white;
+    background-color: rgba(0,0,0,0.6);
+    border-color: rgba(0,0,0,0.8);
   }
 
   button {
@@ -176,57 +209,60 @@ const AddBook = () => {
 
   return (
     <AddBookDiv>
-        <AddBookForm onSubmit={formSubmit}>
-          <div>
-            <Label>Api Choice</Label>
-            <Input type="select" onChange={handleChanges} name="apiChoice">
-              <option name="google" value="google">
-                Google
-              </option>
-              <option name="goodreads" value="goodreads">
-                GoodReads
-              </option>
-              <option name="ol" value="ol">
-                Open Library
-              </option>
-            </Input>
-          </div>
-          <div>
-            <Label>Search Type</Label>
-            <Input type="select" onChange={handleChanges} name="searchType">
-              <option name="title" value="title">
-                Title
-              </option>
-              <option name="author" value="author">
-                Author
-              </option>
-              <option name="isbn" value="isbn">
-                ISBN
-              </option>
-            </Input>
-          </div>
-          <div>
-            <Label>Entry</Label>
-            <Input
-              placeholder={values.searchType}
-              onChange={handleChanges}
-              name="entry"
-              value={values.entry}
-            />
-          </div>
-          <div>
-            <ButtonDiv>
-              <Button type="submit">
-                <Space />
-                Search
-                <Space />
-              </Button>
-            </ButtonDiv>
-          </div>
-        </AddBookForm>
-      <ManualAddButtonDiv>
-        <Button onClick={toggleManualAddModal}>Add a Book Manually</Button>
-      </ManualAddButtonDiv>
+        <FormHold>
+          <h2>Add a Book</h2>
+          <AddBookForm onSubmit={formSubmit}>
+            <div>
+              <Label>Api Choice</Label>
+              <Input type="select" onChange={handleChanges} name="apiChoice">
+                <option name="google" value="google">
+                  Google
+                </option>
+                <option name="goodreads" value="goodreads">
+                  GoodReads
+                </option>
+                <option name="ol" value="ol">
+                  Open Library
+                </option>
+              </Input>
+            </div>
+            <div>
+              <Label>Search Type</Label>
+              <Input type="select" onChange={handleChanges} name="searchType">
+                <option name="title" value="title">
+                  Title
+                </option>
+                <option name="author" value="author">
+                  Author
+                </option>
+                <option name="isbn" value="isbn">
+                  ISBN
+                </option>
+              </Input>
+            </div>
+            <div>
+              <Label>Entry</Label>
+              <Input
+                placeholder={values.searchType}
+                onChange={handleChanges}
+                name="entry"
+                value={values.entry}
+              />
+            </div>
+            <div>
+              <ButtonDiv>
+                <Button type="submit">
+                  <Space />
+                  Search
+                  <Space />
+                </Button>
+              </ButtonDiv>
+            </div>
+          </AddBookForm>
+        <ManualAddButtonDiv>
+          <Button onClick={toggleManualAddModal}>Add a Book Manually</Button>
+        </ManualAddButtonDiv>
+        </FormHold>
       {bookResults.length > 0 ? (
         <BookMap bookResults={bookResults} passApiVal={passApiVal} />
       ) : (
