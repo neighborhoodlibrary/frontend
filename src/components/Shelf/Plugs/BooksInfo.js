@@ -217,7 +217,7 @@ const BooksInfo = () => {
       <BookInfoDiv>
         Currently borrowing:
         {borrowedBooks === null ? (
-          <div>: 0 books</div>
+          <div id="countemp">0 books</div>
         ) : (
           <div id="counthold">
             <div id="count">{borrowedBooks.length} books</div>

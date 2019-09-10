@@ -9,6 +9,10 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 100%;
   font-family: "Merriweather Sans", sans-serif;
+  background-color: rgb(127, 173, 80);
+  border-radius: 2px;
+  padding: 15px;
+  box-sizing: border-box;
 `;
 
 const MapHold = styled.div`
@@ -34,9 +38,10 @@ const EmptyBooksContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
-    background-color: rgba(0,0,0,.11);
-    border: 1px solid rgba(0,0,0,.3);
+    padding: 50px;
+    background-color: rgba(255,255,255,.1);
+    border: 1px solid rgba(0,0,0,.2);
+    color: white;
     border-radius: 2px;
 `;
 

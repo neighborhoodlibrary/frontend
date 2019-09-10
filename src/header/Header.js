@@ -42,6 +42,11 @@ const HeaderDiv = styled.div`
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+
+    @media(max-width: 800px){
+      justify-content: center;
+      text-align: center;
+    }
   }
 
   a:hover {
