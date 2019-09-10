@@ -23,15 +23,6 @@ const HeaderDiv = styled.div`
   -webkit-animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
-  h1 {
-    font-size: 1.25em;
-    font-family: "Merriweather", serif;
-    border-bottom: 2px solid rgb(127, 173, 80);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   img {
     height: 38px;
     margin: 4px;
@@ -43,9 +34,18 @@ const HeaderDiv = styled.div`
     color: black;
   }
 
+  h1 {
+    font-size: 1.5em;
+    font-family: "PT Serif", serif;
+    border-bottom: 2px solid rgb(127, 173, 80);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   a:hover {
-    text-decoration: wavy;
     color: black;
+    text-decoration: none;
   }
 
   @media (max-width: 800px) {
@@ -99,6 +99,11 @@ const HeaderDiv = styled.div`
       transform: translateY(0);
       opacity: 1;
     }
+  }
+
+  #header a {
+    font-weight: 300;
+    font-family: "PT Serif", "Merriweather", serif;
   }
 `;
 
@@ -157,7 +162,7 @@ const Header = props => {
     <div>
       {loggedIn ? (
         <HeaderDiv>
-          <h1>
+          <h1 id="header">
             <img src={tmplo} />
             <NavLink to="/">Neighborhood Library</NavLink>
           </h1>
