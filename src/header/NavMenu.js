@@ -26,7 +26,9 @@ const NavMenuDiv = styled.div`
   }
 
   @media(max-width: 800px) {
+    display: block;
     padding: 3px;
+    width: 100vw;
     justify-content: center;
     align-items: center;
   }

@@ -26,28 +26,57 @@ const AddBookDiv = styled.div`
   }
 `;
 
-const AddBookForm = styled.div`
+const AddBookForm = styled.form`
+  padding: 5px;
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 3fr 0.8fr;
-  grid-gap: 10px;
+  display: flex;
+  flex-direction: column;
 
-  @media (max-width: 800px) {
-    flex-direction: column;
+  div {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
+    width: 90%;
+    margin: 5px auto;
+  }
+
+  input {
+    width: 250px;
+  }
+
+  select {
+    width: 150px;
+  }
+
+  button {
+    background-color: rgb(127, 173, 80);
   }
 `;
 
 const ButtonDiv = styled.div`
-  margin-top: 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  button {
+    text-align: right;
+  }
 `;
 
 const Space = styled.span`
   margin-left: 15px;
   margin-right: 15px;
 `;
+
 const ManualAddButtonDiv = styled.div`
-  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+
+  button {
+    width: 150px;
+    margin: auto;
+    font-size: 0.75em;
+  }
 `;
 
 const AddBook = () => {
@@ -147,8 +176,7 @@ const AddBook = () => {
 
   return (
     <AddBookDiv>
-      <Form onSubmit={formSubmit}>
-        <AddBookForm>
+        <AddBookForm onSubmit={formSubmit}>
           <div>
             <Label>Api Choice</Label>
             <Input type="select" onChange={handleChanges} name="apiChoice">
@@ -196,7 +224,6 @@ const AddBook = () => {
             </ButtonDiv>
           </div>
         </AddBookForm>
-      </Form>
       <ManualAddButtonDiv>
         <Button onClick={toggleManualAddModal}>Add a Book Manually</Button>
       </ManualAddButtonDiv>

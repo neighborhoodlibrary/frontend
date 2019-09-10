@@ -37,8 +37,8 @@ const EmptyBooksContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 50px;
-  background-color: rgba(0,0,0,.11);
-  border: 1px solid rgba(0,0,0,.3);
+  background-color: rgba(0,0,0,.05);
+  border: 1px solid rgba(0,0,0,.2);
   border-radius: 2px;
 `;
 
