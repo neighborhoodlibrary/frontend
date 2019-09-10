@@ -9,7 +9,7 @@ import BooksInfo from "./Plugs/BooksInfo";
 
 const MainShelfDiv = styled.div`
   display: grid;
-  color: rgb(60,60,60);
+  color: rgb(50,50,50);
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas:
     "bntop bntop bntop bntop"
@@ -25,12 +25,14 @@ const MainShelfDiv = styled.div`
   #banTop {
     grid-area: bntop;
     font-family: 'Merriweather', sans-serif;
-    background-color: rgb(250,250,250);
-    color: rgb(80,80,80);
-    padding: 10px;  
-    font-size: 1.1em;
-    padding-left: 24px;
+    background-color: rgb(80,80,80);
+    color: rgb(232,232,232);
+    padding: 10px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    padding-left: 14px;
     width: 100%;
+    border: 1px solid rgba(0,0,0,.2);
   }
 
   #userinfo {

@@ -5,12 +5,17 @@ import styled from "styled-components";
 const UserInfoDiv = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: rgb(252,252,252);
-  padding: 10px;
+  color: rgb(40,40,40);
   font-size: 0.9em;
-  font-family: "Merriweather Sans";
+  padding: 10px;
+  font-family: "Merriweather";
   border-radius: 2px;
   width: 100%;
+  height: 100%;
+  border-right: 1px solid rgb(0,0,0,0.2);
 
   div {
     padding: 7.5px 2px;

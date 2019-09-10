@@ -20,6 +20,10 @@ const CardDiv = styled.div`
     font-family: "Merriweather Sans", sans-serif;
     color: black;
   }
+
+  #aCard {
+    color: black;
+  }
 `;
 const CardBodyDiv = styled.div`
   display: flex;
@@ -58,7 +62,7 @@ const LoanedBook = props => {
   };
 
   return (
-    <CardDiv>
+    <CardDiv id="aCard">
       <Card
         body
         outline

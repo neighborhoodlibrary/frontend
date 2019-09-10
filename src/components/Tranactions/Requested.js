@@ -18,27 +18,47 @@ const ContainerWrapper = styled.div`
   width: 100%;
   height: 100%;
 
+  @media(max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+  }
+
   h5 {
     font-family: "Merriweather", serif;
   }
 `;
 
 const Container1 = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
-  background-color: rgba(0,0,0,.11);
-  border: 1px solid rgba(0,0,0,.3);
+  min-height: 600px;
   border-radius: 2px;
+  background-color: rgb(127, 173, 80);
+  color: rgb(20,20,20);
+  padding: 10px;
+  box-sizing: border-box;
+
+  h5 {
+    color: rgb(250,250,250);
+    font-family: "Merriweather", serif;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 3px 0px;
+  }
 `;
 const Container2 = styled.div`
-  background-color: rgba(0,0,0,.1);
-  padding: 10px;
+  background-color: rgb(80,80,80);
+  min-height: 600px;
   border-radius: 2px;
-  border: 1px solid rgba(0,0,0,.3);
+  color: rgb(20,20,20);
+  padding: 10px;
+  box-sizing: border-box;
+
+  h5 {
+    color: rgb(250,250,250);
+    font-family: "Merriweather", serif;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 3px 0px;
+  }
 `;
 
 const Requested = () => {
@@ -84,12 +104,12 @@ const Requested = () => {
   return (
     <ContainerWrapper>
       <div>
-        <h5>
-          <u>Requested Books:</u>
-        </h5>
         <Container1>
+          <h5>
+            Requested Books
+          </h5>
           {requestedBooks === null ? (
-            <div>
+            <div id="noBooks">
               <h4>No one has requested a book from you</h4>
               <h6>When a user wants to read a book from your library</h6>
               <h6>It'll show up here</h6>
@@ -110,12 +130,12 @@ const Requested = () => {
         </Container1>
       </div>
       <div>
-        <h5>
-          <u>Books To Loan:</u>
-        </h5>
         <Container2>
+          <h5>
+            Books To Loan
+          </h5>
           {toBeGivenBooks === null ? (
-            <div>
+            <div id="noBooks">
               <h6>
                 Set a user to loan a book, and the book will be placed here
               </h6>

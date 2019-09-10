@@ -9,8 +9,6 @@ const NavMenuDiv = styled.div`
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
-  height: 100%;
-  width: 100%;
   font-size: 0.95em;
 
   a:active, a:focus {
@@ -26,7 +24,9 @@ const NavMenuDiv = styled.div`
   }
 
   @media(max-width: 800px) {
+    display: block;
     padding: 3px;
+    width: 95vw;
     justify-content: center;
     align-items: center;
   }
@@ -38,14 +38,18 @@ const NavTabs = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+  box-sizing: border-box;
+  width: 100%;
 `;
 
 const TabTop = styled.div`
-  padding: 5px 10px;
+  position: sticky;
   width: 100%;
+  height: 100%;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: flex-end;
 
   #topTabS {
     font-weight: bold;
@@ -55,16 +59,8 @@ const TabTop = styled.div`
 
   button {
     font-size: 1em;
-    padding: 1px 2px;
     border: none;
     background-color: transparent;
-    margin: 0px 7px;
-
-    &:hover {
-      -webkit-animation: slide-bck-center 0.45s
-        cubic-bezier(0.47, 0, 0.745, 0.715) both;
-      animation: slide-bck-center 0.45s cubic-bezier(0.47, 0, 0.745, 0.715) both;
-    }
   }
 
   /* ----------------------------------------------
@@ -101,18 +97,17 @@ const TabTop = styled.div`
 
 const TabBottom = styled.div`
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  font-size: 0.91em;
-  box-sizing: border-box;
+  font-size: 0.9em;
+  padding-top: 8px;
 
   a {
     padding: 3px 6px;
-    border: none;
-    border-radius: 3px;
-    margin: 0px 1px;
+    border-radius: 2px;
+    box-sizing: border-box;
 
-    &:hover {
+    &:hover{
+      background-color: rgba(0,0,0,0.1);
     }
   }
 
@@ -120,7 +115,6 @@ const TabBottom = styled.div`
     padding: 3px 6px;
     border: none;
     border-radius: 3px;
-    margin: 0px 1px;
   }
 
   @media(max-width: 800px){

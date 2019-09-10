@@ -15,22 +15,13 @@ const HeaderDiv = styled.div`
   padding: 5px 12px;
   margin: auto;
   margin-bottom: 10px;
-  width: 92%;
+  width: 95%;
   height: 75px;
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-top: none;
   -webkit-animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-
-  h1 {
-    font-size: 1.25em;
-    font-family: "Merriweather", serif;
-    border-bottom: 2px solid rgb(127, 173, 80);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
   img {
     height: 38px;
@@ -43,9 +34,24 @@ const HeaderDiv = styled.div`
     color: black;
   }
 
+  h1 {
+    font-size: 1.5em;
+    font-family: "PT Serif", serif;
+    border-bottom: 2px solid rgb(127, 173, 80);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    @media(max-width: 800px){
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
   a:hover {
-    text-decoration: wavy;
     color: black;
+    text-decoration: none;
   }
 
   @media (max-width: 800px) {
@@ -53,7 +59,7 @@ const HeaderDiv = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 98%;
     height: 150px;
 
     h1 {
@@ -99,6 +105,11 @@ const HeaderDiv = styled.div`
       transform: translateY(0);
       opacity: 1;
     }
+  }
+
+  #header a {
+    font-weight: 300;
+    font-family: "PT Serif", "Merriweather", serif;
   }
 `;
 
@@ -157,7 +168,7 @@ const Header = props => {
     <div>
       {loggedIn ? (
         <HeaderDiv>
-          <h1>
+          <h1 id="header">
             <img src={tmplo} />
             <NavLink to="/">Neighborhood Library</NavLink>
           </h1>

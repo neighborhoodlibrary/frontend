@@ -11,7 +11,8 @@ const AnalyticsDiv = styled.div`
     width: 100%;
     padding: 10px;
     background-color: rgb(0,0,0,0.025);
-    border-radius: 2px;
+    border-right: 1px solid rgba(0,0,0,.2);
+    border-bottom: 1px solid rgba(0,0,0,.2);
     box-sizing: border-box;
 
     #a2{

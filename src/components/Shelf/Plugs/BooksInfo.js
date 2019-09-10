@@ -6,7 +6,8 @@ import "firebase/auth";
 import styled from "styled-components";
 
 const BooksInfoDiv = styled.div`
-  background-color: rgb(252,252,252);
+  background-color: rgb(127, 173, 80);
+  color: white;
   font-family: 'Merriweather Sans', sans-serif;
   font-size: 0.95em;
   padding: 25px;
@@ -14,9 +15,16 @@ const BooksInfoDiv = styled.div`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  border-left: 1px solid rgb(0,0,0,.2);
+  border-right: 1px solid rgb(0,0,0,.2);
+  border-bottom: 1px solid rgba(0,0,0,.2);
 
   #abook {
     padding: 10px;
+    border: 1px solid rgba(0,0,0,.5);
+    margin: 3px;
+    background-color: white;
+    color: rgb(40,40,40);
   }
 
   #counthold {
@@ -34,7 +42,6 @@ const BooksInfoDiv = styled.div`
     display: flex;
     align-items: center;
     font-size: 1.2em;
-    min-width: 100px;
     padding: 0;
     margin: 0;
   }
@@ -54,6 +61,8 @@ const BooksInfoDiv = styled.div`
 const BookInfoDiv = styled.div`
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid rgba(255,255,255,.4);
+  margin-bottom: 20px;
 `;
 
 const BookMap = styled.div`
@@ -159,7 +168,7 @@ const BooksInfo = () => {
             <BookMap>
               {requestedBooks.map(requestedBook => (
                 <div key={Math.random()}>
-                  <div>Title: {requestedBook.title}</div>
+                  <div>{requestedBook.title}</div>
                   <div>Requested by: {requestedBook.requestedId.join(" , ")}</div>
                 </div>
               ))}
@@ -178,7 +187,7 @@ const BooksInfo = () => {
             <BookMap>
               {returningBooks.map(returningBook => (
                 <div key={Math.random()}>
-                  <div>Title: {returningBook.title}</div>
+                  <div>{returningBook.title}</div>
                   <div>Returning from: {returningBook.borrowerId}</div>
                 </div>
               ))}
@@ -197,7 +206,7 @@ const BooksInfo = () => {
               {loanedBooks.map(loanedBook => (
                 <div key={Math.random()}>
                   <div>Checked out by: {loanedBook.borrowerId}</div>
-                  <div>Title: {loanedBook.title}</div>
+                  <div>{loanedBook.title}</div>
                   <div>Due: {loanedBook.dueDate.split("T")[0]}</div>
                 </div>
               ))}
@@ -208,14 +217,14 @@ const BooksInfo = () => {
       <BookInfoDiv>
         Currently borrowing:
         {borrowedBooks === null ? (
-          <div>: 0 books</div>
+          <div id="countemp">0 books</div>
         ) : (
           <div id="counthold">
             <div id="count">{borrowedBooks.length} books</div>
             <BookMap>
               {borrowedBooks.map(borrowedBook => (
                 <div id="abook" key={Math.random()}>
-                  <div>Title: {borrowedBook.title}</div>
+                  <div>{borrowedBook.title}</div>
                   <div>Due:{borrowedBook.dueDate.split("T")[0]}</div>
                 </div>
               ))}

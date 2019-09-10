@@ -13,7 +13,12 @@ import {
   Input
 } from "reactstrap";
 import styled from "styled-components";
-const Container = styled.div``;
+const Container = styled.div`
+  background-color: rgb(127, 173, 80);
+  border-radius: 2px;
+  padding: 15px;
+  box-sizing: border-box;
+`;
 const MapHold = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -37,9 +42,10 @@ const EmptyBooksContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 50px;
-  background-color: rgba(0,0,0,.11);
-  border: 1px solid rgba(0,0,0,.3);
+  background-color: rgba(255,255,255,.1);
+  border: 1px solid rgba(0,0,0,.2);
   border-radius: 2px;
+  color: white;
 `;
 
 const Library = () => {
