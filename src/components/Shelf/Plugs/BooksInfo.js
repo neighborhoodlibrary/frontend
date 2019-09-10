@@ -21,8 +21,10 @@ const BooksInfoDiv = styled.div`
 
   #abook {
     padding: 10px;
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid rgba(0,0,0,.5);
     margin: 3px;
+    background-color: white;
+    color: rgb(40,40,40);
   }
 
   #counthold {

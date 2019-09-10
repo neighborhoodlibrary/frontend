@@ -9,7 +9,7 @@ import BooksInfo from "./Plugs/BooksInfo";
 
 const MainShelfDiv = styled.div`
   display: grid;
-  color: rgb(60,60,60);
+  color: rgb(50,50,50);
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas:
     "bntop bntop bntop bntop"
@@ -26,7 +26,7 @@ const MainShelfDiv = styled.div`
     grid-area: bntop;
     font-family: 'Merriweather', sans-serif;
     background-color: rgb(80,80,80);
-    color: rgb(222,222,222);
+    color: rgb(232,232,232);
     padding: 10px;
     border-radius: 3px;
     font-size: 0.9em;
