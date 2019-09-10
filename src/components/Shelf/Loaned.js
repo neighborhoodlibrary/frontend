@@ -10,22 +10,51 @@ import styled from "styled-components";
 const ContainerWrapper = styled.div`
   box-sizing: border-box;
   display: grid;
-  justify-content: space-apart;
+  justify-items: space-apart;
   grid-template-columns: 2fr 1fr;
   font-family: "Merriweather Sans", "Roboto", sans-serif;
-  width: 100%;
+  width: 97.5%;
   height: 100%;
+  margin: auto;
 
-  h5 {
-    font-family: "Merriweather", serif;
+  @media(max-width: 800px) {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
 const Container1 = styled.div`
-  display: grid;
-  height: 100%;
+  min-height: 600px;
+  border-radius: 2px;
+  background-color: rgb(127, 173, 80);
+  color: rgb(20,20,20);
+  padding: 10px;
+  box-sizing: border-box;
+
+  h5 {
+    color: rgb(250,250,250);
+    font-family: "Merriweather", serif;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 3px 0px;
+  }
 `;
-const Container2 = styled.div``;
+const Container2 = styled.div`
+  background-color: rgb(80,80,80);
+  min-height: 600px;
+  border-radius: 2px;
+  color: rgb(20,20,20);
+  padding: 10px;
+  box-sizing: border-box;
+
+  h5 {
+    color: rgb(250,250,250);
+    font-family: "Merriweather", serif;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 3px 0px;
+  }
+`;
 
 const Loaned = () => {
   const [loanedBooks, setLoanedBooks] = useState([]);
@@ -71,12 +100,12 @@ const Loaned = () => {
   return (
     <ContainerWrapper>
       <div>
-        <h5>
-          <u>Loaned Books:</u>
-        </h5>
         <Container1>
+          <h5>
+            Loaned Books
+          </h5>
           {loanedBooks === null ? (
-            <div>
+            <div id="noBooks">
               <h6>You have no books currently checked-out</h6>
               <p>Add more books to your library?</p>
               <NavLink to="/lookup/add">
@@ -95,12 +124,12 @@ const Loaned = () => {
         </Container1>
       </div>
       <div>
-        <h5>
-          <u>Check-In Books:</u>
-        </h5>
         <Container2>
+          <h5>
+            Check-In Books
+          </h5>
           {recoverBooks === null ? (
-            <div>
+            <div id="noBooks">
               <h6>You have no pending books to be checked in...</h6>
             </div>
           ) : (

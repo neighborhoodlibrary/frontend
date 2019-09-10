@@ -13,7 +13,12 @@ import {
   Input
 } from "reactstrap";
 import styled from "styled-components";
-const Container = styled.div``;
+const Container = styled.div`
+  background-color: rgb(127, 173, 80);
+  border-radius: 2px;
+  padding: 15px;
+  box-sizing: border-box;
+`;
 const MapHold = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

@@ -8,3 +8,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#noBooks {
+  color: rgb(250,250,250);
+}
