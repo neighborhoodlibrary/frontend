@@ -18,6 +18,11 @@ const AddBookDiv = styled.div`
   flex-direction: column;
   font-family: "Merriweather Sans", sans-serif;
 
+  @media(max-width: 800px){
+    width: 98%;
+    margin: auto;
+  }
+
   #sorryToInform {
     padding: 15px;
     font-size: 1.2em;
@@ -46,9 +51,9 @@ const FormHold = styled.div`
 
 const AddBookForm = styled.form`
   padding: 5px;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   div {
     display: flex;
@@ -69,6 +74,14 @@ const AddBookForm = styled.form`
     color: white;
     background-color: rgba(0,0,0,0.3);
     border-color: rgba(0,0,0,0.5);
+  }
+  
+  label {
+    padding: 5px;
+    max-width: 175px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+    margin: 5px;
   }
 
   select {

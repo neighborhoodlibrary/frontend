@@ -15,7 +15,7 @@ const HeaderDiv = styled.div`
   padding: 5px 12px;
   margin: auto;
   margin-bottom: 10px;
-  width: 92%;
+  width: 95%;
   height: 75px;
   border-radius: 2px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -59,7 +59,7 @@ const HeaderDiv = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 98%;
     height: 150px;
 
     h1 {

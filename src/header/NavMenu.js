@@ -9,7 +9,6 @@ const NavMenuDiv = styled.div`
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
-  width: 100%;
   font-size: 0.95em;
 
   a:active, a:focus {
@@ -27,7 +26,7 @@ const NavMenuDiv = styled.div`
   @media(max-width: 800px) {
     display: block;
     padding: 3px;
-    width: 100vw;
+    width: 95vw;
     justify-content: center;
     align-items: center;
   }
