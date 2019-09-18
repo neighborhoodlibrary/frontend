@@ -149,7 +149,7 @@ const Header = props => {
         }
       });
     }
-  }, {});
+  });
   const loggedInToTrue = () => {
     setLoggedIn(true);
   };
@@ -170,7 +170,7 @@ const Header = props => {
       {loggedIn ? (
         <HeaderDiv>
           <h1 id="header">
-            <img src={tmplo} />
+            <img src={tmplo} alt="Logo img" />
             <NavLink to="/">Neighborbooks</NavLink>
           </h1>
           <SideBar>

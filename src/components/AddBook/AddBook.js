@@ -3,7 +3,7 @@ import BookMap from "./BookMap";
 import ManualAddBookModal from "./ManualAddBookModal";
 import styled from "styled-components";
 import { useAlert } from "react-alert";
-import { Form, Input, Button, Label } from "reactstrap";
+import { Input, Button, Label } from "reactstrap";
 import Axios from "axios";
 //
 const booksApi = require("google-books-search");
