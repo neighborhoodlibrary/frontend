@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import NavMenu from "./NavMenu";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import UserContext from "../context/user/userContext";
-import firebase from "../firebase/firebase.utils";
+import UserContext from "../../context/user/userContext";
+import firebase from "../../firebase/firebase.utils";
 import "firebase/auth";
 import tmplo from "./tmplo.png";
 
@@ -109,7 +109,8 @@ const HeaderDiv = styled.div`
 
   #header a {
     font-weight: 300;
-    font-family: "PT Serif", "Merriweather", serif;
+    font-size: 24px;
+    font-family: "Merriweather", serif;
   }
 `;
 
@@ -148,7 +149,7 @@ const Header = props => {
         }
       });
     }
-  }, {});
+  });
   const loggedInToTrue = () => {
     setLoggedIn(true);
   };
@@ -169,8 +170,8 @@ const Header = props => {
       {loggedIn ? (
         <HeaderDiv>
           <h1 id="header">
-            <img src={tmplo} />
-            <NavLink to="/">Neighborhood Library</NavLink>
+            <img src={tmplo} alt="Logo img" />
+            <NavLink to="/">Neighborbooks</NavLink>
           </h1>
           <SideBar>
             <NavMenu signOut={signOut} />

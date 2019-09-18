@@ -3,7 +3,7 @@ import BookMap from "./BookMap";
 import ManualAddBookModal from "./ManualAddBookModal";
 import styled from "styled-components";
 import { useAlert } from "react-alert";
-import { Form, Input, Button, Label } from "reactstrap";
+import { Input, Button, Label } from "reactstrap";
 import Axios from "axios";
 //
 const booksApi = require("google-books-search");
@@ -65,6 +65,7 @@ const AddBookForm = styled.form`
   }
 
   input {
+    color: rgba(255,255,255,0.9);
     width: 250px;
     background-color: rgba(0,0,0,0.4);
     border-color: rgba(0,0,0,0.6);
@@ -74,6 +75,10 @@ const AddBookForm = styled.form`
     color: white;
     background-color: rgba(0,0,0,0.3);
     border-color: rgba(0,0,0,0.5);
+  }
+
+  input::placeholder {
+    color: rgb(255,255,255,0.5);
   }
   
   label {

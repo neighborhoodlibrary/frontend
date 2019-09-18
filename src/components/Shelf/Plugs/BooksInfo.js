@@ -89,11 +89,6 @@ const BooksInfo = () => {
   const [requestedBooks, setRequestedBooks] = useState(null);
   const [returningBooks, setReturningBooks] = useState(null);
 
-  useEffect(() => {
-    getBooks();
-    getBorrowed();
-  }, "");
-
   const getBooks = () => {
     const tempLoanedArr = [];
     const tempRequestedArr = [];
@@ -154,6 +149,11 @@ const BooksInfo = () => {
         console.log("Error getting the documents:", error);
       });
   };
+
+  useEffect(() => {
+    getBooks();
+    getBorrowed();
+  }, "");
 
   return (
     <BooksInfoDiv id="booksinfo">

@@ -3,10 +3,6 @@ import "firebase/auth";
 import firebase from "../../firebase/firebase.utils";
 import { useAlert } from "react-alert";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
   Button,
   Modal,
   ModalHeader,
@@ -20,33 +16,61 @@ import {
 } from "reactstrap";
 import styled from "styled-components";
 
-const PageContainer = styled.div`
+const ProfileHold = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  max-width: 700px;
+  margin: auto;
+  
+  @media(max-width: 800px) {
+    padding: 10px;
+  }
 `;
-const CardContainer = styled.div`
-  width: 50vw;
-  margin-bottom: 1rem;
-`;
-const ProfileSlot = styled.p`
+
+const ProfHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  background-color: rgb(80,80,80);
+  border-radius: 2px;
+  font-family: 'Merriweather';
+  color: white;
+  padding: 10px;
+
+  #profHead {
+    font-size: 1.1em;
+  }
 `;
-const CardHeaderDiv = styled.div`
+
+const ProfileFields = styled.div`
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
-`;
-const CardFooterDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-const NoteBody = styled.div`
-  height: 25vh;
-`;
-const Test = styled.div`
-  height: 50vh;
+  flex-direction: column;
+  background-color: rgb(127, 173, 80);
+  color: white;
+  margin-bottom: 10px;
+  font-family: 'Merriweather Sans';
+
+  #notesDiv {
+    min-height: 150px;
+  }
+
+  #field {
+    display: flex;
+    margin: 7px 0px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    #fieldName {
+      font-size: 1.05em;
+    }
+
+    #fieldValue {
+
+    }
+  }
 `;
 
 const Profile = () => {
@@ -151,50 +175,47 @@ const Profile = () => {
   };
 
   return (
-    <PageContainer>
-      <CardContainer>
-        <Card>
-          <CardHeader>
-            <CardHeaderDiv>
-              <h3>User Profile</h3>
-              <Button onClick={toggleEditModal}>Edit</Button>
-            </CardHeaderDiv>
-          </CardHeader>
-          <CardBody>
-            <ProfileSlot>
-              <div>DisplayName:</div>
-              <div>{curUser.displayName}</div>
-            </ProfileSlot>
-            <ProfileSlot>
-              <div>Restricted Distance:</div>
-              <div>{curUser.setDistance} miles</div>
-            </ProfileSlot>
-            <ProfileSlot>
-              <div>Loan Period:</div>
-              <div>{curUser.loanPeriod} days</div>
-            </ProfileSlot>
-            <ProfileSlot>
-              <div>Favorite Book:</div>
-              <div>{curUser.favoriteBook}</div>
-            </ProfileSlot>
-          </CardBody>
-        </Card>
-      </CardContainer>
-      <CardContainer>
-        <Card>
-          <CardHeader>
-            <h3>Notes</h3>
-          </CardHeader>
-          <CardBody>
-            <NoteBody>{curUser.notes}</NoteBody>
-          </CardBody>
-          <CardFooter>
-            <CardFooterDiv>
+    <ProfileHold>
+
+              <ProfHeader>
+              	<div id="profHead">User Profile</div>
+              	<Button onClick={toggleEditModal}>Edit</Button>
+              </ProfHeader>
+
+              <ProfileFields>
+                <div id="field">
+                  <div id="fieldName">Display Name:</div>
+                  <div id="fieldValue">{curUser.displayName}</div>
+                </div>
+        
+                <div id="field">
+                  <div>Restricted Distance:</div>
+                  <div>{curUser.setDistance} miles</div>
+                </div>
+                      
+                <div id="field">
+                  <div>Loan Period:</div>
+                  <div>{curUser.loanPeriod} days</div>
+                </div>
+        
+                <div id="field">
+                  <div>Favorite Book:</div>
+                  <div>{curUser.favoriteBook}</div>
+                </div>
+                
+              </ProfileFields>
+
+              <ProfHeader>
+                <div id="profHead">Notes</div>
+              </ProfHeader>
+
+            <ProfileFields>
+              
+              <div id="notesDiv">
+                {curUser.notes}
+              </div>
+            </ProfileFields>
               <Button onClick={toggleNotesModal}>Edit Notes</Button>
-            </CardFooterDiv>
-          </CardFooter>
-        </Card>
-      </CardContainer>
       <Modal isOpen={editModal} toggle={toggleEditModal} centered>
         <ModalHeader>Edit User Profile</ModalHeader>
         <ModalBody>
@@ -285,112 +306,8 @@ const Profile = () => {
           <Button onClick={toggleNotesModal}>Back</Button>
         </ModalFooter>
       </Modal>
-    </PageContainer>
+    </ProfileHold>
   );
 };
 
 export default Profile;
-
-// import React, { useContext, useState } from 'react';
-// import UserContext from "../../context/user/userContext";
-// import "firebase/auth";
-// import firebase from "../../firebase/firebase.utils";
-// import './Profile.css';
-// export default function Profile() {
-//     const db = firebase.firestore();
-//     const auth = firebase.auth();
-//     var userContext = useContext(UserContext);
-//     var curUser = userContext.userState.user;
-//     const userDB = db.collection("users").doc(`${auth.currentUser.uid}`);
-//     const [values, setValues] = useState({
-//         edited: {
-//           displayName: curUser.displayName,
-//           favoriteBook: curUser.favoriteBook
-//         },
-//         locked: {
-//           displayName: curUser.displayName,
-//           favoriteBook: curUser.favoriteBook,
-//           uid: curUser.uid
-//         }
-//       });
-
-//     const [edit, setEdit] = useState({
-//       isOn: false
-//     })
-
-//     const toggleEdit = () => {
-//       setEdit({...edit, isOn: !edit.isOn});
-//     }
-
-//     const handleChanges = e => {
-//         const { name, value } = e.target;
-//         setValues(
-//           { ...values,
-//              edited: {
-//               [name]: value }
-//         });
-//       };
-
-//     const updateProfile = e => {
-//       e.preventDefault();
-//       userDB.update(values.edited)
-//         .then(function() {
-//           console.log("updated")
-//         })
-//         .catch(function(error) {
-//           console.log(error);
-//         })
-
-//         setValues({
-//           ...values,
-//           locked: values.edited
-//         });
-
-//         userDB.get().then(function(user) {
-//           userContext.addUser(user.data())
-//         }).catch(function(error) {
-//           console.log(error);
-//         })
-
-//         toggleEdit();
-//     }
-
-//     if(edit.isOn === false) {
-//       return (
-//           <div className="editProfile">
-//             <div className="editOff">
-//               <div className="profileBox">
-
-//                   <div className="profileSlot"><h3>
-//                   Display Name:
-//                   </h3><p>
-//                   {values.locked.displayName}
-//                   </p></div>
-
-//                   <div className="profileSlot"><h3>
-//                   Favorite Book:
-//                   </h3> <p>
-//                   {values.locked.favoriteBook}
-//                   </p></div>
-
-//               </div>
-//               <button className="heartbeat" onClick={toggleEdit}>Edit</button>
-//             </div>
-//           </div>
-//       )
-//     } else {
-//       return (
-//         <div className="editProfile">
-//           <div className="editOn">
-//             <form onSubmit={updateProfile}>
-//               <input name="displayName" value={values.edited.displayName} onChange={handleChanges} placeholder="Enter display name" />
-//               <input name="favoriteBook" value={values.edited.favoriteBook} onChange={handleChanges} placeholder="Enter your favorite Book" />
-//               <button>Submit Changes</button>
-//             </form>
-//             <button onClick={toggleEdit}>Close Edit</button>
-//           </div>
-//         </div>
-//       )
-//     }
-
-// }
