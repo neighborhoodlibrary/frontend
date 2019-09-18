@@ -50,6 +50,7 @@ const ProfileFields = styled.div`
   background-color: rgb(127, 173, 80);
   color: white;
   margin-bottom: 10px;
+  font-family: 'Merriweather Sans';
 
   #notesDiv {
     min-height: 150px;
