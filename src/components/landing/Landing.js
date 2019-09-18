@@ -1,8 +1,7 @@
 import React from "react";
 import SignInComponent from "./SignInComponent";
-import "./Landing.css";
 import styled from "styled-components";
-import bgImage from "../assets/neighborpic2.jpg";
+import bgImage from "../../assets/neighborpic2.jpg";
 
 const LandingDiv = styled.div`
   box-sizing: border-box;
@@ -138,7 +137,7 @@ const LandingTwo = props => {
             books <br /> from your personal collection.
           </ServiceText>
           <ServiceImg
-            src={require("../assets/book_lover.png")}
+            src={require("../../assets/book_lover.png")}
             alt="bookShelf"
           />
         </Services>
@@ -148,7 +147,7 @@ const LandingTwo = props => {
             books from.
           </ServiceText>
           <ServiceImg
-            src={require("../assets/Books.png")}
+            src={require("../../assets/Books.png")}
             alt="createLibrary"
           />
         </Services>
@@ -158,7 +157,7 @@ const LandingTwo = props => {
             books.
           </ServiceText>
           <ServiceImg
-            src={require("../assets/conversation.png")}
+            src={require("../../assets/conversation.png")}
             alt="meetup"
           />
         </Services>
@@ -168,65 +167,3 @@ const LandingTwo = props => {
 };
 
 export default LandingTwo;
-
-// import React from "react";
-// import SignInComponent from "./SignInComponent";
-// import "./Landing.css";
-// const LandingTwo = props => {
-//   return (
-//     <div className="landingDiv">
-//       <div className="bghold" />
-//         <div className="topofBG">
-//           <div className="landingHeaderText">
-//             <h1>Neighborhood Library</h1>
-//             <h2>Read Great Books In Your Area</h2>
-//           </div>
-//           <SignInComponent routerProps={props} />
-//             <div className="arrowSection">
-//               <i className="arrow down"></i>
-//             </div>
-//         </div>
-//         <div>
-//           <div className="halfBackground">
-
-//             <p className="halfblurb">Providing our users with a simple and <br/>feature-rich solution for lending and borrowing from their neighbors!</p>
-//             <div className="services">
-//               <p className="serviceOne">
-//                 Share books with neighbors, our platform <br /> let's you loan
-//                 out books <br /> from your personal collection.
-//               </p>
-//               <img
-//                 className="serviceOneImg"
-//                 src={require("../assets/book_lover.png")}
-//                 alt="bookShelf"
-//               />
-//             </div>
-//             <div className="services">
-//               <p className="serviceOne">
-//                 Create your own digital library for <br /> others to see and
-//                 borrow books from.
-//               </p>
-//               <img
-//                 className="serviceOneImg"
-//                 src={require("../assets/Books.png")}
-//                 alt="createLibrary"
-//               />
-//             </div>
-//             <div className="services">
-//               <p className="serviceOne">
-//                 Communicate via email to <br /> set a place and time to exchange
-//                 books.
-//               </p>
-//               <img
-//                 className="serviceOneImg"
-//                 src={require("../assets/conversation.png")}
-//                 alt="meetup"
-//               />
-//             </div>
-//           </div>
-//         </div>
-//     </div>
-//   );
-// };
-
-// export default LandingTwo;

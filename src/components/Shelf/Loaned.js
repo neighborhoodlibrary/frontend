@@ -95,7 +95,7 @@ const Loaned = () => {
 
   useEffect(() => {
     getBooks();
-  }, []);
+  }, [getBooks]);
 
   return (
     <ContainerWrapper>

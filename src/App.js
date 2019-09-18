@@ -1,7 +1,7 @@
 // app=> header (render navmenu only if loggedIn)()=> if(loggedIn)=> shelf
 // else (!loggedIn)=> landing(signInComponent)
 import React from "react";
-import Header from "./header/Header";
+import Header from "./components/header/Header";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import PrivateRoute from "./authentication/PrivateRoute";
 import { Provider as AlertProvider } from "react-alert";
@@ -10,7 +10,7 @@ import AlertTemplate from "react-alert-template-basic";
 import UserState from "./context/user/UserState";
 import BookState from "./context/book/BookState";
 // when user is not logged in...
-import Landing from "./landing/Landing";
+import Landing from "./components/landing/Landing";
 // shelf components
 // import MyShelf from "./views/MyShelf/MyShelf";
 import MainShelf from "./components/Shelf/MainShelf";
@@ -40,6 +40,8 @@ const LoggedInDiv = styled.div`
     width: 100%;
   }
 `;
+
+//Options for toast alerts
 
 const alertOptions = {
   timeout: 3000,
