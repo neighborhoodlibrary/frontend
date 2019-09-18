@@ -7,9 +7,9 @@ const NavMenuDiv = styled.div`
   flex-direction: column
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
   box-sizing: border-box;
-  font-size: 0.95em;
+  font-size: 0.94em;
 
   a:active, a:focus {
     outline: 0;
@@ -50,6 +50,7 @@ const TabTop = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  font-size: 0.98em;
 
   #topTabS {
     font-weight: bold;
@@ -58,7 +59,6 @@ const TabTop = styled.div`
   }
 
   button {
-    font-size: 1em;
     border: none;
     background-color: transparent;
   }
@@ -99,15 +99,16 @@ const TabBottom = styled.div`
   display: flex;
   align-items: center;
   font-size: 0.9em;
-  padding-top: 8px;
+  padding-top: 4px;
 
   a {
-    padding: 3px 6px;
+    margin-left: 4px;
+    padding: 5px;
     border-radius: 2px;
     box-sizing: border-box;
 
     &:hover{
-      background-color: rgba(0,0,0,0.1);
+      background-color: rgba(0,0,0,0.05);
     }
   }
 
