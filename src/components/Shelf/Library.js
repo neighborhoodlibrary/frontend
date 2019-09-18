@@ -94,7 +94,7 @@ const Library = () => {
 
   useEffect(() => {
     getBooks();
-  }, [getBooks]);
+  }, []);
 
   // filter
   const toggleFilterDropdown = () => {

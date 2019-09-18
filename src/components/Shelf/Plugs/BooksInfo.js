@@ -153,7 +153,7 @@ const BooksInfo = () => {
   useEffect(() => {
     getBooks();
     getBorrowed();
-  }, [getBooks, getBorrowed]);
+  }, "");
 
   return (
     <BooksInfoDiv id="booksinfo">

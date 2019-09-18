@@ -94,7 +94,7 @@ const Borrowed = () => {
 
   useEffect(() => {
     getBooks();
-  }, [getBooks]);
+  }, []);
 
   return (
     <ContainerWrapper>
