@@ -19,7 +19,7 @@
     "react-input-slider": "^5.1.2",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "react-transition-group": "^4.3.0",
     "reactstrap": "^8.0.1",
     "request": "^2.88.0",
